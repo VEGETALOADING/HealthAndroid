@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+  <RelativeLayout
+      android:id="@+id/userinfo"
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:gravity="left"
+      android:background="@color/nav_text_selected">
+
+      <RelativeLayout
+          android:id="@+id/userinfo_rl"
+          android:layout_width="300dp"
+          android:layout_height="130dp">
+
+          <ImageView
+              android:id="@+id/user_photo"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginTop="40dp"
+              android:src="@mipmap/ic_launcher"></ImageView>
+
+          <TextView
+              android:id="@+id/user_username"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginTop="50dp"
+              android:layout_toRightOf="@+id/user_photo"
+              android:text="未登录"
+              android:textColor="#ffffff"
+              android:textSize="30sp"></TextView>
+
+          <ImageView
+              android:id="@+id/img_update"
+              android:layout_width="30sp"
+              android:layout_height="30sp"
+              android:layout_marginLeft="20dp"
+              android:layout_marginTop="55dp"
+              android:layout_toRightOf="@+id/user_username"
+              android:src="@mipmap/update"></ImageView>
+      </RelativeLayout>
+
+
+      <ImageView
+          android:id="@+id/user_message"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_alignParentRight="true"
+          android:layout_marginLeft="124dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginRight="13dp"
+          android:src="@mipmap/mail"></ImageView>
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/userinfo_rl"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+      <LinearLayout
+          android:id="@+id/activity_ll"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+        <TextView
+            android:id="@+id/activity_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0"
+            android:textColor="#ffffff"></TextView>
+
+        <TextView
+            android:id="@+id/activity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="动态"
+            android:textColor="#ffffff"></TextView>
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/following_ll"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/following_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0"
+            android:textColor="#ffffff"></TextView>
+
+        <TextView
+            android:id="@+id/following_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="关注"
+            android:textColor="#ffffff"></TextView>
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/follower_ll"
+          android:layout_width="0dp"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/follower_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0"
+            android:textColor="#ffffff"></TextView>
+        <TextView
+            android:id="@+id/follower_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="粉丝"
+            android:textColor="#ffffff"></TextView>
+      </LinearLayout>
+
+    </LinearLayout>
+  </RelativeLayout>
+  <RelativeLayout
+      android:id="@+id/menu1"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="25dp"
+      android:gravity="center"
+      android:layout_below="@+id/userinfo"
+      android:background="#ffffff">
+    <RelativeLayout
+        android:id="@+id/menu1_1"
+        android:layout_width="400dp"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/textbook"
+            android:layout_marginLeft="0dp"
+            android:id="@+id/infomation">
+        </ImageView>
+
+      <TextView
+          android:id="@+id/tv_information"
+          android:layout_width="145dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="29dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:layout_toRightOf="@+id/infomation"
+          android:gravity="left"
+          android:text="健康资料"
+          android:textColor="@color/black"></TextView>
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="match_parent"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:layout_marginLeft="370dp"
+          android:src="@mipmap/right"></ImageView>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/menu1_2"
+        android:layout_below="@+id/menu1_1"
+        android:layout_width="400dp"
+        android:layout_height="40dp">
+
+      <ImageView
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:layout_marginStart="20dp"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:src="@mipmap/diet"
+          android:layout_marginLeft="0dp"
+          android:id="@+id/diet">
+      </ImageView>
+
+      <TextView
+          android:id="@+id/tv_diet"
+          android:layout_width="145dp"
+          android:layout_height="match_parent"
+          android:layout_marginLeft="29dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:layout_toRightOf="@+id/diet"
+          android:gravity="left"
+          android:text="更多饮食方案"
+          android:textColor="@color/black"></TextView>
+
+      <ImageView
+          android:layout_width="20dp"
+          android:layout_height="match_parent"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:layout_marginLeft="370dp"
+          android:src="@mipmap/right"></ImageView>
+
+    </RelativeLayout>
+
+
+
+  </RelativeLayout>
+
+
+  <Button
+      android:id="@+id/logout_btn"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/menu1"
+      android:layout_marginTop="29dp"
+      android:background="#ffffff"
+      android:text="退出账号"></Button>
+
+</RelativeLayout>

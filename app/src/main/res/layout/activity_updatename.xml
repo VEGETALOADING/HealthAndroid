@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="380dp"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:id="@+id/return_a"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_return">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="返回"
+                android:textColor="@color/nav_text_selected"></TextView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="6"
+            android:layout_height="wrap_content"
+            android:text="昵称"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"></TextView>
+        <TextView
+            android:id="@+id/finish_tv"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textSize="20sp"
+            android:text="完成"
+            android:textColor="@color/nav_text_selected"></TextView>
+
+
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/username_et"
+        android:layout_gravity="center"
+        android:layout_width="380dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="50dp"
+        android:background="#DDDDDD"
+        android:hint="test"
+        android:textColor="@color/black"></EditText>
+
+    <TextView
+        android:layout_width="380dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="只允许中文、英文字母、数字、下划线 长度最少2 最大25"
+        android:textSize="15sp"
+        android:textColor="#999999"></TextView>
+
+
+
+</LinearLayout>

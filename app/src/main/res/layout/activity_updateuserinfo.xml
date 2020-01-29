@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="380dp"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:id="@+id/return_ll"
+            android:layout_gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_return">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="返回"
+                android:textColor="@color/black"></TextView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:text="个人资料"
+            android:textSize="20sp"
+            android:paddingLeft="-50dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"></TextView>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/menu"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:background="#FFFFF8">
+
+        <LinearLayout
+            android:id="@+id/userpic_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="头像"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/user_photo"
+                    android:layout_centerVertical="true"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignLeft="@+id/icon_right"
+                    android:layout_marginLeft="-40dp"
+
+                    android:src="@mipmap/ic_launcher"></ImageView>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/icon_right"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="370dp"
+                    android:src="@mipmap/right"></ImageView>
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/username_ll"
+            android:layout_below="@+id/userpic_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="用户名"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="28dp"
+                    android:text="hello"
+                    android:textColor="@color/nav_text_default"
+                    android:textSize="15sp"></TextView>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="370dp"
+                    android:src="@mipmap/right"></ImageView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/phone_ll"
+            android:layout_below="@+id/username_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="手机号码"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/phone_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="28dp"
+                    android:text="未验证"
+                    android:textColor="@color/nav_text_default"
+                    android:textSize="15sp"></TextView>
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="370dp"
+                    android:src="@mipmap/right"></ImageView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>
