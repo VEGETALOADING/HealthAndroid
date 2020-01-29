@@ -39,7 +39,6 @@ public class FollowingDetailActivity extends AppCompatActivity implements OnClic
     LinearLayout return_ll;
     Button follow_btn;
 
-    //第一次修改
 
     private static final int INITNAMEANDPIC = 0;
     private static final int INITFOLLOWERCOUNT = 1;
