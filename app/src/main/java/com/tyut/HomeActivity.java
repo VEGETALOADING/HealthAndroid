@@ -33,7 +33,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout activity_LinearLayout;
     LinearLayout my_LinearLayout;
     LinearLayout add_LinearLayout;
-    LinearLayout nav_ll;
     RelativeLayout fragment_content;
     ImageView img_home;
     TextView tv_home;
@@ -70,7 +69,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tv_friend = (TextView)findViewById(R.id.tv_friend);
         tv_activity = (TextView)findViewById(R.id.tv_activity);
         tv_my = (TextView)findViewById(R.id.tv_my);
-        nav_ll = findViewById(R.id.nav);
 
 
         home_LinearLayout.setOnClickListener(this);
@@ -157,8 +155,24 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 tv_my.setTextColor(Color.rgb(16,222,57));
                 break;
             case R.id.add:
-                Toast.makeText(HomeActivity.this,"xx",Toast.LENGTH_LONG).show();
                 View view = getLayoutInflater().inflate(R.layout.popwindow_homeadd, null);
+
+                LinearLayout close_ll = view.findViewById(R.id.close_ll);
+                LinearLayout diet_ll = view.findViewById(R.id.diet_ll);
+                LinearLayout sport_ll = view.findViewById(R.id.sport_ll);
+                LinearLayout weight_ll = view.findViewById(R.id.weight_ll);
+                LinearLayout activity_ll = view.findViewById(R.id.activity_ll);
+                LinearLayout girth_ll = view.findViewById(R.id.girth_ll);
+                LinearLayout punchin_ll = view.findViewById(R.id.punchin_ll);
+                close_ll.setOnClickListener(this);
+                diet_ll.setOnClickListener(this);
+                sport_ll.setOnClickListener(this);
+                weight_ll.setOnClickListener(this);
+                activity_ll.setOnClickListener(this);
+                girth_ll.setOnClickListener(this);
+                punchin_ll.setOnClickListener(this);
+
+
                 mPop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 mPop.setOutsideTouchable(true);
                 mPop.setFocusable(true);
@@ -169,7 +183,22 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                 int[] location = new int[2];
                 add_LinearLayout.getLocationOnScreen(location);
-                mPop.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2, location[1] - popupHeight-70);
+                mPop.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2, location[1] - popupHeight);
+                break;
+            case R.id.close_ll:
+                mPop.dismiss();
+                break;
+            case R.id.diet_ll:
+                break;
+            case R.id.sport_ll:
+                break;
+            case R.id.weight_ll:
+                break;
+            case R.id.activity_ll:
+                break;
+            case R.id.punchin_ll:
+                break;
+            case R.id.girth_ll:
                 break;
         }
 
