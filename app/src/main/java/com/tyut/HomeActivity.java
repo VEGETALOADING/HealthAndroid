@@ -5,11 +5,15 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +32,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout friend_LinearLayout;
     LinearLayout activity_LinearLayout;
     LinearLayout my_LinearLayout;
+    LinearLayout add_LinearLayout;
+    LinearLayout nav_ll;
     RelativeLayout fragment_content;
     ImageView img_home;
     TextView tv_home;
@@ -37,6 +43,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     TextView tv_activity;
     ImageView img_my;
     TextView tv_my;
+    private PopupWindow mPop;
 
     private static final String HOMEFRAGMENT_TAG="HOME";
     private static final String FRIENDFRAGMENT_TAG="FRIEND";
@@ -53,6 +60,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         home_LinearLayout = (LinearLayout)findViewById(R.id.home);
         friend_LinearLayout = (LinearLayout)findViewById(R.id.friend);
         activity_LinearLayout = (LinearLayout)findViewById(R.id.activity);
+        add_LinearLayout = (LinearLayout)findViewById(R.id.add);
         my_LinearLayout = (LinearLayout)findViewById(R.id.my);
         img_home = (ImageView)findViewById(R.id.img_home);
         img_friend = (ImageView)findViewById(R.id.img_friend);
@@ -62,11 +70,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tv_friend = (TextView)findViewById(R.id.tv_friend);
         tv_activity = (TextView)findViewById(R.id.tv_activity);
         tv_my = (TextView)findViewById(R.id.tv_my);
+        nav_ll = findViewById(R.id.nav);
+
 
         home_LinearLayout.setOnClickListener(this);
         friend_LinearLayout.setOnClickListener(this);
         activity_LinearLayout.setOnClickListener(this);
         my_LinearLayout.setOnClickListener(this);
+        add_LinearLayout.setOnClickListener(this);
 
         Intent intent = getIntent();
         if(intent.getIntExtra("src", 0 ) == 0){
@@ -144,6 +155,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 tv_activity.setTextColor(Color.rgb(94, 94, 94));
                 img_my.setImageResource(R.mipmap.my_selected);
                 tv_my.setTextColor(Color.rgb(16,222,57));
+                break;
+            case R.id.add:
+                Toast.makeText(HomeActivity.this,"xx",Toast.LENGTH_LONG).show();
+                View view = getLayoutInflater().inflate(R.layout.popwindow_homeadd, null);
+                mPop = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                mPop.setOutsideTouchable(true);
+                mPop.setFocusable(true);
+
+                view.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                int popupHeight = view.getMeasuredHeight();
+                int popupWidth = view.getMeasuredWidth();
+
+                int[] location = new int[2];
+                add_LinearLayout.getLocationOnScreen(location);
+                mPop.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2, location[1] - popupHeight-70);
                 break;
         }
 
