@@ -39,31 +39,42 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"></TextView>
     </LinearLayout>
-    <EditText
-        android:id="@+id/search_et"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/top_ll"
+    <LinearLayout
+        android:id="@+id/search_ll"
+        android:layout_width="380dp"
         android:gravity="center"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/tv_grey"
-        android:hint="请输入运动名称"></EditText>
-
-    <Button
-        android:id="@+id/search_btn"
-        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_below="@+id/top_ll"
-        android:layout_marginLeft="0dp"
-        android:layout_toRightOf="@+id/search_et"
-        android:text="搜索"
-        android:textSize="18sp"
-        android:background="@drawable/btn_green"></Button>
+        android:layout_marginLeft="15dp"
+        android:layout_below="@+id/top_ll">
+        <EditText
+            android:id="@+id/searchsport_et"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:background="@drawable/tv_grey"
+            android:hint="请输入运动名称"></EditText>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/cancelsearch_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/search_et"
+            android:text="取消"
+            android:textSize="18sp"
+            android:background="@drawable/btn_green"></Button>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/commonandmy_ll"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/search_et"
+        android:layout_below="@id/search_ll"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/common_sport"
@@ -91,19 +102,63 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/btn_unselected"></View>
+
     <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/line_view">
+        android:layout_below="@+id/line_view"
+        android:layout_marginTop="4dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sportRv_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#ffffff">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:background="#ffffff"></androidx.recyclerview.widget.RecyclerView>
 
     </ScrollView>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/not_found_tv"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_below="@+id/line_view"
+        android:text="抱歉，没有找到相关的选项"
+        android:gravity="center"
+        android:textColor="@color/nav_text_default"></TextView>
+    <View
+        android:visibility="gone"
+        android:id="@+id/not_fount_line"
+        android:layout_below="@+id/not_found_tv"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/btn_unselected"></View>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/not_found_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/not_fount_line">
+        <ImageView
+            android:id="@+id/icon_edit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/icon_edit"
+            android:layout_gravity="center"
+            android:layout_marginLeft="100dp">
+        </ImageView>
+        <TextView
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="搜索不到？添加自定义运动"
+            android:textColor="@color/black">
+
+        </TextView>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
