@@ -12,6 +12,12 @@
         <item name="android:windowEnterAnimation">@anim/set_up_in</item>
         <item name="android:windowExitAnimation">@anim/set_up_out</item>
     </style>
+    <!--Dialog-->
+    <style name="SportDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@color/green_light</item>
+    </style>
 
 </resources>
 

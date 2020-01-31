@@ -36,6 +36,7 @@ import com.tyut.vo.FollowerVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
 import com.tyut.vo.UserVO;
+import com.tyut.widget.SportTimeDialog;
 
 import java.util.List;
 
@@ -75,10 +76,29 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                         @Override
                         public void onClick(int position) {
 
-                            /*Intent intent = new Intent(SportListActivity.this, FollowingDetailActivity.class);
-                            intent.putExtra("followingid", list.get(position).getId());
+                            SportTimeDialog dialog = new SportTimeDialog(SportListActivity.this);
+                            dialog.setSportName(list.get(position).getName())
+                                    .setSportUnit(list.get(position).getUnit())
+                                    .setSportQuantity(list.get(position).getQuantity()+"")
+                                    .setSportPic(list.get(position).getPic())
+                                    .setSportCalories(list.get(position).getCalories()+"")
+                                    .setCancel(new SportTimeDialog.IOnCancelListener() {
+                                        @Override
+                                        public void onCancel(SportTimeDialog dialog) {
+
+                                        }
+                                    })
+                                    .setConfirm(new SportTimeDialog.IOnConfirmListener() {
+                                        @Override
+                                        public void onConfirm(SportTimeDialog dialog) {
+
+                                        }
+                                    }).show();
+                           /* Intent intent = new Intent(SportListActivity.this, FollowerDetailActivity.class);
+                            intent.putExtra("followerid", list.get(position).getId());
+                            intent.putExtra("isFollow", list.get(position).getId());
                             SportListActivity.this.startActivity(intent);*/
-                            Toast.makeText(SportListActivity.this, list.get(position).getId()+"", Toast.LENGTH_LONG).show();
+
                         }
                     }));
                     commonandmy_ll.setVisibility(View.VISIBLE);

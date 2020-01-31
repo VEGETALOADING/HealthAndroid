@@ -1,33 +1,53 @@
 package com.tyut;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.animation.Animation;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
-import com.tyut.view.MyProgressView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.tyut.view.MyHorizontalScrollView;
+import com.tyut.view.SportTimeRulerView;
 
 public class TestActivity extends AppCompatActivity {
 
-    PieChart pieChart;
+    SportTimeRulerView sportTimeRulerView;
+    MyHorizontalScrollView horizontalScrollView;
+    TextView tv;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_showschema);
-        pieChart = findViewById(R.id.pieChart);
+        setContentView(R.layout.test);
+
+        sportTimeRulerView = (SportTimeRulerView) findViewById(R.id.rule_view);
+        tv = (TextView) findViewById(R.id.tv);
+        horizontalScrollView = findViewById(R.id.hor_scrollview);
+        horizontalScrollView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);// 去掉超出滑动后出现的阴影效果
+
+        // 设置水平滑动
+        sportTimeRulerView.setHorizontalScrollView(horizontalScrollView);
+        sportTimeRulerView.setDefaultScaleValue(200);
+
+        // 当滑动尺子的时候
+        horizontalScrollView.setOnScrollListener(new MyHorizontalScrollView.OnScrollListener() {
+
+            @Override
+            public void onScrollChanged(int l, int t, int oldl, int oldt) {
+
+                sportTimeRulerView.setScrollerChanaged(l, t, oldl, oldt);
+            }
+        });
+
+
+        sportTimeRulerView.onChangedListener(new SportTimeRulerView.onChangedListener() {
+            @Override
+            public void onSlide(float number) {
+
+                int num = (int) (number * 10);
+                tv.setText(num+"");
+            }
+        });
 
 
 

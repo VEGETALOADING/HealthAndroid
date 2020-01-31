@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:gravity="center"
+            android:text="添加运动"
+            android:textSize="20sp"></TextView>
+        <ImageView
+            android:id="@+id/st_dl_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_close"></ImageView>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <ImageView
+            android:id="@+id/sport_pic_dl"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="15sp"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/textbook"
+            ></ImageView>
+        <TextView
+            android:id="@+id/sport_name_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="爬楼梯"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/sport_pic_dl"></TextView>
+        <TextView
+            android:id="@+id/sport_cal_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="832"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/sport_pic_dl"
+            android:layout_below="@id/sport_name_dl"></TextView>
+        <TextView
+            android:id="@+id/sport_static_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="千卡/"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_toRightOf="@id/sport_cal_dl"
+            android:layout_below="@id/sport_name_dl"></TextView>
+        <TextView
+            android:id="@+id/sport_quantity_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="60"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_toRightOf="@id/sport_static_dl"
+            android:layout_below="@id/sport_name_dl"></TextView>
+        <TextView
+            android:id="@+id/sport_unit_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="分钟"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_toRightOf="@id/sport_quantity_dl"
+            android:layout_below="@id/sport_name_dl"></TextView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="30dp">
+        <TextView
+            android:id="@+id/calories_infact_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="20dp"
+            android:text="589"
+            android:gravity="center"
+            android:textSize="18sp"></TextView>
+        <TextView
+            android:layout_toRightOf="@id/calories_infact_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="千卡"
+            android:gravity="center"
+            android:textSize="18sp"></TextView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/time_infact_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="30"
+            android:textSize="30sp"
+            android:textColor="@color/green_light"
+            android:textStyle="bold"
+            android:gravity="bottom"
+            android:layout_marginLeft="175dp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="分钟"
+            android:textSize="15sp"
+            android:textColor="@color/green_light"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"></TextView>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="0dp"
+        android:background="#fff"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <com.tyut.view.MyHorizontalScrollView
+            android:id="@+id/hor_scrollview_dl"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:scrollbars="none" >
+
+            <com.tyut.view.SportTimeRulerView
+                android:id="@+id/ruler_view_dl"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"/>
+        </com.tyut.view.MyHorizontalScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true" />
+        <View
+            android:layout_width="30px"
+            android:layout_height="30px"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shape_triangle" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/confirm_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/green_light"
+        android:text="确认添加"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textColor="#ffffff"></TextView>
+
+
+
+
+</LinearLayout>

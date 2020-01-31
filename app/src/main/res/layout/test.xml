@@ -1,9 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="30px"
+    android:background="#fff"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.tyut.view.MyHorizontalScrollView
+        android:id="@+id/hor_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:layout_height="300px"
+        android:scrollbars="none" >
+
+        <com.tyut.view.SportTimeRulerView
+            android:id="@+id/rule_view"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"/>
+    </com.tyut.view.MyHorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/btn_unselected"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+    <View
+        android:layout_width="30px"
+        android:layout_height="30px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/shape_triangle" />
+    <TextView
+        android:id="@+id/tv"
+        android:layout_below="@id/hor_scrollview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="300dp"
+        android:text="helloxxxxxxxxx"
+        android:gravity=""
+        android:textColor="@color/black"
+        android:textSize="50sp" />
+</RelativeLayout>
