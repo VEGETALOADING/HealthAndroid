@@ -4,6 +4,7 @@ import com.tyut.MainActivity;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,6 +35,13 @@ public class StringUtil {
         }else{
             return -num;
         }
+    }
+
+    public static java.sql.Date utilDate2Sql() {
+        java.util.Date nDate = new java.util.Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String sDate = sdf.format(nDate);
+        return java.sql.Date.valueOf(sDate);  //转型成java.sql.Date类型
     }
 
     public static void main(String[] args) {

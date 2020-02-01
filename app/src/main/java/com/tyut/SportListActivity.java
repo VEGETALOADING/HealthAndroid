@@ -31,10 +31,16 @@ import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.utils.StringUtil;
+import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
 import com.tyut.widget.SportTimeDialog;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import q.rorbin.badgeview.Badge;
@@ -61,6 +67,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     private static final int SEARCHSPORT_NOT_NULL = 3;
 
     private Badge badge;
+    private List<Mysport> mysportList = new ArrayList<>();
 
 
     //子线程主线程通讯
@@ -77,7 +84,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
 
                     rvMain.setAdapter(new SportListAdapter(SportListActivity.this, list, new SportListAdapter.OnItemClickListener() {
                         @Override
-                        public void onClick(int position) {
+                        public void onClick(final int position) {
 
                             SportTimeDialog dialog = new SportTimeDialog(SportListActivity.this);
                             dialog.setSportName(list.get(position).getName())
@@ -94,6 +101,18 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                     .setConfirm(new SportTimeDialog.IOnConfirmListener() {
                                         @Override
                                         public void onConfirm(SportTimeDialog dialog) {
+                                            if(!dialog.getTime().equals("0")){
+                                                Mysport mysport = new Mysport();
+                                                mysport.setTime(Integer.parseInt(dialog.getTime()));
+                                                mysport.setSportid(list.get(position).getId());
+                                                mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
+                                                mysport.setCreateTime("2020-02-01");
+                                                mysportList.add(mysport);
+                                                badge.setBadgeNumber(badge.getBadgeNumber()+1);
+
+                                            }else{
+                                                Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
+                                            }
 
                                         }
                                     }).show();
@@ -292,6 +311,40 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 search_et.setText(null);
                 break;
             case R.id.commit_btn:
+                if(mysportList.size()>0){
+                    final Gson gson=new Gson();
+                    String list_json = gson.toJson(mysportList);
+                    /*try {
+                        list_json = URLEncoder.encode(list_json, "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }*/
+                    OkHttpUtils.post("http://192.168.1.10:8080//portal/mysport/addbatch.do/",list_json,
+                            new OkHttpCallback(){
+                                @Override
+                                public void onFinish(String status, String msg) {
+                                    super.onFinish(status, msg);
+                                    //解析数据
+
+                                    ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                    if(serverResponse.getStatus() == 0){
+                                        Looper.prepare();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Looper.loop();
+
+                                    }else{
+                                        Looper.prepare();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Looper.loop();
+                                    }
+                                }
+                            }
+                    );
+                }else{
+                    Looper.prepare();
+                    Toast.makeText(SportListActivity.this, "list为空", Toast.LENGTH_LONG).show();
+                    Looper.loop();
+                }
                 break;
 
 

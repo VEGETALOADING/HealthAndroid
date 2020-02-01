@@ -193,6 +193,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.sport_ll:
                 Intent intent = new Intent(HomeActivity.this, SportListActivity.class);
                 HomeActivity.this.startActivity(intent);
+                HomeActivity.this.startActivity(intent);
                 break;
             case R.id.weight_ll:
                 break;

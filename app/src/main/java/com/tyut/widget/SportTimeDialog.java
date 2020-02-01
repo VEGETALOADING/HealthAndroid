@@ -36,6 +36,11 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
     private MyHorizontalScrollView horizontalScrollView;
 
     private String sportUnit;
+
+    public String getTime() {
+        return time_tv.getText()+"";
+    }
+
     private String sportQuantity;
     private String sportName;
     private String sportCalories;
@@ -73,6 +78,7 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
         this.sportQuantity = sportQuantity;
         return this;
     }
+
 
     public SportTimeDialog setCancel(IOnCancelListener cancelListener) {
         this.cancelListener = cancelListener;
