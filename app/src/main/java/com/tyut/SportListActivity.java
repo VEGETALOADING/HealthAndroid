@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.Editable;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,19 +26,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.adapter.FollowingListAdapter;
 import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.vo.FollowerVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
-import com.tyut.vo.UserVO;
 import com.tyut.widget.SportTimeDialog;
 
 import java.util.List;
+
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 public class SportListActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -48,6 +48,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     private TextView common_sport;
     private EditText search_et;
     private Button cancel_btn;
+    private Button commit_btn;
     private ScrollView scrollView;
     private View line;
     private LinearLayout commonandmy_ll;
@@ -58,6 +59,8 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     private static final int SPORTLIST = 1;
     private static final int SEARCHSPORT_NULL = 2;
     private static final int SEARCHSPORT_NOT_NULL = 3;
+
+    private Badge badge;
 
 
     //子线程主线程通讯
@@ -149,6 +152,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
         search_et = findViewById(R.id.searchsport_et);
         commonandmy_ll = findViewById(R.id.commonandmy_ll);
         cancel_btn = findViewById(R.id.cancelsearch_btn);
+        commit_btn = findViewById(R.id.commit_btn);
         scrollView = findViewById(R.id.scrollview);
         line = findViewById(R.id.line_view);
         not_found_line = findViewById(R.id.not_fount_line);
@@ -159,6 +163,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
         my_sport.setOnClickListener(this);
         common_sport.setOnClickListener(this);
         cancel_btn.setOnClickListener(this);
+        commit_btn.setOnClickListener(this);
         search_et.setOnEditorActionListener(this);
         search_et.setOnTouchListener(new View.OnTouchListener() {
 
@@ -181,6 +186,9 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
+
+        //初始化气泡
+        initBadge();
 
         //查数据
         OkHttpUtils.get("http://192.168.1.10:8080//portal/sport/list.do?userid=0",
@@ -283,6 +291,8 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 not_found_tv.setVisibility(View.GONE);
                 search_et.setText(null);
                 break;
+            case R.id.commit_btn:
+                break;
 
 
         }
@@ -332,5 +342,19 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
 
         }
         return true;
+    }
+
+    private void initBadge() {
+        badge = new QBadgeView(this)
+                .bindTarget(commit_btn)
+                .setBadgeNumber(0)
+                .setBadgeTextColor(R.color.green_light)
+                .setBadgeTextSize(13,true)
+                .setBadgeGravity(Gravity.START | Gravity.TOP)
+                .setBadgeBackground(getResources().getDrawable(R.drawable.shape_round_rect));
+        //.setBadgeText("PNG")
+        //.setBadgeBackgroundColor(R.color.red)
+        //.stroke(0xff000000, 1, true);
+
     }
 }

@@ -11,6 +11,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal">
 
+
         <TextView
             android:layout_width="280dp"
             android:layout_height="50dp"
