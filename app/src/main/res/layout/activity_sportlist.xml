@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="完成"
+            android:textSize="18sp"
             android:gravity="center"
             android:background="@drawable/btn_green"
             android:layout_gravity="center" />
@@ -54,6 +55,7 @@
         android:gravity="center"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/top_ll">
         <EditText
             android:id="@+id/searchsport_et"

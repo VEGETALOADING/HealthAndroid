@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -31,15 +32,12 @@ import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.utils.StringUtil;
+
 import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
 import com.tyut.widget.SportTimeDialog;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +63,8 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     private static final int SPORTLIST = 1;
     private static final int SEARCHSPORT_NULL = 2;
     private static final int SEARCHSPORT_NOT_NULL = 3;
+
+    private static int current_category = 1;
 
     private Badge badge;
     private List<Mysport> mysportList = new ArrayList<>();
@@ -116,10 +116,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
 
                                         }
                                     }).show();
-                           /* Intent intent = new Intent(SportListActivity.this, FollowerDetailActivity.class);
-                            intent.putExtra("followerid", list.get(position).getId());
-                            intent.putExtra("isFollow", list.get(position).getId());
-                            SportListActivity.this.startActivity(intent);*/
+
 
                         }
                     }));
@@ -142,12 +139,39 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
 
                     rvMain.setAdapter(new SportListAdapter(SportListActivity.this, list2, new SportListAdapter.OnItemClickListener() {
                         @Override
-                        public void onClick(int position) {
+                        public void onClick(final int position) {
 
-                            /*Intent intent = new Intent(SportListActivity.this, FollowingDetailActivity.class);
-                            intent.putExtra("followingid", list.get(position).getId());
-                            SportListActivity.this.startActivity(intent);*/
-                            Toast.makeText(SportListActivity.this, list2.get(position).getId()+"", Toast.LENGTH_LONG).show();
+                            SportTimeDialog dialog = new SportTimeDialog(SportListActivity.this);
+                            dialog.setSportName(list2.get(position).getName())
+                                    .setSportUnit(list2.get(position).getUnit())
+                                    .setSportQuantity(list2.get(position).getQuantity()+"")
+                                    .setSportPic(list2.get(position).getPic())
+                                    .setSportCalories(list2.get(position).getCalories()+"")
+                                    .setCancel(new SportTimeDialog.IOnCancelListener() {
+                                        @Override
+                                        public void onCancel(SportTimeDialog dialog) {
+
+                                        }
+                                    })
+                                    .setConfirm(new SportTimeDialog.IOnConfirmListener() {
+                                        @Override
+                                        public void onConfirm(SportTimeDialog dialog) {
+                                            if(!dialog.getTime().equals("0")){
+                                                Mysport mysport = new Mysport();
+                                                mysport.setTime(Integer.parseInt(dialog.getTime()));
+                                                mysport.setSportid(list2.get(position).getId());
+                                                mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
+                                                mysport.setCreateTime("2020-02-01");
+                                                mysportList.add(mysport);
+                                                badge.setBadgeNumber(badge.getBadgeNumber()+1);
+
+                                            }else{
+                                                Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
+                                            }
+
+                                        }
+                                    }).show();
+
                         }
                     }));
                     commonandmy_ll.setVisibility(View.GONE);
@@ -209,6 +233,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
         //初始化气泡
         initBadge();
 
+
         //查数据
         OkHttpUtils.get("http://192.168.1.10:8080//portal/sport/list.do?userid=0",
                 new OkHttpCallback(){
@@ -244,6 +269,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 intent.putExtra("src", SPORTLISTACTIVITY);
                 SportListActivity.this.startActivity(intent);
             case R.id.my_sport:
+                current_category = 2;
                 my_sport.setTextColor(v.getResources().getColor(R.color.black));
                 common_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 Integer userid = SharedPreferencesUtil.getInstance(this).readInt("userid");
@@ -270,6 +296,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 );
                 break;
             case R.id.common_sport:
+                current_category = 1;
                 my_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 common_sport.setTextColor(v.getResources().getColor(R.color.black));
                 OkHttpUtils.get("http://192.168.1.10:8080//portal/sport/list.do?userid=0",
@@ -295,20 +322,70 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 );
                 break;
             case R.id.cancelsearch_btn:
+
                 search_et.clearFocus();
-                InputMethodManager inputMethodManager =(InputMethodManager)this.getApplicationContext().
+                InputMethodManager inputMethodManager =(InputMethodManager)this
+                        .getApplicationContext().
                         getSystemService(Context.INPUT_METHOD_SERVICE);
-
-
                 inputMethodManager.hideSoftInputFromWindow(search_et.getWindowToken(), 0); //隐藏
-                commonandmy_ll.setVisibility(View.VISIBLE);
-                scrollView.setVisibility(View.VISIBLE);
-                line.setVisibility(View.VISIBLE);
+
                 cancel_btn.setVisibility(View.GONE);
                 not_found_line.setVisibility(View.GONE);
                 not_found_ll.setVisibility(View.GONE);
                 not_found_tv.setVisibility(View.GONE);
                 search_et.setText(null);
+
+                if(current_category == 1){
+                    my_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
+                    common_sport.setTextColor(v.getResources().getColor(R.color.black));
+                    OkHttpUtils.get("http://192.168.1.10:8080//portal/sport/list.do?userid=0",
+                            new OkHttpCallback(){
+                                @Override
+                                public void onFinish(String status, String msg) {
+                                    super.onFinish(status, msg);
+                                    //解析数据
+                                    Gson gson=new Gson();
+                                    ServerResponse<List<SportVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<SportVO>>>(){}.getType());
+                                    if(serverResponse.getStatus() == 0){
+                                        Message message = new Message();
+                                        message.what= SPORTLIST;
+                                        message.obj = serverResponse.getData();
+                                        mHandler.sendMessage(message);
+                                    }else{
+                                        Looper.prepare();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Looper.loop();
+                                    }
+                                }
+                            }
+                    );
+                }else{
+                    my_sport.setTextColor(v.getResources().getColor(R.color.black));
+                    common_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
+                    Integer userid1 = SharedPreferencesUtil.getInstance(this).readInt("userid");
+                    OkHttpUtils.get("http://192.168.1.10:8080//portal/sport/list.do?userid="+userid1,
+                            new OkHttpCallback(){
+                                @Override
+                                public void onFinish(String status, String msg) {
+                                    super.onFinish(status, msg);
+                                    //解析数据
+                                    Gson gson=new Gson();
+                                    ServerResponse<List<SportVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<SportVO>>>(){}.getType());
+                                    if(serverResponse.getStatus() == 0){
+                                        Message message = new Message();
+                                        message.what= SPORTLIST;
+                                        message.obj = serverResponse.getData();
+                                        mHandler.sendMessage(message);
+                                    }else{
+                                        Looper.prepare();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Looper.loop();
+                                    }
+                                }
+                            }
+                    );
+                }
+
                 break;
             case R.id.commit_btn:
                 if(mysportList.size()>0){
@@ -327,24 +404,17 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                     //解析数据
 
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
-                                    if(serverResponse.getStatus() == 0){
-                                        Looper.prepare();
-                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
-                                        Looper.loop();
-
-                                    }else{
+                                    if(serverResponse.getStatus() != 0){
                                         Looper.prepare();
                                         Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
                                         Looper.loop();
                                     }
+
                                 }
                             }
                     );
-                }else{
-                    Looper.prepare();
-                    Toast.makeText(SportListActivity.this, "list为空", Toast.LENGTH_LONG).show();
-                    Looper.loop();
                 }
+                this.finish();
                 break;
 
 

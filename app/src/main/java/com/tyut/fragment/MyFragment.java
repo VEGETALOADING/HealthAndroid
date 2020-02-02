@@ -113,7 +113,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
 
             user_name.setText(userVO.getUsername());
-            Glide.with(this).load("http://192.168.1.10:8080/" + userVO.getUserpic()).into(user_photo);
+            Glide.with(this).load("http://192.168.1.10:8080/userpic/" + userVO.getUserpic()).into(user_photo);
 
 
             OkHttpUtils.get("http://192.168.1.10:8080/portal/follow/findfollowercount.do?id=" + userVO.getId(),
