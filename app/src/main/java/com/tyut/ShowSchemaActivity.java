@@ -109,10 +109,10 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
-        String height = StringUtil.divison(Integer.parseInt(userVO.getHeight()), 100);
+        String height = userVO.getHeight();
         String weight = userVO.getWeight();
 
-        float bmi = StringUtil.keepDecimal((Float.parseFloat(weight) /  Float.parseFloat(height) / Float.parseFloat(height)), 1);
+        float bmi = StringUtil.getBMI(weight, height);
         bmi_tv.setText(bmi+"");
         bmi_view.setProgress(bmi);
 

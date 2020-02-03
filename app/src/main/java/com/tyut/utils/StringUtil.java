@@ -44,6 +44,11 @@ public class StringUtil {
         return java.sql.Date.valueOf(sDate);  //转型成java.sql.Date类型
     }
 
+    public static float getBMI(String weight, String height){
+        String h = StringUtil.divison(Integer.parseInt(height), 100);
+        return StringUtil.keepDecimal((Float.parseFloat(weight) /  Float.parseFloat(h) / Float.parseFloat(h)), 1);
+    }
+
     public static void main(String[] args) {
 
 
