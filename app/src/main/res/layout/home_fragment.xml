@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
   <LinearLayout
       android:id="@+id/top_ll"
-      android:layout_width="wrap_content"
+      android:layout_width="370dp"
       android:layout_height="60dp"
       android:layout_gravity="center">
 
     <EditText
-        android:layout_width="320dp"
+        android:id="@+id/searchfood_et"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:layout_width="300dp"
         android:layout_height="30dp"
         android:background="@drawable/btn_grey"
         android:hint="搜索食物营养和热量"
         android:layout_gravity="center_vertical"
         android:gravity="center"></EditText>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/cancelsearchfood_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginLeft="20dp"
+        android:text="取消"
+        android:textSize="20sp"
+        android:textColor="@color/green_light"
+        android:gravity="center"
+        android:layout_gravity="center"></TextView>
     <ImageView
+        android:id="@+id/message_iv"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginLeft="20dp"
@@ -29,347 +40,432 @@
         android:layout_gravity="center_vertical"></ImageView>
   </LinearLayout>
 
-  <LinearLayout
-      android:layout_width="370dp"
-      android:layout_height="200dp"
-      android:layout_gravity="center"
-      android:orientation="vertical"
-      android:background="@drawable/btn_grey">
-
+  <ScrollView
+      android:id="@+id/default_scrollview"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp">
-      <ImageView
-          android:id="@+id/userpic_home"
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:layout_marginLeft="10dp"
-          android:layout_gravity="center_vertical"
-          android:src="@drawable/ic_launcher_background">
-      </ImageView>
-      <TextView
-          android:id="@+id/username_home"
-          android:layout_marginLeft="10dp"
-          android:layout_width="150dp"
-          android:layout_height="30dp"
-          android:layout_gravity="center_vertical"
-          android:text="default"
-          android:textColor="@color/black"
-          android:textSize="20dp"
-          android:gravity="left"></TextView>
-      <LinearLayout
-          android:id="@+id/healthinfo"
-          android:layout_width="wrap_content"
-          android:layout_height="30dp"
-          android:layout_gravity="center"
-          android:layout_marginLeft="60dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="健康档案"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"></TextView>
-        <ImageView
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:src="@mipmap/right"
-            android:layout_gravity="center"></ImageView>
-
-      </LinearLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="330dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center">
-      <LinearLayout
-          android:layout_width="80dp"
-          android:layout_height="80dp"
-          android:layout_gravity="center"
-          android:orientation="vertical">
-        <TextView
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="阶段"
-            android:gravity="center"></TextView>
-        <TextView
-            android:id="@+id/now_status"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="塑形"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="center"></TextView>
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_marginLeft="40dp"
-          android:layout_width="90dp"
-          android:layout_height="80dp"
-          android:layout_gravity="center"
-          android:orientation="vertical">
-        <TextView
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="当前（公斤）"
-            android:gravity="center"></TextView>
-        <TextView
-            android:id="@+id/weight_home"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="115.0"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="center"></TextView>
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:layout_marginLeft="40dp"
-          android:layout_width="match_parent"
-          android:layout_height="80dp"
-          android:layout_gravity="center"
-          android:orientation="vertical">
-        <TextView
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BMI"
-            android:gravity="center"></TextView>
-        <TextView
-            android:id="@+id/bmi_home"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="38.4"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:gravity="center"></TextView>
-
-      </LinearLayout>
-
-    </LinearLayout>
-
-
-  </LinearLayout>
-
-  <LinearLayout
-      android:layout_width="370dp"
-      android:layout_height="250dp"
-      android:layout_gravity="center"
-      android:layout_marginTop="20dp"
-      android:orientation="vertical"
-      android:background="@drawable/btn_grey">
-
-    <LinearLayout
-        android:id="@+id/schema_ll"
-        android:layout_width="330dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp">
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginLeft="15dp"
-          android:layout_marginTop="10dp"
-          android:text="为你定制"
-          android:textColor="@color/black"
-          android:textSize="20sp"></TextView>
-      <ImageView
-          android:layout_width="10dp"
-          android:layout_height="10dp"
-          android:layout_marginLeft="220dp"
-          android:src="@mipmap/right"
-          android:layout_gravity="center"></ImageView>
-    </LinearLayout>
-    <TextView
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
-        android:text="#经典均衡饮食#饭后常犯困？正餐选对主食，可以避免因餐后血糖升高，导致的犯困，嗜睡等情况，让你状态满满！"></TextView>
+        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="350dp"
-        android:layout_height="18dp"
-        android:layout_gravity="center">
-      <ImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
-          android:src="@mipmap/icon_like_red"
-          android:layout_gravity="center_vertical"></ImageView>
-      <TextView
-          android:layout_marginLeft="10dp"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:text="坚果"
-          android:gravity="center"></TextView>
-      <TextView
-          android:layout_marginLeft="40dp"
-          android:layout_gravity="right"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:text="松子，开心果，夏威夷果，葵花子，花生"
-          android:gravity="center"></TextView>
+      <LinearLayout
+          android:id="@+id/one_ll"
+          android:layout_width="370dp"
+          android:layout_height="200dp"
+          android:layout_gravity="center"
+          android:orientation="vertical"
+          android:background="@drawable/btn_grey">
 
+        <LinearLayout
+            android:layout_width="330dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp">
+          <ImageView
+              android:id="@+id/userpic_home"
+              android:layout_width="30dp"
+              android:layout_height="30dp"
+              android:layout_marginLeft="10dp"
+              android:layout_gravity="center_vertical"
+              android:src="@drawable/ic_launcher_background">
+          </ImageView>
+          <TextView
+              android:id="@+id/username_home"
+              android:layout_marginLeft="10dp"
+              android:layout_width="150dp"
+              android:layout_height="30dp"
+              android:layout_gravity="center_vertical"
+              android:text="default"
+              android:textColor="@color/black"
+              android:textSize="20dp"
+              android:gravity="left"></TextView>
+          <LinearLayout
+              android:id="@+id/healthinfo"
+              android:layout_width="wrap_content"
+              android:layout_height="30dp"
+              android:layout_gravity="center"
+              android:layout_marginLeft="60dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="健康档案"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"></TextView>
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@mipmap/right"
+                android:layout_gravity="center"></ImageView>
+
+          </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="330dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center">
+          <LinearLayout
+              android:layout_width="80dp"
+              android:layout_height="80dp"
+              android:layout_gravity="center"
+              android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="阶段"
+                android:gravity="center"></TextView>
+            <TextView
+                android:id="@+id/now_status"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="塑形"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:gravity="center"></TextView>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_marginLeft="40dp"
+              android:layout_width="90dp"
+              android:layout_height="80dp"
+              android:layout_gravity="center"
+              android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前（公斤）"
+                android:gravity="center"></TextView>
+            <TextView
+                android:id="@+id/weight_home"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="115.0"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:gravity="center"></TextView>
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_marginLeft="40dp"
+              android:layout_width="match_parent"
+              android:layout_height="80dp"
+              android:layout_gravity="center"
+              android:orientation="vertical">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BMI"
+                android:gravity="center"></TextView>
+            <TextView
+                android:id="@+id/bmi_home"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="38.4"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:gravity="center"></TextView>
+
+          </LinearLayout>
+
+        </LinearLayout>
+
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/two_ll"
+          android:layout_width="370dp"
+          android:layout_height="250dp"
+          android:layout_gravity="center"
+          android:layout_marginTop="20dp"
+          android:orientation="vertical"
+          android:background="@drawable/btn_grey">
+
+        <LinearLayout
+            android:id="@+id/schema_ll"
+            android:layout_width="330dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="15dp"
+              android:layout_marginTop="10dp"
+              android:text="为你定制"
+              android:textColor="@color/black"
+              android:textSize="20sp"></TextView>
+          <ImageView
+              android:layout_width="10dp"
+              android:layout_height="10dp"
+              android:layout_marginLeft="220dp"
+              android:src="@mipmap/right"
+              android:layout_gravity="center"></ImageView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:text="#经典均衡饮食#饭后常犯困？正餐选对主食，可以避免因餐后血糖升高，导致的犯困，嗜睡等情况，让你状态满满！"></TextView>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="350dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center">
+          <ImageView
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+              android:src="@mipmap/icon_like_red"
+              android:layout_gravity="center_vertical"></ImageView>
+          <TextView
+              android:layout_marginLeft="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="18dp"
+              android:text="坚果"
+              android:gravity="center"></TextView>
+          <TextView
+              android:layout_marginLeft="40dp"
+              android:layout_gravity="right"
+              android:layout_width="wrap_content"
+              android:layout_height="18dp"
+              android:text="松子，开心果，夏威夷果，葵花子，花生"
+              android:gravity="center"></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center">
+          <ImageView
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+              android:src="@mipmap/icon_like_red"
+              android:layout_gravity="center_vertical"></ImageView>
+          <TextView
+              android:layout_marginLeft="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="18dp"
+              android:text="坚果"
+              android:gravity="center"></TextView>
+          <TextView
+              android:layout_marginLeft="40dp"
+              android:layout_gravity="right"
+              android:layout_width="wrap_content"
+              android:layout_height="18dp"
+              android:text="松子，开心果，夏威夷果，葵花子，花生"
+              android:gravity="center"></TextView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="18dp"
+            android:layout_gravity="center">
+          <ImageView
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+              android:src="@mipmap/icon_like_red"
+              android:layout_gravity="center_vertical"></ImageView>
+          <TextView
+              android:layout_marginLeft="10dp"
+              android:layout_width="wrap_content"
+              android:layout_height="18dp"
+              android:text="坚果"
+              android:gravity="center"></TextView>
+          <TextView
+              android:layout_marginLeft="40dp"
+              android:layout_gravity="right"
+              android:layout_width="wrap_content"
+              android:layout_height="18dp"
+              android:text="松子，开心果，夏威夷果，葵花子，花生"
+              android:gravity="center"></TextView>
+
+        </LinearLayout>
+
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/three_ll"
+          android:layout_width="370dp"
+          android:layout_height="100dp"
+          android:layout_gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/diet_diary"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_grey">
+          <TextView
+              android:id="@+id/title_dd"
+              android:layout_marginTop="15dp"
+              android:layout_marginLeft="15dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="饮食日记"
+              android:textSize="15sp"
+              android:textColor="@color/black"></TextView>
+          <TextView
+              android:id="@+id/tv_1"
+              android:layout_marginLeft="15dp"
+              android:layout_marginTop="4dp"
+              android:layout_below="@+id/title_dd"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="还可以吃 "
+              android:textSize="10sp"></TextView>
+          <TextView
+              android:id="@+id/rest_calories"
+              android:layout_below="@id/title_dd"
+              android:layout_toRightOf="@id/tv_1"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="2800"></TextView>
+          <TextView
+              android:id="@+id/tv_2"
+              android:layout_below="@id/title_dd"
+              android:layout_toRightOf="@id/rest_calories"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text=" 大卡"
+              android:layout_marginTop="4dp"
+              android:textSize="10sp"></TextView>
+          <ImageView
+              android:layout_marginTop="30dp"
+              android:layout_toRightOf="@+id/tv_2"
+              android:layout_width="60dp"
+              android:layout_height="60dp"
+              android:src="@mipmap/icon_pot"></ImageView>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:id="@+id/food_ranking"
+            android:layout_width="180dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_grey">
+
+          <TextView
+              android:id="@+id/title_fr"
+              android:layout_marginTop="15dp"
+              android:layout_marginLeft="15dp"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="食物排行榜"
+              android:textSize="15sp"
+              android:textColor="@color/black"></TextView>
+          <TextView
+              android:id="@+id/tv_3"
+              android:layout_marginLeft="15dp"
+              android:layout_marginTop="4dp"
+              android:layout_below="@+id/title_fr"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="低卡高纤帮你挑 "
+              android:textSize="10sp"></TextView>
+
+          <ImageView
+              android:layout_marginLeft="30dp"
+              android:layout_marginTop="30dp"
+              android:layout_toRightOf="@+id/tv_3"
+              android:layout_width="60dp"
+              android:layout_height="60dp"
+              android:src="@mipmap/icon_rank"></ImageView>
+        </RelativeLayout>
+      </LinearLayout>
     </LinearLayout>
+  </ScrollView>
+  <LinearLayout
+      android:visibility="gone"
+      android:id="@+id/searchhide_ll"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="350dp"
-        android:layout_height="18dp"
-        android:layout_gravity="center">
-      <ImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
-          android:src="@mipmap/icon_like_red"
-          android:layout_gravity="center_vertical"></ImageView>
+        android:id="@+id/compreandhot_ll"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/search_ll"
+        android:orientation="horizontal">
       <TextView
-          android:layout_marginLeft="10dp"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:text="坚果"
+          android:id="@+id/common_food"
+          android:layout_width="0dp"
+          android:layout_height="40dp"
+          android:layout_weight="1"
+          android:textColor="@color/black"
+          android:text="综合"
           android:gravity="center"></TextView>
+      <View
+          android:layout_width="0.5dp"
+          android:layout_height="40dp"
+          android:background="@color/btn_unselected"></View>
       <TextView
-          android:layout_marginLeft="40dp"
-          android:layout_gravity="right"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:text="松子，开心果，夏威夷果，葵花子，花生"
+          android:id="@+id/hot_food"
+          android:layout_width="0dp"
+          android:layout_height="40dp"
+          android:layout_weight="1"
+          android:text="热量/营养素"
           android:gravity="center"></TextView>
-
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="350dp"
-        android:layout_height="18dp"
-        android:layout_gravity="center">
-      <ImageView
-          android:layout_width="15dp"
-          android:layout_height="15dp"
-          android:src="@mipmap/icon_like_red"
-          android:layout_gravity="center_vertical"></ImageView>
-      <TextView
-          android:layout_marginLeft="10dp"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:text="坚果"
-          android:gravity="center"></TextView>
-      <TextView
-          android:layout_marginLeft="40dp"
-          android:layout_gravity="right"
-          android:layout_width="wrap_content"
-          android:layout_height="18dp"
-          android:text="松子，开心果，夏威夷果，葵花子，花生"
-          android:gravity="center"></TextView>
+    <View
+        android:id="@+id/line_view"
+        android:layout_below="@+id/commonandmy_ll"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/btn_unselected"></View>
+    <ScrollView
+        android:id="@+id/scrollview_food"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line_view"
+        android:layout_marginTop="4dp">
 
-    </LinearLayout>
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/foodRv_main"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="#ffffff"></androidx.recyclerview.widget.RecyclerView>
 
-
+    </ScrollView>
   </LinearLayout>
 
+  <TextView
+      android:visibility="gone"
+      android:id="@+id/not_foundfood_tv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/line_view"
+      android:text="抱歉，没有找到相关的选项"
+      android:gravity="center"
+      android:textColor="@color/nav_text_default"></TextView>
 
   <LinearLayout
-      android:layout_width="370dp"
-      android:layout_height="100dp"
-      android:layout_gravity="center">
+      android:visibility="gone"
+      android:id="@+id/blank_ll"
+      android:layout_width="match_parent"
+      android:layout_height="670dp"
+      android:orientation="vertical"></LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/diet_diary"
-        android:layout_width="180dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/btn_grey">
-      <TextView
-          android:id="@+id/title_dd"
-          android:layout_marginTop="15dp"
-          android:layout_marginLeft="15dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="饮食日记"
-          android:textSize="15sp"
-          android:textColor="@color/black"></TextView>
-      <TextView
-          android:id="@+id/tv_1"
-          android:layout_marginLeft="15dp"
-          android:layout_marginTop="4dp"
-          android:layout_below="@+id/title_dd"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="还可以吃 "
-          android:textSize="10sp"></TextView>
-      <TextView
-          android:id="@+id/rest_calories"
-          android:layout_below="@id/title_dd"
-          android:layout_toRightOf="@id/tv_1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="2800"></TextView>
-      <TextView
-          android:id="@+id/tv_2"
-          android:layout_below="@id/title_dd"
-          android:layout_toRightOf="@id/rest_calories"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text=" 大卡"
-          android:layout_marginTop="4dp"
-          android:textSize="10sp"></TextView>
-      <ImageView
-          android:layout_marginTop="30dp"
-          android:layout_toRightOf="@+id/tv_2"
-          android:layout_width="60dp"
-          android:layout_height="60dp"
-          android:src="@mipmap/icon_pot"></ImageView>
-    </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginLeft="10dp"
-        android:id="@+id/food_ranking"
-        android:layout_width="180dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:background="@drawable/btn_grey">
 
-      <TextView
-          android:id="@+id/title_fr"
-          android:layout_marginTop="15dp"
-          android:layout_marginLeft="15dp"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="食物排行榜"
-          android:textSize="15sp"
-          android:textColor="@color/black"></TextView>
-      <TextView
-          android:id="@+id/tv_3"
-          android:layout_marginLeft="15dp"
-          android:layout_marginTop="4dp"
-          android:layout_below="@+id/title_fr"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="低卡高纤帮你挑 "
-          android:textSize="10sp"></TextView>
 
-      <ImageView
-          android:layout_marginLeft="30dp"
-          android:layout_marginTop="30dp"
-          android:layout_toRightOf="@+id/tv_3"
-          android:layout_width="60dp"
-          android:layout_height="60dp"
-          android:src="@mipmap/icon_rank"></ImageView>
-    </RelativeLayout>
-  </LinearLayout>
 
 
 
 </LinearLayout>
-</ScrollView>

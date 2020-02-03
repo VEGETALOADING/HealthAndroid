@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/food_pic"
+        android:layout_marginLeft="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/home_selected"></ImageView>
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/foodname_tv"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="default"
+            android:textSize="20sp"></TextView>
+        <TextView
+            android:id="@+id/foodcalories_tv"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/foodname_tv"
+            android:text="000"
+            android:textColor="@color/red"></TextView>
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/foodcalories_tv"
+            android:layout_below="@id/foodname_tv"
+            android:text="千卡/"></TextView>
+        <TextView
+            android:id="@+id/foodquantity_tv"
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv1"
+            android:layout_below="@id/foodname_tv"
+            android:text="def">
+
+        </TextView>
+        <TextView
+            android:id="@+id/foodunit_tv"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/foodquantity_tv"
+            android:layout_below="@id/foodname_tv"
+            android:text="def">
+
+        </TextView>
+    </RelativeLayout>
+
+
+</LinearLayout>
