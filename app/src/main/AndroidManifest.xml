@@ -25,12 +25,12 @@
 
         </activity>
         <activity android:name=".LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".UpdateUserInfoActivity" />
         <activity android:name=".UpdateUsernameActivity" />
@@ -42,6 +42,9 @@
         <activity android:name=".ShowSchemaActivity" />
         <activity android:name=".FollowingDetailActivity" />
         <activity android:name=".FollowerDetailActivity" />
+        <activity android:name=".FoodDetailActivity">
+
+        </activity>
     </application>
 
 </manifest>

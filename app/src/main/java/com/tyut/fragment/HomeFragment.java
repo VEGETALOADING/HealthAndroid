@@ -1,6 +1,7 @@
 package com.tyut.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -29,6 +30,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tyut.FoodDetailActivity;
+import com.tyut.HomeActivity;
 import com.tyut.R;
 import com.tyut.SportListActivity;
 import com.tyut.adapter.FoodListAdapter;
@@ -115,36 +118,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                         @Override
                         public void onClick(final int position) {
 
-                           /* SportTimeDialog dialog = new SportTimeDialog(SportListActivity.this);
-                            dialog.setSportName(list.get(position).getName())
-                                    .setSportUnit(list.get(position).getUnit())
-                                    .setSportQuantity(list.get(position).getQuantity()+"")
-                                    .setSportPic(list.get(position).getPic())
-                                    .setSportCalories(list.get(position).getCalories()+"")
-                                    .setCancel(new SportTimeDialog.IOnCancelListener() {
-                                        @Override
-                                        public void onCancel(SportTimeDialog dialog) {
-
-                                        }
-                                    })
-                                    .setConfirm(new SportTimeDialog.IOnConfirmListener() {
-                                        @Override
-                                        public void onConfirm(SportTimeDialog dialog) {
-                                            if(!dialog.getTime().equals("0")){
-                                                Mysport mysport = new Mysport();
-                                                mysport.setTime(Integer.parseInt(dialog.getTime()));
-                                                mysport.setSportid(list.get(position).getId());
-                                                mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
-                                                mysport.setCreateTime("2020-02-01");
-                                                mysportList.add(mysport);
-                                                badge.setBadgeNumber(badge.getBadgeNumber()+1);
-
-                                            }else{
-                                                Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
-                                            }
-
-                                        }
-                                    }).show();*/
+                            Intent intent = new Intent(getActivity(), FoodDetailActivity.class);
+                            intent.putExtra("id", list.get(position).getId());
+                            intent.putExtra("name", list.get(position).getName());
+                            intent.putExtra("quantity", list.get(position).getQuantity());
+                            intent.putExtra("unit", list.get(position).getUnit());
+                            intent.putExtra("calories", list.get(position).getCalories());
+                            intent.putExtra("pic", list.get(position).getPic());
+                            intent.putExtra("protein", list.get(position).getProtein().toString());
+                            intent.putExtra("fat", list.get(position).getFat().toString());
+                            intent.putExtra("carbs", list.get(position).getCarbs().toString());
+                            getActivity().startActivity(intent);
 
                         }
                     }));
@@ -265,10 +249,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                 defaultScrollView.setVisibility(View.VISIBLE);
                 listScrollView.setVisibility(View.GONE);
                 blank_ll.setVisibility(View.GONE);
+                hot_food.setTextColor(getResources().getColor(R.color.nav_text_default));
+                commnon_food.setTextColor(getResources().getColor(R.color.black));
                 condition1 = null;
                 condition2 = null;
                 break;
+            case R.id.common_food:
+                hot_food.setTextColor(getResources().getColor(R.color.nav_text_default));
+                commnon_food.setTextColor(getResources().getColor(R.color.black));
+
+                break;
             case R.id.hot_food:
+                hot_food.setTextColor(getResources().getColor(R.color.black));
+                commnon_food.setTextColor(getResources().getColor(R.color.nav_text_default));
                 View view = getLayoutInflater().inflate(R.layout.popwindow_searchfoodbyhot, null);
 
                 hot_tv = view.findViewById(R.id.byhot_tv);
@@ -334,20 +327,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                 changeConfirmTv();
                 break;
             case R.id.desc_tv:
-                Toast.makeText(getActivity(), "desc", Toast.LENGTH_LONG).show();
                 desc_tv.setBackground(getResources().getDrawable(R.drawable.btn_green));
                 asc_tv.setBackground(getResources().getDrawable(R.drawable.btn_grey));
                 condition2 = "desc";
                 changeConfirmTv();
                 break;
             case R.id.asc_tv:
-                Toast.makeText(getActivity(), "asc", Toast.LENGTH_LONG).show();
                 desc_tv.setBackground(getResources().getDrawable(R.drawable.btn_grey));
                 asc_tv.setBackground(getResources().getDrawable(R.drawable.btn_green));
                 condition2 = "asc";
                 changeConfirmTv();
                 break;
             case R.id.cancel_searchfoodpop:
+                hot_food.setTextColor(getResources().getColor(R.color.nav_text_default));
+                commnon_food.setTextColor(getResources().getColor(R.color.black));
                 mPop.dismiss();
                 break;
             case R.id.confirm_searchfoodpop:
