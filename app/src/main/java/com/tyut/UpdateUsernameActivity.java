@@ -63,7 +63,7 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
                 UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
 
                 String username = username_et.getText().toString();
-                OkHttpUtils.get("http://192.168.1.10:8080/portal/user/update.do?id="+userVO.getId()+"&username="+username,
+                OkHttpUtils.get("http://192.168.1.4:8080/portal/user/update.do?id="+userVO.getId()+"&username="+username,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

@@ -82,7 +82,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                 if(phoneNum.length() != 11){
                     Toast.makeText(UpdatePhoneActivity.this, "手机格式不正确", Toast.LENGTH_LONG).show();
                 }else{
-                    OkHttpUtils.get("http://192.168.1.10:8080/portal/user/isbound.do?phone="+phoneNum,
+                    OkHttpUtils.get("http://192.168.1.4:8080/portal/user/isbound.do?phone="+phoneNum,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -96,7 +96,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                                         Looper.loop();
 
                                     }else{
-                                        OkHttpUtils.get("http://192.168.1.10:8080/portal/user/sendvalcode.do?phone="+phoneNum+"&valcode="+generateValcode,
+                                        OkHttpUtils.get("http://192.168.1.4:8080/portal/user/sendvalcode.do?phone="+phoneNum+"&valcode="+generateValcode,
                                                 new OkHttpCallback(){
                                                     @Override
                                                     public void onFinish(String status, String msg) {
@@ -128,7 +128,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                 if(inputValcode.equals(generateValcode)){
                     UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
                     //验证码正确，绑定手机号
-                    OkHttpUtils.get("http://192.168.1.10:8080/portal/user/update.do?id="+userVO.getId()+"&phone="+phoneNum,
+                    OkHttpUtils.get("http://192.168.1.4:8080/portal/user/update.do?id="+userVO.getId()+"&phone="+phoneNum,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {

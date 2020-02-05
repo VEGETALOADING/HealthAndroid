@@ -19,5 +19,11 @@
         <item name="android:windowBackground">@color/green_light</item>
     </style>
 
+    <!--自定义滑动日历弹框主题-->
+    <style name="CalendarDialog" parent="@android:style/Theme.Holo.Dialog">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>
 

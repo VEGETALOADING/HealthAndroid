@@ -23,7 +23,6 @@
             android:id="@+id/st_dl_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="15dp"
             android:layout_gravity="center"
             android:src="@mipmap/icon_close"></ImageView>
     </LinearLayout>
@@ -121,8 +120,8 @@
             android:textSize="30sp"
             android:textColor="@color/green_light"
             android:textStyle="bold"
-            android:gravity="bottom"
-            android:layout_marginLeft="175dp"></TextView>
+            android:gravity="center"
+            android:layout_marginLeft="165dp"></TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="20dp"
@@ -143,15 +142,16 @@
 
         <com.tyut.view.MyHorizontalScrollView
             android:id="@+id/hor_scrollview_dl"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:scrollbars="none" >
 
-            <com.tyut.view.SportTimeRulerView
+            <com.tyut.view.RulerView
                 android:id="@+id/ruler_view_dl"
                 android:background="#ffffff"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="-16dp"
                 android:layout_gravity="top"/>
         </com.tyut.view.MyHorizontalScrollView>
 

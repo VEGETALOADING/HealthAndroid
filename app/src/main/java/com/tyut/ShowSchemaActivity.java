@@ -155,7 +155,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
 
 
         initPieChart(myPieChart, carb, fat, protein);
-        OkHttpUtils.get("http://192.168.1.10:8080/portal/healthtest/select.do?bmi="+bmi,
+        OkHttpUtils.get("http://192.168.1.4:8080/portal/healthtest/select.do?bmi="+bmi,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

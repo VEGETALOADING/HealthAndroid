@@ -273,7 +273,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
 
                 UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
 
-                OkHttpUtils.get("http://192.168.1.10:8080/portal/user/update.do?gender="+gender+"&height="+height+"&weight="+weight+"&id="+userVO.getId()+"&goal="+goal,
+                OkHttpUtils.get("http://192.168.1.4:8080/portal/user/update.do?gender="+gender+"&height="+height+"&weight="+weight+"&id="+userVO.getId()+"&goal="+goal,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

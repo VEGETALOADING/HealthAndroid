@@ -3,10 +3,13 @@ package com.tyut.utils;
 import com.tyut.MainActivity;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class StringUtil {
     public static String divison(int a,int b) {
@@ -44,16 +47,49 @@ public class StringUtil {
         return java.sql.Date.valueOf(sDate);  //转型成java.sql.Date类型
     }
 
+    public static String convertDatetime(Date datetime, String pattern) {
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(datetime);
+    }
+
     public static float getBMI(String weight, String height){
         String h = StringUtil.divison(Integer.parseInt(height), 100);
         return StringUtil.keepDecimal((Float.parseFloat(weight) /  Float.parseFloat(h) / Float.parseFloat(h)), 1);
     }
 
+
+    public static List<String> getRecengtDateList(){
+        List<String> list = new ArrayList<String>();
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        Date beginDate = new Date();
+
+        for(int i = 5;i>0;i--) {
+            calendar.setTime(beginDate);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - i);
+            String strDay =  formatDate.format(calendar.getTime());
+            list.add(strDay);
+        }
+        list.add("今天");
+
+        calendar.setTime(beginDate);
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+        String strDay =  formatDate.format(calendar.getTime());
+        list.add(strDay);
+        return  list;
+    }
+
     public static void main(String[] args) {
 
-
-        System.out.println(positive(50.25f));
+        System.out.println(getRecengtDateList());
     }
+
+
+
+
+
+
 
 
 }

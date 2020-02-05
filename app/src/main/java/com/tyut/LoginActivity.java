@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = password_et.getText().toString();
 
                 //请求接口 -> okHttp在子线程中执行
-                OkHttpUtils.get("http://192.168.1.10:8080/portal/user/login.do?username="+username+"&password="+password,
+                OkHttpUtils.get("http://192.168.1.4:8080/portal/user/login.do?username="+username+"&password="+password,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

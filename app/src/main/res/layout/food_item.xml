@@ -37,7 +37,7 @@
             android:text="千卡/"></TextView>
         <TextView
             android:id="@+id/foodquantity_tv"
-            android:layout_width="18dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/tv1"
             android:layout_below="@id/foodname_tv"
@@ -46,7 +46,7 @@
         </TextView>
         <TextView
             android:id="@+id/foodunit_tv"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/foodquantity_tv"
             android:layout_below="@id/foodname_tv"

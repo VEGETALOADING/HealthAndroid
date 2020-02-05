@@ -2,9 +2,7 @@ package com.tyut.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Point;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
@@ -17,7 +15,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.tyut.R;
 import com.tyut.view.MyHorizontalScrollView;
-import com.tyut.view.SportTimeRulerView;
+import com.tyut.view.RulerView;
 
 
 public class SportTimeDialog extends Dialog implements View.OnClickListener {
@@ -32,7 +30,7 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
     private TextView confirm_tv;
     private TextView time_tv;
     private TextView calories_infact;
-    private SportTimeRulerView sportTimeRulerView;
+    private RulerView rulerView;
     private MyHorizontalScrollView horizontalScrollView;
 
     private String sportUnit;
@@ -110,7 +108,7 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
         WindowManager.LayoutParams p = getWindow().getAttributes();
         Point size = new Point();
         d.getSize(size);
-        p.width = (int) (size.x *1.08);
+        p.width = (int) (size.x * 1.0);
         getWindow().setAttributes(p);
 
         close_iv = findViewById(R.id.st_dl_close);
@@ -121,17 +119,17 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
         sport_calories = findViewById(R.id.sport_cal_dl);
         confirm_tv = findViewById(R.id.confirm_tv);
         horizontalScrollView = findViewById(R.id.hor_scrollview_dl);
-        sportTimeRulerView = findViewById(R.id.ruler_view_dl);
+        rulerView = findViewById(R.id.ruler_view_dl);
         time_tv = findViewById(R.id.time_infact_dl);
         calories_infact = findViewById(R.id.calories_infact_tv);
 
-        initRuler(sportTimeRulerView, horizontalScrollView);
+        initRuler(rulerView, horizontalScrollView);
 
         sport_name.setText(sportName+"");
         sport_unit.setText(sportUnit + "");
         sport_quantity.setText(sportQuantity + "");
         sport_calories.setText(sportCalories + "");
-        Glide.with(getContext()).load("http://192.168.1.10:8080/sportpic/" + sportPic).into(sport_pic);
+        Glide.with(getContext()).load("http://192.168.1.4:8080/sportpic/" + sportPic).into(sport_pic);
 
 
         confirm_tv.setOnClickListener(this);
@@ -165,13 +163,13 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
         void onConfirm(SportTimeDialog dialog);
     }
 
-    private void initRuler(final SportTimeRulerView sportTimeRulerView, MyHorizontalScrollView horizontalScrollView){
+    private void initRuler(final RulerView rulerView, MyHorizontalScrollView horizontalScrollView){
 
         horizontalScrollView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);// 去掉超出滑动后出现的阴影效果
 
         // 设置水平滑动
-        sportTimeRulerView.setHorizontalScrollView(horizontalScrollView);
-        sportTimeRulerView.setDefaultScaleValue(30);
+        rulerView.setHorizontalScrollView(horizontalScrollView);
+        rulerView.setDefaultScaleValue(30);
 
         // 当滑动尺子的时候
         horizontalScrollView.setOnScrollListener(new MyHorizontalScrollView.OnScrollListener() {
@@ -179,12 +177,12 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onScrollChanged(int l, int t, int oldl, int oldt) {
 
-                sportTimeRulerView.setScrollerChanaged(l, t, oldl, oldt);
+                rulerView.setScrollerChanaged(l, t, oldl, oldt);
             }
         });
 
 
-        sportTimeRulerView.onChangedListener(new SportTimeRulerView.onChangedListener() {
+        rulerView.onChangedListener(new RulerView.onChangedListener() {
             @Override
             public void onSlide(float number) {
 

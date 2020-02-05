@@ -113,10 +113,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
 
             user_name.setText(userVO.getUsername());
-            Glide.with(this).load("http://192.168.1.10:8080/userpic/" + userVO.getUserpic()).into(user_photo);
+            Glide.with(this).load("http://192.168.1.4:8080/userpic/" + userVO.getUserpic()).into(user_photo);
 
 
-            OkHttpUtils.get("http://192.168.1.10:8080/portal/follow/findfollowercount.do?id=" + userVO.getId(),
+            OkHttpUtils.get("http://192.168.1.4:8080/portal/follow/findfollowercount.do?id=" + userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -133,7 +133,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         }
                     }
             );
-            OkHttpUtils.get("http://192.168.1.10:8080/portal/follow/findfollowingcount.do?followerid=" + userVO.getId(),
+            OkHttpUtils.get("http://192.168.1.4:8080/portal/follow/findfollowingcount.do?followerid=" + userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -150,7 +150,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         }
                     }
             );
-            OkHttpUtils.get("http://192.168.1.10:8080/portal/activity/findactivitycount.do?userid=" + userVO.getId(),
+            OkHttpUtils.get("http://192.168.1.4:8080/portal/activity/findactivitycount.do?userid=" + userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -177,7 +177,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 //退出登录
 
                 System.out.println("exit");
-                OkHttpUtils.get("http://192.168.1.10:8080/portal/user/logout.do",
+                OkHttpUtils.get("http://192.168.1.4:8080/portal/user/logout.do",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

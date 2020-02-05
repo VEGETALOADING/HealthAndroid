@@ -31,9 +31,13 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
+import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
+import com.tyut.widget.RecordFoodDialog;
+import com.tyut.widget.SportTimeDialog;
 
 
+import java.util.Date;
 import java.util.List;
 
 public class FoodDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -59,6 +63,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
     Button qianjiao_btn;
     LinearLayout return_ll;
     LinearLayout favorite_ll;
+    LinearLayout record_ll;
 
     Intent intent;
     Integer foodId;
@@ -123,11 +128,13 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         favorite_iv = findViewById(R.id.favoritefood_detail_img);
         favorite_tv = findViewById(R.id.favoritefood_detail_tv);
         favorite_ll = findViewById(R.id.favoritefood_detail_ll);
+        record_ll = findViewById(R.id.record_fooddetail_ll);
 
         qianka_btn.setOnClickListener(this);
         qianjiao_btn.setOnClickListener(this);
         return_ll.setOnClickListener(this);
         favorite_ll.setOnClickListener(this);
+        record_ll.setOnClickListener(this);
     }
 
     @Override
@@ -151,7 +158,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         unit1_tv.setText(unit);
         unit2_tv.setText(unit);
         calories_tv.setText(calories+"");
-        Glide.with(this).load("http://192.168.1.10:8080/foodpic/" + pic).into(pic_iv);
+        Glide.with(this).load("http://192.168.1.4:8080/foodpic/" + pic).into(pic_iv);
         carbs_tv.setText(carbs);
         protein_tv.setText(protein);
         fat_tv.setText(fat);
@@ -165,7 +172,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         fat_bar.setPercentData(fat_Percent, new DecelerateInterpolator());
         carb_bar.setPercentData(carbs_Percent, new DecelerateInterpolator());
 
-        OkHttpUtils.get("http://192.168.1.10:8080/portal/favorite/find.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
+        OkHttpUtils.get("http://192.168.1.4:8080/portal/favorite/find.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -216,7 +223,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                 hotunit_tv.setText("千焦");
                 break;
             case R.id.favoritefood_detail_ll:
-                OkHttpUtils.get("http://192.168.1.10:8080/portal/favorite/addorcancel.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
+                OkHttpUtils.get("http://192.168.1.4:8080/portal/favorite/addorcancel.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -252,6 +259,27 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                             }
                         }
                 );
+            case R.id.record_fooddetail_ll:
+                RecordFoodDialog dialog = new RecordFoodDialog(FoodDetailActivity.this);
+                dialog.setFoodName(name)
+                        .setFoodUnit(unit)
+                        .setFoodQuantity(quantity+"")
+                        .setFoodPic(pic)
+                        .setFoodCal(calories+"")
+                        .setCancel(new RecordFoodDialog.IOnCancelListener() {
+                            @Override
+                            public void onCancel(RecordFoodDialog dialog) {
+
+                            }
+                        })
+                        .setConfirm(new RecordFoodDialog.IOnConfirmListener() {
+                            @Override
+                            public void onConfirm(RecordFoodDialog dialog) {
+
+
+                            }
+                        }).show();
+                break;
 
 
         }

@@ -18,7 +18,7 @@ import com.tyut.utils.RulerUtill;
 
 import java.text.DecimalFormat;
 
-public class SportTimeRulerView extends View {
+public class RulerView extends View {
 
     private Paint paint;
 
@@ -79,7 +79,7 @@ public class SportTimeRulerView extends View {
 
     boolean isDraw = true;
 
-    public SportTimeRulerView(Context context) {
+    public RulerView(Context context) {
         super(context);
         this.context = context;
         init();
@@ -113,7 +113,7 @@ public class SportTimeRulerView extends View {
         });
     }
 
-    public SportTimeRulerView(Context context, AttributeSet attrs) {
+    public RulerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
 
