@@ -58,13 +58,18 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
     MyHorizontalScrollView horizontalScrollView;
 
     Boolean showChooseDate = false;
-    String date;
-    String time;
+
+    //不给默认值需要滚动
+    String time = "早餐";
+    String date = "今天";
+    Integer dateIndex=5;//默认今天
+    //定义滚动选择器的数据项（年月日的）
+    List<String> dateList = StringUtil.getRecengtDateList();
 
 
 
 
-    public String getTime() {
+    public String getQuantity() {
         return quantity_infact2.getText()+"";
     }
 
@@ -83,6 +88,12 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
     public RecordFoodDialog setFoodName(String foodName) {
         this.foodName = foodName;
         return this;
+    }
+    public Integer getDateIndex(){
+        return dateIndex;
+    }
+    public String getTime(){
+        return time;
     }
 
 
@@ -179,6 +190,8 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
         Glide.with(getContext()).load("http://192.168.1.4:8080/foodpic/" + foodPic).into(food_pic);
 
 
+        date_tv.setText(StringUtil.getCurrentDate());
+
         confirm_tv.setOnClickListener(this);
         close_iv.setOnClickListener(this);
         chooseDate_ll.setOnClickListener(this);
@@ -269,9 +282,9 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
 
         chooseDate_spv = chooseDate_hide.findViewById(R.id.choosedate_spv);
         chooseTime_spv = chooseDate_hide.findViewById(R.id.choosetime_spv);
+        confirm_dateandtime_tv = chooseDate_hide.findViewById(R.id.confirm_dateandtime_tv);
 
-        //定义滚动选择器的数据项（年月日的）
-        List<String> dateList = StringUtil.getRecengtDateList();
+
         List<String> timeList = new ArrayList<>();
         timeList.add("早餐");
         timeList.add("午餐");
@@ -286,12 +299,27 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
             @Override
             public void onSelect(String data) {
                 date = data;
+                List<String> originalList = StringUtil.getRecengtDateList();
+                dateIndex = originalList.indexOf(data);
+                int x  = dateIndex;
             }
         });
         chooseTime_spv.setOnSelectListener(new ScrollPickView.onSelectListener() {
             @Override
             public void onSelect(String data) {
                 time = data;
+            }
+        });
+        confirm_dateandtime_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                date_tv.setText(date);
+                time_tv.setText(time);
+                main_ll.setVisibility(View.VISIBLE);
+                chooseDate_hide.setVisibility(View.GONE);
+                chooseDate_iv.setImageResource(R.mipmap.icon_triangle_down);
+
             }
         });
 

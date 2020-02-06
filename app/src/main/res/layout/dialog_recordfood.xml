@@ -254,7 +254,8 @@
         <LinearLayout
             android:id="@+id/spv_ll"
             android:layout_margin="20dp"
-            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
             android:layout_height="250dp">
             <com.tyut.view.ScrollPickView
                 android:id="@+id/choosedate_spv"
@@ -280,7 +281,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
             android:background="@color/btn_unselected"
-            android:text="确认添加"
+            android:text="确认"
             android:textSize="30sp"
             android:gravity="center"
             android:textColor="@color/green_light"></TextView>

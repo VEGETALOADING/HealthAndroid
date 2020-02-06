@@ -118,7 +118,7 @@ public class ScrollPickView extends View {
         mViewHeight = getMeasuredHeight();
         mViewWidth = getMeasuredWidth();
         // 按照View的高度计算字体大小
-        mMaxTextSize = mViewHeight / 4.0f;
+        mMaxTextSize = mViewHeight / 8.0f;
         mMinTextSize = mMaxTextSize / 2f;
         isInit = true;
         invalidate();

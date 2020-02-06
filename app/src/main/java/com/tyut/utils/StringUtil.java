@@ -61,7 +61,7 @@ public class StringUtil {
     public static List<String> getRecengtDateList(){
         List<String> list = new ArrayList<String>();
 
-        SimpleDateFormat formatDate = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM月-dd日");
         Calendar calendar = Calendar.getInstance();
         Date beginDate = new Date();
 
@@ -78,6 +78,37 @@ public class StringUtil {
         String strDay =  formatDate.format(calendar.getTime());
         list.add(strDay);
         return  list;
+    }
+
+    public static List<String> getRecengtDateListWithYear(){
+        List<String> list = new ArrayList<String>();
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        Date beginDate = new Date();
+
+        for(int i = 5;i>-2;i--) {
+            calendar.setTime(beginDate);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - i);
+            String strDay =  formatDate.format(calendar.getTime());
+            list.add(strDay);
+        }
+        return  list;
+    }
+
+    //获取当前时间  xx月xx日
+    public static String getCurrentDate(){
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM月-dd日");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE));
+        return  formatDate.format(calendar.getTime());
+
+    }
+
+    public static String transferDate2Db(String date){
+        return date.substring(0, 2)+"-"+date.substring(3, 5);
     }
 
     public static void main(String[] args) {

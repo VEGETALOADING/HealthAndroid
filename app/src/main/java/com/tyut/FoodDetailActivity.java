@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.FoodListAdapter;
+import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
@@ -79,6 +80,8 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
     Integer userid;
     private static final int ADDFAVORITE = 0;
     private static final int CANCELFAVORITE = 1;
+
+    List<String> dateWithYearList = StringUtil.getRecengtDateListWithYear();
 
     private Handler mHandler = new Handler(){
         @Override
@@ -274,7 +277,27 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                         })
                         .setConfirm(new RecordFoodDialog.IOnConfirmListener() {
                             @Override
-                            public void onConfirm(RecordFoodDialog dialog) {
+                            public void onConfirm(final RecordFoodDialog dialog) {
+                                Integer dateIndex = dialog.getDateIndex();
+                                String quantity = dialog.getQuantity();
+                                Integer time = JudgeUtil.getDietTime(dialog.getTime());
+                                OkHttpUtils.get("http://192.168.1.4:8080/portal/myfood/add.do?userid="+userid+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex),
+                                        new OkHttpCallback(){
+                                            @Override
+                                            public void onFinish(String status, String msg) {
+                                                super.onFinish(status, msg);
+                                                //解析数据
+                                                Gson gson=new Gson();
+                                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                                Looper.prepare();
+                                                Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                                Looper.loop();
+                                                dialog.dismiss();
+
+
+                                            }
+                                        }
+                                );
 
 
                             }

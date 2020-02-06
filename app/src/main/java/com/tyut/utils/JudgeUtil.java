@@ -22,5 +22,16 @@ public class JudgeUtil {
         }
         return null;
     }
+    public static Integer getDietTime(String time){
+        switch (time){
+            case "早餐":
+                return 1;
+            case "午餐":
+                return 2;
+            case "晚餐":
+                return 3;
+        }
+        return null;
+    }
 
 }
