@@ -33,6 +33,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.FoodDetailActivity;
 import com.tyut.HomeActivity;
 import com.tyut.R;
+import com.tyut.ShowSchemaActivity;
 import com.tyut.SportListActivity;
 import com.tyut.adapter.FoodListAdapter;
 import com.tyut.adapter.SportListAdapter;
@@ -83,6 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     TextView not_found;
     ScrollView listScrollView;
     ScrollView defaultScrollView;
+    LinearLayout schema_ll;
 
 
     private static final int SEARCHFOOD_NULL = 0;
@@ -170,6 +172,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         not_found = view.findViewById(R.id.not_foundfood_tv);
         listScrollView = view.findViewById(R.id.scrollview_food);
         defaultScrollView = view.findViewById(R.id.default_scrollview);
+        schema_ll = view.findViewById(R.id.schema_ll);
 
 
         blank_ll = view.findViewById(R.id.blank_ll);
@@ -178,6 +181,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         cancel.setOnClickListener(this);
         commnon_food.setOnClickListener(this);
         hot_food.setOnClickListener(this);
+        schema_ll.setOnClickListener(this);
 
         search.setOnEditorActionListener(this);
         search.setOnTouchListener(new View.OnTouchListener() {
@@ -378,6 +382,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                     );
 
                 }
+            case R.id.schema_ll:
+                Intent intent = new Intent(getActivity(), ShowSchemaActivity.class);
+                getActivity().startActivity(intent);
 
 
 

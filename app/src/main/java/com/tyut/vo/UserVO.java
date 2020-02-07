@@ -99,6 +99,16 @@ public class UserVO {
 
     private Integer goal;
 
+    private String initialweight;
+
+    public String getInitialweight() {
+        return initialweight;
+    }
+
+    public void setInitialweight(String initialweight) {
+        this.initialweight = initialweight;
+    }
+
     public Integer getGoal() {
         return goal;
     }

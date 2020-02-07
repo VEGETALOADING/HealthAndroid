@@ -380,7 +380,7 @@
         android:id="@+id/update_btn"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
         android:background="#E4FFDD"
         android:text="修改健康资料"></Button>
