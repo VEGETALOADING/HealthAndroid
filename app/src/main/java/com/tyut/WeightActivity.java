@@ -3,22 +3,33 @@ package com.tyut;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebHistoryItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tyut.adapter.FollowingListAdapter;
 import com.tyut.fragment.ActivityFragment;
 import com.tyut.fragment.FriendFragment;
 import com.tyut.fragment.HomeFragment;
@@ -26,6 +37,16 @@ import com.tyut.fragment.MyFragment;
 import com.tyut.fragment.WeightCalendarFragment;
 import com.tyut.fragment.WeightCurveFragment;
 import com.tyut.fragment.WeightProgressFragment;
+import com.tyut.utils.OkHttpCallback;
+import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.vo.FollowerVO;
+import com.tyut.vo.ServerResponse;
+import com.tyut.vo.UserVO;
+import com.tyut.vo.Weight;
+
+import java.util.List;
 
 public class WeightActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,10 +64,10 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
     ImageView img_calendar;
     TextView tv_calendar;
 
-
     private static final String PROGRESSFRAGMENT_TAG="PROGRESS";
     private static final String CALENDARFRAGMENT_TAG="CALENDAR";
     private static final String CURVEFRAGMENT_TAG="CURVE";
+    private static final String HOMEFRAGMENT_TAG="HOME";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +90,10 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
         return_ll = findViewById(R.id.return_h);
 
 
+
+
+
+
         progress_ll.setOnClickListener(this);
         calendar_ll.setOnClickListener(this);
         curve_ll.setOnClickListener(this);
@@ -87,24 +112,12 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
 
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1){
-            Log.d("fresh", "ok");
-            attachFragment(MYFRAGMENT_TAG);
-            img_home.setImageResource(R.mipmap.home_unselected);
-            tv_home.setTextColor(Color.rgb(94,94,94));
-            img_friend.setImageResource(R.mipmap.friend_unselected);
-            tv_friend.setTextColor(Color.rgb(94,94,94));
-            img_activity.setImageResource(R.mipmap.activity_unselected);
-            tv_activity.setTextColor(Color.rgb(94, 94, 94));
-            img_my.setImageResource(R.mipmap.my_selected);
-            tv_my.setTextColor(Color.rgb(16,222,57));
-        }
-    }*/
+    }
 
     @Override
     public void onClick(View v) {
@@ -139,7 +152,9 @@ public class WeightActivity extends AppCompatActivity implements View.OnClickLis
                 tv_curve.setTextColor(Color.rgb(16,222,57));
                 break;
             case R.id.return_h:
-                finish();
+                Intent intent = new Intent(WeightActivity.this, HomeActivity.class);
+                intent.putExtra("src", HOMEFRAGMENT_TAG);
+                WeightActivity.this.startActivity(intent);
                 break;
         }
 

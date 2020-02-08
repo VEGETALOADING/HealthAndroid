@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/recordweight_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:text="今天"
+            android:layout_marginLeft="170dp"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/black"></TextView>
+
+        <ImageView
+            android:id="@+id/weight_dl_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="130dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_close"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/main_ll"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="290dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/weight_recordweight_dl"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="200"
+                android:textSize="30sp"
+                android:textColor="@color/green_light"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginLeft="163dp"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="公斤"
+                android:textSize="15sp"
+                android:textColor="@color/green_light"
+                android:textStyle="bold"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"></TextView>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="0dp"
+            android:background="#fff"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+
+            <com.tyut.view.MyHorizontalScrollView
+                android:id="@+id/recordweight_sv_dl"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:scrollbars="none" >
+
+                <com.tyut.view.WeightRulerView
+                    android:id="@+id/recordweight_rv_dl"
+                    android:background="#ffffff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-16dp"
+                    android:layout_gravity="top"/>
+            </com.tyut.view.MyHorizontalScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/black"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true" />
+            <View
+                android:layout_width="30px"
+                android:layout_height="30px"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/shape_triangle" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/confirm_recordweight_tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="70dp"
+            android:background="@color/green_light"
+            android:text="确认添加"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="#ffffff"></TextView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/choosedate_hide"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="385dp">
+        <LinearLayout
+            android:id="@+id/spv_ll"
+            android:layout_margin="20dp"
+            android:layout_gravity="center"
+            android:layout_width="300dp"
+            android:layout_height="250dp">
+            <com.tyut.view.ScrollPickView
+                android:id="@+id/choosedate_spv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="250dp"
+                ></com.tyut.view.ScrollPickView>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="250dp"
+                android:background="@color/nav_text_default"></View>
+            <com.tyut.view.ScrollPickView
+                android:id="@+id/choosetime_spv"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="250dp"
+                ></com.tyut.view.ScrollPickView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/confirm_dateandtime_tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/btn_unselected"
+            android:text="确认"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/green_light"></TextView>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -35,6 +35,7 @@ import com.tyut.HomeActivity;
 import com.tyut.R;
 import com.tyut.ShowSchemaActivity;
 import com.tyut.SportListActivity;
+import com.tyut.WeightActivity;
 import com.tyut.adapter.FoodListAdapter;
 import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
@@ -85,6 +86,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     ScrollView listScrollView;
     ScrollView defaultScrollView;
     LinearLayout schema_ll;
+    LinearLayout weight_ll;
 
 
     private static final int SEARCHFOOD_NULL = 0;
@@ -176,12 +178,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
 
 
         blank_ll = view.findViewById(R.id.blank_ll);
+        weight_ll = view.findViewById(R.id.weight_ll);
 
         message.setOnClickListener(this);
         cancel.setOnClickListener(this);
         commnon_food.setOnClickListener(this);
         hot_food.setOnClickListener(this);
         schema_ll.setOnClickListener(this);
+        weight_ll.setOnClickListener(this);
 
         search.setOnEditorActionListener(this);
         search.setOnTouchListener(new View.OnTouchListener() {
@@ -385,6 +389,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             case R.id.schema_ll:
                 Intent intent = new Intent(getActivity(), ShowSchemaActivity.class);
                 getActivity().startActivity(intent);
+                break;
+            case R.id.weight_ll:
+
+                Intent intent1 = new Intent(getActivity(), WeightActivity.class);
+                getActivity().startActivity(intent1);
+                break;
 
 
 

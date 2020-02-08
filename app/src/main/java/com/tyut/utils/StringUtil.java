@@ -97,9 +97,10 @@ public class StringUtil {
     }
 
     //获取当前时间  xx月xx日
-    public static String getCurrentDate(){
+    public static String getCurrentDate(String pattern){
 
-        SimpleDateFormat formatDate = new SimpleDateFormat("MM月-dd日");
+        //"MM月-dd日"
+        SimpleDateFormat formatDate = new SimpleDateFormat(pattern);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.set(Calendar.DATE, calendar.get(Calendar.DATE));

@@ -1,94 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-  <RelativeLayout
-      android:id="@+id/one_rl"
-      android:layout_width="match_parent"
-      android:layout_height="280dp">
+    <RelativeLayout
+        android:id="@+id/one_rl"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:gravity="center">
 
+      <View
+          android:id="@+id/circle_view"
+          android:layout_width="150dp"
+          android:layout_height="150dp"
+          android:layout_marginTop="40dp"
+          android:layout_centerHorizontal="true"
+          android:foregroundGravity="center"
+          android:background="@drawable/circle"></View>
+      <TextView
+          android:id="@+id/compare_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="80dp"
+          android:layout_marginLeft="175dp"
+          android:text="比原来"
+          android:textSize="15sp"></TextView>
+      <TextView
+          android:id="@+id/moreorless_tv"
+          android:layout_toRightOf="@+id/compare_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="80dp"
+          android:text="重"
+          android:textSize="15sp"></TextView>
+      <TextView
+          android:id="@+id/morequantity_tv"
+          android:layout_below="@+id/compare_tv"
+          android:layout_width="100dp"
+          android:layout_centerHorizontal="true"
+          android:layout_height="wrap_content"
+          android:text="10.2"
+          android:textSize="25sp"
+          android:textStyle="bold"
+          android:gravity="center"
+          android:textColor="@color/black"></TextView>
+      <TextView
+          android:id="@+id/status_inweight"
+          android:layout_below="@id/morequantity_tv"
+          android:layout_width="50dp"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:text="保持"
+          android:gravity="center"
+          android:textSize="15sp"></TextView>
+
+      <Button
+          android:id="@+id/kg_btn"
+          android:layout_width="60dp"
+          android:layout_height="30dp"
+          android:layout_marginTop="20dp"
+          android:layout_marginLeft="280dp"
+          android:text="公斤"
+          android:background="@drawable/btn_green"></Button>
+      <Button
+          android:id="@+id/jin_btn"
+          android:layout_toRightOf="@id/kg_btn"
+          android:layout_width="60dp"
+          android:layout_height="30dp"
+          android:layout_marginTop="20dp"
+          android:text="斤"
+          android:background="@drawable/btn_grey"></Button>
+      <Button
+          android:id="@+id/record_weight"
+          android:layout_width="150dp"
+          android:layout_height="40dp"
+          android:text="记录体重"
+          android:layout_below="@id/circle_view"
+          android:gravity="center"
+          android:layout_marginTop="20dp"
+          android:layout_centerHorizontal="true"
+          android:textSize="15sp"
+          android:background="@drawable/btn_green">
+      </Button>
+
+    </RelativeLayout>
     <View
-        android:id="@+id/circle_view"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="125dp"
-        android:background="@drawable/circle"></View>
-    <TextView
-        android:id="@+id/compare_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:layout_marginLeft="171dp"
-        android:text="比原来"
-        android:textSize="15sp"></TextView>
-    <TextView
-        android:id="@+id/moreorless_tv"
-        android:layout_toRightOf="@+id/compare_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:text="重"
-        android:textSize="15sp"></TextView>
-    <TextView
-        android:id="@+id/morequantity_tv"
-        android:layout_below="@+id/compare_tv"
-        android:layout_width="100dp"
-        android:layout_marginLeft="150dp"
-        android:layout_height="wrap_content"
-        android:text="10.2"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/black"></TextView>
-    <TextView
-        android:id="@+id/status_inweight"
-        android:layout_below="@id/morequantity_tv"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="177dp"
-        android:text="保持"
-        android:gravity="center"
-        android:textSize="15sp"></TextView>
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_grey"></View>
 
+    <LinearLayout
+        android:id="@+id/initialweight_ll"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <RelativeLayout
+          android:layout_width="200dp"
+          android:layout_height="60dp"
+          android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/initialweight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:gravity="bottom"
+            android:textColor="@color/black"
+            android:text="default"
+            android:textSize="20sp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:id="@+id/initialweightunit_tv"
+            android:layout_toRightOf="@id/initialweight_tv"
+            android:layout_marginLeft="3dp"
+            android:text="公斤"
+            android:gravity="bottom"
+            android:textColor="@color/black">
+
+        </TextView>
+        <TextView
+            android:id="@+id/weight_category_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/initialweight_tv"
+            android:text="初始体重"
+            android:textColor="@color/black"
+            android:layout_marginLeft="25dp"></TextView>
+
+      </RelativeLayout>
+      <TextView
+          android:id="@+id/initialweight_time_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="2020-01-23"
+          android:layout_gravity="center_vertical"
+          android:textSize="15sp"
+          android:gravity="center"
+          android:layout_marginLeft="120dp"></TextView>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/latestweight_ll"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <RelativeLayout
+          android:layout_width="200dp"
+          android:layout_height="60dp"
+          android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/latestweight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:gravity="bottom"
+            android:textColor="@color/black"
+            android:text="default"
+            android:textSize="20sp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:id="@+id/latestweightunit_tv"
+            android:layout_toRightOf="@id/latestweight_tv"
+            android:layout_marginLeft="3dp"
+            android:text="公斤"
+            android:gravity="bottom"
+            android:textColor="@color/black">
+
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/latestweight_tv"
+            android:text="最新体重"
+            android:textColor="@color/black"
+            android:layout_marginLeft="25dp"></TextView>
+
+      </RelativeLayout>
+      <TextView
+          android:id="@+id/latestweight_time_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="2020-01-23"
+          android:layout_gravity="center_vertical"
+          android:textSize="15sp"
+          android:gravity="center"
+          android:layout_marginLeft="120dp"></TextView>
+
+    </LinearLayout>
     <Button
-        android:id="@+id/jin_btn"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="280dp"
-        android:layout_marginTop="20dp"
-        android:text="斤"
-        android:background="@drawable/btn_green"></Button>
-    <Button
-        android:id="@+id/kg_btn"
-        android:layout_toRightOf="@id/jin_btn"
-        android:layout_width="60dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:text="公斤"
-        android:background="@drawable/btn_grey"></Button>
-    <Button
+        android:id="@+id/new_goal"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:text="记录体重"
+        android:text="设立新目标"
         android:layout_below="@id/circle_view"
         android:gravity="center"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="127dp"
+        android:layout_gravity="center"
         android:textSize="15sp"
         android:background="@drawable/btn_green">
     </Button>
-
-  </RelativeLayout>
-  <View
-      android:layout_width="match_parent"
-      android:layout_height="1dp"
-      android:background="@color/line_grey"></View>
 
 
 
 
 
 </LinearLayout>
+</ScrollView>

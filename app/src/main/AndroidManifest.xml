@@ -25,15 +25,15 @@
 
         </activity>
         <activity android:name=".LoginActivity">
-
-
-        </activity>
-        <activity android:name=".WeightActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".WeightActivity">
+
         </activity>
         <activity android:name=".UpdateUserInfoActivity" />
         <activity android:name=".UpdateUsernameActivity" />

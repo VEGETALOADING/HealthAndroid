@@ -29,6 +29,8 @@ import com.tyut.view.PickerScrollView;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
+import com.tyut.widget.RecordFoodDialog;
+import com.tyut.widget.UpdateGenderDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
     LinearLayout height_ll;
     LinearLayout weight_ll;
     LinearLayout goal_ll;
+    LinearLayout return_ll;
     TextView gender_tv;
     TextView birthday_tv;
     TextView height_tv;
@@ -68,17 +71,21 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
         height_tv = findViewById(R.id.height_tv);
         goal_tv = findViewById(R.id.goal_tv);
         save_btn = findViewById(R.id.save_btn);
+        return_ll = findViewById(R.id.return_i);
+
 
         gender_ll.setOnClickListener(this);
         goal_ll.setOnClickListener(this);
         height_ll.setOnClickListener(this);
         save_btn.setOnClickListener(this);
+        return_ll.setOnClickListener(this);
 
         goal_tv.addTextChangedListener(this);
         gender_tv.addTextChangedListener(this);
         height_tv.addTextChangedListener(this);
         weight_tv.addTextChangedListener(this);
         birthday_tv.addTextChangedListener(this);
+
 
 
     }
@@ -203,7 +210,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
             case R.id.gender_ll:
                 //模拟请求后台返回数据
                 //response = "{\"datas\":[{\"ID\":\"0\",\"categoryName\":\"女\"},{\"ID\":\"1\",\"categoryName\":\"男\"}]}";
-                GetConfigReq configReq = new GetConfigReq();
+              /*  GetConfigReq configReq = new GetConfigReq();
 
                 List<GetConfigReq.DatasBean> list = new ArrayList<>();
                 GetConfigReq.DatasBean bean1 = new GetConfigReq.DatasBean("0", "女");
@@ -220,7 +227,20 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                 getConfigReq = new Gson().fromJson(response, GetConfigReq.class);
                 //滚动选择数据集合
                 datasBeanList = getConfigReq.getDatas();
-                setAddressSelectorPopup(v, R.id.gender_ll, defaultIndex);
+                setAddressSelectorPopup(v, R.id.gender_ll, defaultIndex);*/
+                final UpdateGenderDialog dialog1 = new UpdateGenderDialog(UpdateUserDataActivity.this);
+                dialog1.setCancel(new UpdateGenderDialog.IOnCancelListener() {
+                    @Override
+                    public void onCancel(UpdateGenderDialog dialog) {
+
+                    }
+                })
+                        .setConfirm(new UpdateGenderDialog.IOnConfirmListener() {
+                            @Override
+                            public void onConfirm(UpdateGenderDialog dialog) {
+                                gender_tv.setText(dialog1.getGender());
+                            }
+                        }).show();
                 break;
             case R.id.goal_ll:
 
@@ -285,9 +305,10 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
 
 
                                     SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(UpdateUserDataActivity.this);
-                                    util.delete("user");
+                                    /*util.delete("user");
                                     util.delete("isLogin");
-                                    util.delete("userid");
+                                    util.delete("userid");*/
+                                    util.clear();
                                     util.putBoolean("isLogin", true);
                                     util.putString("user", gson.toJson(serverResponse.getData()));
                                     util.putInt("userid", serverResponse.getData().getId());
@@ -307,6 +328,9 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                             }
                         });
 
+                break;
+            case R.id.return_i:
+                finish();
                 break;
 
         }

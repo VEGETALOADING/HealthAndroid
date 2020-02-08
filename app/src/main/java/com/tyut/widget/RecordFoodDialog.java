@@ -190,7 +190,7 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
         Glide.with(getContext()).load("http://192.168.1.4:8080/foodpic/" + foodPic).into(food_pic);
 
 
-        date_tv.setText(StringUtil.getCurrentDate());
+        date_tv.setText(StringUtil.getCurrentDate("MM月-dd日"));
 
         confirm_tv.setOnClickListener(this);
         close_iv.setOnClickListener(this);

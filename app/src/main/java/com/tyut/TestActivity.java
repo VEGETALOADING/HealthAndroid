@@ -14,14 +14,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
+import com.tyut.view.RulerView;
 import com.tyut.view.ScrollPickView;
+import com.tyut.view.WeightRulerView;
 
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
-    ScrollPickView scrollPickView;
     MyHorizontalScrollView scrollView;
+    WeightRulerView rulerView;
     TextView show;
     String date;
     Button btn;
@@ -32,66 +34,48 @@ public class TestActivity extends AppCompatActivity {
 
         btn = findViewById(R.id.btn_test);
         show = findViewById(R.id.show_tv);
+        scrollView = findViewById(R.id.sv);
+        rulerView = findViewById(R.id.rv);
 
         //scrollPickView = findViewById(R.id.sv);;
+        initRuler(rulerView, scrollView);
 
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myCalendar();
-            }
-        });
 
 
     }
 
-    public void myCalendar(){
-        //初始化对话框             R.style.CalendarDialog 是自定义的弹框主题，在styles设置
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CalendarDialog);
-        //初始化自定义布局参数
-        LayoutInflater layoutInflater = getLayoutInflater();
-        //绑定布局
-        View customLayout = layoutInflater.inflate(R.layout.testpicked, (ViewGroup) findViewById(R.id.customDialog));
-        //为对话框设置视图
-        builder.setView(customLayout);
+    private void initRuler(final WeightRulerView rulerView, MyHorizontalScrollView horizontalScrollView){
 
-        scrollPickView = customLayout.findViewById(R.id.testView);
+        horizontalScrollView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);// 去掉超出滑动后出现的阴影效果
 
+        // 设置水平滑动
+        rulerView.setHorizontalScrollView(horizontalScrollView);
+        rulerView.setDefaultScaleValue(30);
 
-        //定义滚动选择器的数据项（年月日的）
-        List<String> dateList = StringUtil.getRecengtDateList();
+        // 当滑动尺子的时候
+        horizontalScrollView.setOnScrollListener(new MyHorizontalScrollView.OnScrollListener() {
 
-
-
-        //为滚动选择器设置数据
-        scrollPickView.setData(dateList);
-
-        //滚动选择事件
-        scrollPickView.setOnSelectListener(new ScrollPickView.onSelectListener() {
             @Override
-            public void onSelect(String data) {
+            public void onScrollChanged(int l, int t, int oldl, int oldt) {
 
-                date = data;
-
+                rulerView.setScrollerChanaged(l, t, oldl, oldt);
             }
         });
 
 
-        //对话框的确定按钮
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        rulerView.onChangedListener(new WeightRulerView.onChangedListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                show.setText(date);
+            public void onSlide(float number) {
+
+                show.setText(StringUtil.keepDecimal(number, 1)+"");
+
 
             }
         });
-        //对话框的取消按钮
-        builder.setNegativeButton("取消", null);
-        //显示对话框
-        builder.show();
-
 
     }
+
+
 
 }

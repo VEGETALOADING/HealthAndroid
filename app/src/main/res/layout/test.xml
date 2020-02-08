@@ -29,12 +29,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
         <com.tyut.view.MyHorizontalScrollView
-            android:id="@+id/sv1"
+            android:id="@+id/sv"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:scrollbars="none" >
 
-            <com.tyut.view.RulerView
+            <com.tyut.view.WeightRulerView
+                android:id="@+id/rv"
                 android:background="#ffffff"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
