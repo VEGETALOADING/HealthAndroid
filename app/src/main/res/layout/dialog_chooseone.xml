@@ -15,12 +15,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginLeft="110dp"
+            android:layout_marginLeft="130dp"
             android:gravity="center"
-            android:text="选择性别"
+            android:text="选择"
             android:textSize="20sp"></TextView>
         <ImageView
-            android:id="@+id/gender_dl_close"
+            android:id="@+id/chooseone_dl_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginLeft="80dp"
@@ -36,7 +36,7 @@
         android:layout_height="250dp">
 
         <com.tyut.view.ScrollPickView
-            android:id="@+id/choosegender_spv"
+            android:id="@+id/chooseone_spv"
             android:layout_width="150dp"
             android:layout_gravity="center"
             android:layout_height="250dp"
@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/confirmgender_tv"
+        android:id="@+id/chooseone_confirm_tv"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"

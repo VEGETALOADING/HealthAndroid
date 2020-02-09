@@ -5,6 +5,7 @@ import com.tyut.MainActivity;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,9 +113,21 @@ public class StringUtil {
         return date.substring(0, 2)+"-"+date.substring(3, 5);
     }
 
+    public static int getDaysOfMonth(String date) {
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(new SimpleDateFormat("yyyy年MM月").parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+
+
     public static void main(String[] args) {
 
-        System.out.println(getRecengtDateList());
+        System.out.println(02-1);
     }
 
 

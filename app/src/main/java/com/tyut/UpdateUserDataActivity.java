@@ -25,12 +25,15 @@ import com.tyut.utils.GetConfigReq;
 import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.StringUtil;
 import com.tyut.view.PickerScrollView;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
-import com.tyut.widget.RecordFoodDialog;
-import com.tyut.widget.UpdateGenderDialog;
+import com.tyut.widget.ChooseBirthdayDialog;
+import com.tyut.widget.ChooseHeightDialog;
+import com.tyut.widget.ChooseOneDialog;
+import com.tyut.widget.RecordWeightDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +80,9 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
         gender_ll.setOnClickListener(this);
         goal_ll.setOnClickListener(this);
         height_ll.setOnClickListener(this);
+        weight_ll.setOnClickListener(this);
         save_btn.setOnClickListener(this);
+        birthday_ll.setOnClickListener(this);
         return_ll.setOnClickListener(this);
 
         goal_tv.addTextChangedListener(this);
@@ -208,81 +213,97 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.gender_ll:
-                //模拟请求后台返回数据
-                //response = "{\"datas\":[{\"ID\":\"0\",\"categoryName\":\"女\"},{\"ID\":\"1\",\"categoryName\":\"男\"}]}";
-              /*  GetConfigReq configReq = new GetConfigReq();
-
-                List<GetConfigReq.DatasBean> list = new ArrayList<>();
-                GetConfigReq.DatasBean bean1 = new GetConfigReq.DatasBean("0", "女");
-                GetConfigReq.DatasBean bean2 = new GetConfigReq.DatasBean("1", "男");
-                list.add(bean1);
-                list.add(bean2);
-                for (GetConfigReq.DatasBean bean : list) {
-                    if(bean.getCategoryName().equals(gender_tv.getText().toString())){
-                        defaultIndex = bean.getID();
-                    }
-                }
-                configReq.setDatas(list);
-                response = new Gson().toJson(configReq);
-                getConfigReq = new Gson().fromJson(response, GetConfigReq.class);
-                //滚动选择数据集合
-                datasBeanList = getConfigReq.getDatas();
-                setAddressSelectorPopup(v, R.id.gender_ll, defaultIndex);*/
-                final UpdateGenderDialog dialog1 = new UpdateGenderDialog(UpdateUserDataActivity.this);
-                dialog1.setCancel(new UpdateGenderDialog.IOnCancelListener() {
+                List<String> genders = new ArrayList<>();
+                genders.add("男");
+                genders.add("女");
+                final ChooseOneDialog dialog1 = new ChooseOneDialog(UpdateUserDataActivity.this, genders);
+                dialog1.setCancel(new ChooseOneDialog.IOnCancelListener() {
                     @Override
-                    public void onCancel(UpdateGenderDialog dialog) {
+                    public void onCancel(ChooseOneDialog dialog) {
 
                     }
                 })
-                        .setConfirm(new UpdateGenderDialog.IOnConfirmListener() {
+                        .setConfirm(new ChooseOneDialog.IOnConfirmListener() {
                             @Override
-                            public void onConfirm(UpdateGenderDialog dialog) {
-                                gender_tv.setText(dialog1.getGender());
+                            public void onConfirm(ChooseOneDialog dialog) {
+                                gender_tv.setText(dialog1.getDataChosen());
                             }
                         }).show();
                 break;
             case R.id.goal_ll:
+                List<String> goals = new ArrayList<>();
+                goals.add("减脂");
+                goals.add("保持");
+                goals.add("增肌");
+                final ChooseOneDialog dialog2 = new ChooseOneDialog(UpdateUserDataActivity.this, goals);
+                dialog2.setCancel(new ChooseOneDialog.IOnCancelListener() {
+                    @Override
+                    public void onCancel(ChooseOneDialog dialog) {
 
-                GetConfigReq configReq1 = new GetConfigReq();
-
-                List<GetConfigReq.DatasBean> list1 = new ArrayList<>();
-                GetConfigReq.DatasBean bean3 = new GetConfigReq.DatasBean("0", "减脂");
-                GetConfigReq.DatasBean bean4 = new GetConfigReq.DatasBean("1", "保持");
-                GetConfigReq.DatasBean bean5 = new GetConfigReq.DatasBean("2", "增肌");
-                list1.add(bean3);
-                list1.add(bean4);
-                list1.add(bean5);
-                for (GetConfigReq.DatasBean bean : list1) {
-                    if(bean.getCategoryName().equals(goal_tv.getText().toString())){
-                        defaultIndex = bean.getID();
                     }
-                }
-                configReq1.setDatas(list1);
-                response = new Gson().toJson(configReq1);
-                getConfigReq = new Gson().fromJson(response, GetConfigReq.class);
-                //滚动选择数据集合
-                datasBeanList = getConfigReq.getDatas();
-                setAddressSelectorPopup(v, R.id.goal_ll, defaultIndex);
+                })
+                        .setConfirm(new ChooseOneDialog.IOnConfirmListener() {
+                            @Override
+                            public void onConfirm(ChooseOneDialog dialog) {
+                                goal_tv.setText(dialog2.getDataChosen());
+                            }
+                        }).show();
+
                 break;
             case R.id.height_ll:
-                GetConfigReq configReq2 = new GetConfigReq();
-                List<GetConfigReq.DatasBean> list2 = new ArrayList<>();
-                for (int i = 0; i <= 130 ; i++) {
-                    GetConfigReq.DatasBean bean = new GetConfigReq.DatasBean(""+ i, ""+(i+130)+"厘米");
-                    list2.add(bean);
-                }
-                for (GetConfigReq.DatasBean bean : list2) {
-                    if(bean.getCategoryName().equals(height_tv.getText().toString() + "厘米")){
-                        defaultIndex = bean.getID();
+                final ChooseHeightDialog dialog4 = new ChooseHeightDialog(UpdateUserDataActivity.this);
+
+                dialog4.setDefaultHeight(height_tv.getText().toString().substring(0, 3))
+                        .setCancel(new ChooseHeightDialog.IOnCancelListener() {
+                            @Override
+                            public void onCancel(ChooseHeightDialog dialog) {
+
+                            }
+                        })
+                        .setConfirm(new ChooseHeightDialog.IOnConfirmListener() {
+                            @Override
+                            public void onConfirm(ChooseHeightDialog dialog) {
+                                height_tv.setText(dialog4.getHeight());
+
+                            }
+                        }).show();
+                break;
+            case R.id.birthday_ll:
+
+                final ChooseBirthdayDialog dialog3 = new ChooseBirthdayDialog(UpdateUserDataActivity.this);
+
+                dialog3.setDefaultYear(birthday_tv.getText().toString().substring(0, 4))
+                        .setDefaultMonth(birthday_tv.getText().toString().substring(5, 7))
+                        .setDefaultDay(birthday_tv.getText().toString().substring(8, 10))
+                        .setCancel(new ChooseBirthdayDialog.IOnCancelListener() {
+                    @Override
+                    public void onCancel(ChooseBirthdayDialog dialog) {
+
                     }
-                }
-                configReq2.setDatas(list2);
-                response = new Gson().toJson(configReq2);
-                getConfigReq = new Gson().fromJson(response, GetConfigReq.class);
-                //滚动选择数据集合
-                datasBeanList = getConfigReq.getDatas();
-                setAddressSelectorPopup(v, R.id.height_ll, defaultIndex);
+                }).setConfirm(new ChooseBirthdayDialog.IOnConfirmListener() {
+                    @Override
+                    public void onConfirm(ChooseBirthdayDialog dialog) {
+                        birthday_tv.setText(dialog3.getYear().substring(0, 4)+"-"+dialog3.getMonth().substring(0, 2)+"-"+dialog3.getDay().substring(0, 2));
+                    }
+                }).show();
+                break;
+            case R.id.weight_ll:
+                final RecordWeightDialog dialog5 = new RecordWeightDialog(UpdateUserDataActivity.this);
+                dialog5.setDate("今天")
+                        .setDefaultWeight(Float.parseFloat(weight_tv.getText().toString().substring(0, 4)))
+                        .setCancel(new RecordWeightDialog.IOnCancelListener() {
+                            @Override
+                            public void onCancel(RecordWeightDialog dialog) {
+
+                            }
+                        })
+                        .setConfirm(new RecordWeightDialog.IOnConfirmListener() {
+                            @Override
+                            public void onConfirm(RecordWeightDialog dialog) {
+                                weight_tv.setText(dialog5.getWeight());
+                            }
+                        })
+                        .show();
                 break;
             case R.id.save_btn:
 

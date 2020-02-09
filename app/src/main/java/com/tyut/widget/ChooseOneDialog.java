@@ -8,64 +8,71 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
 import com.tyut.R;
-import com.tyut.utils.StringUtil;
-import com.tyut.view.MyHorizontalScrollView;
-import com.tyut.view.RulerView;
 import com.tyut.view.ScrollPickView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UpdateGenderDialog extends Dialog implements View.OnClickListener {
+public class ChooseOneDialog extends Dialog implements View.OnClickListener {
 
 
     ImageView close_iv;
     TextView confirm_tv;
-    ScrollPickView chooseGender;
-    String gender;
+    ScrollPickView chooseSpv;
+    String dataChosen;
+    List<String> dataList;
 
-    public String getGender() {
-        return gender;
+    public String getDataChosen() {
+        return dataChosen;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setDataChosen(String dataChosen) {
+        this.dataChosen = dataChosen;
     }
 
     private IOnCancelListener cancelListener;
     private IOnConfirmListener confirmListener;
 
-    public UpdateGenderDialog setCancel(IOnCancelListener cancelListener) {
+    public List<String> getDataList() {
+        return dataList;
+    }
+
+    public ChooseOneDialog setDataList(List<String> dataList) {
+        this.dataList = dataList;
+        return this;
+    }
+
+    public ChooseOneDialog setCancel(IOnCancelListener cancelListener) {
         this.cancelListener = cancelListener;
         return this;
     }
 
 
-    public UpdateGenderDialog setConfirm(IOnConfirmListener confirmListener) {
+    public ChooseOneDialog setConfirm(IOnConfirmListener confirmListener) {
         this.confirmListener = confirmListener;
         return this;
     }
 
-    public UpdateGenderDialog(@NonNull Context context) {
+    public ChooseOneDialog(@NonNull Context context, List<String> dataList) {
         super(context);
+        this.dataList = dataList;
     }
 
-    public UpdateGenderDialog(@NonNull Context context, int themeId) {
+    public ChooseOneDialog(@NonNull Context context, int themeId, List<String> dataList) {
         super(context, themeId);
+        this.dataList = dataList;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_gender);
+        setContentView(R.layout.dialog_chooseone);
 
 
         //设置宽度
@@ -78,9 +85,9 @@ public class UpdateGenderDialog extends Dialog implements View.OnClickListener {
         getWindow().setAttributes(p);
 
 
-        close_iv = findViewById(R.id.gender_dl_close);
-        chooseGender = findViewById(R.id.choosegender_spv);
-        confirm_tv = findViewById(R.id.confirmgender_tv);
+        close_iv = findViewById(R.id.chooseone_dl_close);
+        chooseSpv = findViewById(R.id.chooseone_spv);
+        confirm_tv = findViewById(R.id.chooseone_confirm_tv);
 
         confirm_tv.setOnClickListener(this);
         close_iv.setOnClickListener(this);
@@ -93,13 +100,13 @@ public class UpdateGenderDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.gender_dl_close:
+            case R.id.chooseone_dl_close:
                 if(cancelListener != null){
                     cancelListener.onCancel(this);
                 }
                 dismiss();
                 break;
-            case R.id.confirmgender_tv:
+            case R.id.chooseone_confirm_tv:
                 if(confirmListener != null){
                     confirmListener.onConfirm(this);
                 }
@@ -110,27 +117,23 @@ public class UpdateGenderDialog extends Dialog implements View.OnClickListener {
     }
 
     public interface IOnCancelListener{
-        void onCancel(UpdateGenderDialog dialog);
+        void onCancel(ChooseOneDialog dialog);
     }
     public interface IOnConfirmListener{
-        void onConfirm(UpdateGenderDialog dialog);
+        void onConfirm(ChooseOneDialog dialog);
     }
 
 
     private void initScrollPick(){
 
-        List<String> genders = new ArrayList<>();
-        genders.add("男");
-        genders.add("女");
-
-        chooseGender.setData(genders);
-        chooseGender.setSelected(0);
+        chooseSpv.setData(dataList);
+        chooseSpv.setSelected(0);
 
         //滚动选择事件
-        chooseGender.setOnSelectListener(new ScrollPickView.onSelectListener() {
+        chooseSpv.setOnSelectListener(new ScrollPickView.onSelectListener() {
             @Override
             public void onSelect(String data) {
-                gender = data;
+                dataChosen = data;
 
             }
         });

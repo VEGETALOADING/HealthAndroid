@@ -15,87 +15,60 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.tyut.R;
 import com.tyut.utils.StringUtil;
+import com.tyut.view.HeightRulerView;
 import com.tyut.view.MyHorizontalScrollView;
 import com.tyut.view.RulerView;
-import com.tyut.view.WeightRulerView;
-
-import org.w3c.dom.Text;
 
 
-public class RecordWeightDialog extends Dialog implements View.OnClickListener {
+public class ChooseHeightDialog extends Dialog implements View.OnClickListener {
 
     private ImageView close_iv;
     private TextView confirm_tv;
-    private TextView weight_tv;
-    private TextView date_tv;
-    private WeightRulerView rulerView;
+    private TextView height_tv;
+
+    private HeightRulerView rulerView;
     private MyHorizontalScrollView horizontalScrollView;
 
+    private String height;
+    private String defaultHeight;
 
 
-    private float defaultWeight;
-
-    public float getDefaultWeight() {
-        return defaultWeight;
-    }
-
-    public RecordWeightDialog setDefaultWeight(float defaultWeight) {
-        this.defaultWeight = defaultWeight;
+    public ChooseHeightDialog setDefaultHeight(String defaultHeight) {
+        this.defaultHeight = defaultHeight;
         return this;
     }
 
-    private String weight;
-    private String date;
-
-    public String getDate() {
-        return date;
+    public String getHeight() {
+        return height_tv.getText()+"";
     }
-
-    public RecordWeightDialog setDate(String date) {
-        this.date = date;
-        return this;
-    }
-
-    public String getWeight() {
-        return weight_tv.getText()+"";
-    }
-
-    public RecordWeightDialog setWeight(String weight) {
-        this.weight = weight;
-        return this;
-    }
-
 
 
     private IOnCancelListener cancelListener;
     private IOnConfirmListener confirmListener;
 
-
-
-
-    public RecordWeightDialog setCancel(IOnCancelListener cancelListener) {
+    public ChooseHeightDialog setCancel(IOnCancelListener cancelListener) {
         this.cancelListener = cancelListener;
         return this;
     }
 
 
-    public RecordWeightDialog setConfirm(IOnConfirmListener confirmListener) {
+    public ChooseHeightDialog setConfirm(IOnConfirmListener confirmListener) {
         this.confirmListener = confirmListener;
         return this;
     }
 
-    public RecordWeightDialog(@NonNull Context context) {
+    public ChooseHeightDialog(@NonNull Context context) {
         super(context);
     }
 
-    public RecordWeightDialog(@NonNull Context context, int themeId) {
+    public ChooseHeightDialog(@NonNull Context context, int themeId) {
         super(context, themeId);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_recordweight);
+        setContentView(R.layout.dialog_chooseheight);
 
         //设置宽度
         WindowManager m = getWindow().getWindowManager();
@@ -103,20 +76,19 @@ public class RecordWeightDialog extends Dialog implements View.OnClickListener {
         WindowManager.LayoutParams p = getWindow().getAttributes();
         Point size = new Point();
         d.getSize(size);
-        p.width = (int) (size.x * 1.0);
+        p.width = (int) (size.x * 0.8);
         getWindow().setAttributes(p);
 
-        close_iv = findViewById(R.id.weight_dl_close);
-        confirm_tv = findViewById(R.id.confirm_recordweight_tv);
-        date_tv = findViewById(R.id.recordweight_date_tv);
-        horizontalScrollView = findViewById(R.id.recordweight_sv_dl);
-        rulerView = findViewById(R.id.recordweight_rv_dl);
-        weight_tv = findViewById(R.id.weight_recordweight_dl);
+        close_iv = findViewById(R.id.chooseheight_dl_close);
+        confirm_tv = findViewById(R.id.chooseheight_confirm_tv);
+        height_tv = findViewById(R.id.ch_height_tv);
+        rulerView = findViewById(R.id.height_rv);
+        horizontalScrollView = findViewById(R.id.height_sv);
+
+        height_tv.setText(defaultHeight);
+
 
         initRuler(rulerView, horizontalScrollView);
-        weight_tv.setText(defaultWeight+"");
-        date_tv.setText(date);
-
 
         confirm_tv.setOnClickListener(this);
         close_iv.setOnClickListener(this);
@@ -127,13 +99,13 @@ public class RecordWeightDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.weight_dl_close:
+            case R.id.chooseheight_dl_close:
                 if(cancelListener != null){
                     cancelListener.onCancel(this);
                 }
                 dismiss();
                 break;
-            case R.id.confirm_recordweight_tv:
+            case R.id.chooseheight_confirm_tv:
                 if(confirmListener != null){
                     confirmListener.onConfirm(this);
                 }
@@ -143,20 +115,19 @@ public class RecordWeightDialog extends Dialog implements View.OnClickListener {
     }
 
     public interface IOnCancelListener{
-        void onCancel(RecordWeightDialog dialog);
+        void onCancel(ChooseHeightDialog dialog);
     }
     public interface IOnConfirmListener{
-        void onConfirm(RecordWeightDialog dialog);
+        void onConfirm(ChooseHeightDialog dialog);
     }
 
-    private void initRuler(final WeightRulerView rulerView, MyHorizontalScrollView horizontalScrollView){
+    private void initRuler(final HeightRulerView rulerView, MyHorizontalScrollView horizontalScrollView){
 
         horizontalScrollView.setOverScrollMode(View.OVER_SCROLL_ALWAYS);// 去掉超出滑动后出现的阴影效果
 
         // 设置水平滑动
         rulerView.setHorizontalScrollView(horizontalScrollView);
-        rulerView.setDefaultScaleValue(defaultWeight);
-        rulerView.setMaxScaleValue(200.0f);
+        rulerView.setDefaultScaleValue(Float.parseFloat(defaultHeight)-100);
 
         // 当滑动尺子的时候
         horizontalScrollView.setOnScrollListener(new MyHorizontalScrollView.OnScrollListener() {
@@ -169,13 +140,12 @@ public class RecordWeightDialog extends Dialog implements View.OnClickListener {
         });
 
 
-        rulerView.onChangedListener(new WeightRulerView.onChangedListener() {
+        rulerView.onChangedListener(new HeightRulerView.onChangedListener() {
             @Override
             public void onSlide(float number) {
 
-                weight = StringUtil.keepDecimal(number, 1)+"";
-                weight_tv.setText(weight);
-
+                height = StringUtil.keepDecimal(number, 1)+100+"";
+                height_tv.setText(height);
 
             }
         });

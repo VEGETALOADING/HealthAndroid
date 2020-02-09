@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="130dp"
+            android:gravity="center"
+            android:text="身高"
+            android:textSize="20sp"></TextView>
+
+        <ImageView
+            android:id="@+id/chooseheight_dl_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="80dp"
+            android:src="@mipmap/icon_close"></ImageView>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="#fff"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/ch_height_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="50dp"
+            android:gravity="bottom"
+            android:text="185.0"
+            android:textColor="@color/green_light"
+            android:textSize="25sp"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="190dp"
+            android:gravity="bottom"
+            android:text="厘米"
+            android:textColor="@color/green_light"
+            android:textSize="15sp"></TextView>
+
+
+        <com.tyut.view.MyHorizontalScrollView
+            android:id="@+id/height_sv"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="86dp"
+            android:scrollbars="none">
+
+            <com.tyut.view.HeightRulerView
+                android:id="@+id/height_rv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_marginLeft="-55dp"
+                android:background="#ffffff" />
+
+
+        </com.tyut.view.MyHorizontalScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="86dp"
+            android:background="@color/black" />
+
+        <View
+            android:id="@+id/triangle"
+            android:layout_width="30px"
+            android:layout_height="30px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="85dp"
+            android:background="@drawable/shape_triangle" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/chooseheight_confirm_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/green_light"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="#ffffff"
+        android:textSize="30sp"></TextView>
+
+
+</LinearLayout>

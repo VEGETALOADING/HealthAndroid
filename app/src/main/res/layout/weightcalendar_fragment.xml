@@ -3,11 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <TextView
+  <View
+      android:id="@+id/line2"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:text="weightCalendarFragment"
-      android:gravity="center">
+      android:layout_height="0.5dp"
+      android:layout_marginTop="40dp"
+      android:background="@color/line_grey"></View>
+  <CalendarView
+      android:id="@+id/weight_cv"
+      android:layout_below="@+id/line2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"></CalendarView>
+  <View
+      android:id="@+id/line4"
+      android:layout_width="match_parent"
+      android:layout_below="@+id/weight_cv"
+      android:layout_height="0.5dp"
+      android:background="@color/line_grey"></View>
 
-  </TextView>
+  <Button
+      android:id="@+id/calendar_record_btn"
+      android:layout_width="100dp"
+      android:layout_height="wrap_content"
+      android:background="@drawable/btn_green"
+      android:layout_marginTop="400dp"
+      android:text="记录体重"
+      android:textColor="#ffffff"
+      android:textSize="18sp"
+      android:layout_centerHorizontal="true"></Button>
+
 </RelativeLayout>
