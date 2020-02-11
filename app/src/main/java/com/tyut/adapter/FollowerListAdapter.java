@@ -81,7 +81,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
 
         if(mList.size() > position){
             holder.username_tv.setText(mList.get(position).getUsername());
-            Glide.with(mContext).load("http://192.168.1.10:8080/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
+            Glide.with(mContext).load("http://192.168.1.4:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
             if(mList.get(position).getRel() == 0){
                 holder.follow_btn.setText("关注");
                 holder.follow_btn.setBackground(mContext.getResources().getDrawable(R.drawable.btn_green));

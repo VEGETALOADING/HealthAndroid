@@ -58,9 +58,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button getDataBtn;
 
-    List<String> list = new ArrayList<>();
+    List<String> xList = new ArrayList<>();
 
-    private List<Integer> lists = new ArrayList<Integer>();
+    private List<Integer> lists = new ArrayList<>();
 
     private void setLists() {
         lists.clear();
@@ -76,11 +76,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.test);
         getDataBtn = findViewById(R.id.getData);
         getDataBtn.setOnClickListener(this);
-        list.add("a");
-        list.add("b");
-        list.add("c");
-        list.add("d");
-        list.add("e");
+        xList.add("a");
+        xList.add("b");
+        xList.add("c");
+        xList.add("d");
+        xList.add("e");
 
 
 
@@ -120,7 +120,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         mLegend.setFormSize(6f); //字体
         mLegend.setTextColor(Color.WHITE); //颜色
 
-        lineChart.setVisibleXRange(1, 7);   //x轴可显示的坐标范围
+        //lineChart.setVisibleXRange(1, 7);   //x轴可显示的坐标范围
         XAxis xAxis = lineChart.getXAxis();  //x轴的标示
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); //x轴位置
         xAxis.setTextColor(Color.WHITE);    //字体的颜色
@@ -132,8 +132,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
 
-                if(value <= list.size()){
-                    String data = list.get((int) value-1);
+                if(value <= xList.size()){
+                    String data = xList.get((int) value-1);
                     return  data;
                 }
                 return "";
@@ -233,7 +233,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     public XYMultipleSeriesDataset getDataSet() {
         XYMultipleSeriesDataset barDataset = new XYMultipleSeriesDataset();
-        CategorySeries barSeries = new CategorySeries("2016年");
+        CategorySeries barSeries = new CategorySeries("测试");
 
         for (int i = 0; i < lists.size(); i++) {
             barSeries.add(lists.get(i));

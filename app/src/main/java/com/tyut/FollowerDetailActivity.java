@@ -58,7 +58,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
             switch (msg.what){
                 case 0:
                     UserVO vo = (UserVO) msg.obj;
-                    Glide.with(FollowerDetailActivity.this).load("http://192.168.1.4:8080/" + vo.getUserpic()).into(user_photo);
+                    Glide.with(FollowerDetailActivity.this).load("http://192.168.1.4:8080/userpic/" + vo.getUserpic()).into(user_photo);
                     user_name.setText(vo.getUsername()+"");
                     break;
                 case 1:
