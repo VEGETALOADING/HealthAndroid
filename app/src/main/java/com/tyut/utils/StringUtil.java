@@ -1,6 +1,7 @@
 package com.tyut.utils;
 
 import com.tyut.MainActivity;
+import com.tyut.vo.UserVO;
 import com.tyut.vo.Weight;
 
 import java.math.BigDecimal;
@@ -14,12 +15,12 @@ import java.util.Date;
 import java.util.List;
 
 public class StringUtil {
-    public static String divison(int a,int b) {
+    public static String divison(float a,int b) {
         // TODO 自动生成的方法存根
 
         DecimalFormat df=new DecimalFormat("0.00");//设置保留位数
 
-        return df.format((float)a/b);
+        return df.format(a/b);
 
     }
     public static float keepDecimal(float num, int count){
@@ -55,8 +56,34 @@ public class StringUtil {
     }
 
     public static float getBMI(String weight, String height){
-        String h = StringUtil.divison(Integer.parseInt(height), 100);
+        String h = StringUtil.divison(Float.parseFloat(height), 100);
         return StringUtil.keepDecimal((Float.parseFloat(weight) /  Float.parseFloat(h) / Float.parseFloat(h)), 1);
+    }
+
+    public static Integer getHot(UserVO vo){
+        Integer year = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(vo.getBirthday().substring(0, 4));
+        Integer basic = null;
+
+        if(vo.getGender() == 0){
+            basic = (int)Math.round((450 + 3.1 * Float.parseFloat(vo.getHeight()) + 9.2 * Float.parseFloat(vo.getWeight()) - 4.3 * year) * 1.3);
+
+        }else{
+            basic = (int)Math.round((90 + 4.8 * Float.parseFloat(vo.getHeight()) + 13.4 * Float.parseFloat(vo.getWeight()) -5.7 * year) * 1.3);
+
+        }
+        if(vo.getGoal() == 1){
+           return basic;
+
+        } else if(vo.getGoal() == 0){
+
+            return basic - 200;
+
+        } else if(vo.getGoal() == 2){
+
+            return basic + 200;
+
+        }
+        return null;
     }
 
 

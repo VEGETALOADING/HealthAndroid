@@ -90,7 +90,6 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
 
             //获取用户信息
             UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
-            String photo = userVO.getUserpic();
 
 
             user_name.setText(userVO.getUsername());

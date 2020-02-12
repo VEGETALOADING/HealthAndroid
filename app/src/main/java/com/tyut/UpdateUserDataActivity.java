@@ -253,7 +253,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
             case R.id.height_ll:
                 final ChooseHeightDialog dialog4 = new ChooseHeightDialog(UpdateUserDataActivity.this);
 
-                dialog4.setDefaultHeight(height_tv.getText().toString().substring(0, 3))
+                dialog4.setDefaultHeight(height_tv.getText().toString())
                         .setCancel(new ChooseHeightDialog.IOnCancelListener() {
                             @Override
                             public void onCancel(ChooseHeightDialog dialog) {
@@ -290,7 +290,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
             case R.id.weight_ll:
                 final RecordWeightDialog dialog5 = new RecordWeightDialog(UpdateUserDataActivity.this);
                 dialog5.setDate("今天")
-                        .setDefaultWeight(Float.parseFloat(weight_tv.getText().toString().substring(0, 4)))
+                        .setDefaultWeight(Float.parseFloat(weight_tv.getText().toString()))
                         .setCancel(new RecordWeightDialog.IOnCancelListener() {
                             @Override
                             public void onCancel(RecordWeightDialog dialog) {

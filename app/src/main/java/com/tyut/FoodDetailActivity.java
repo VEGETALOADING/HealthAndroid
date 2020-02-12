@@ -32,7 +32,6 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
 import com.tyut.widget.RecordFoodDialog;
 import com.tyut.widget.SportTimeDialog;
@@ -280,8 +279,9 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                             public void onConfirm(final RecordFoodDialog dialog) {
                                 Integer dateIndex = dialog.getDateIndex();
                                 String quantity = dialog.getQuantity();
+                                String cal = dialog.getCal();
                                 Integer time = JudgeUtil.getDietTime(dialog.getTime());
-                                OkHttpUtils.get("http://192.168.1.4:8080/portal/myfood/add.do?userid="+userid+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex),
+                                OkHttpUtils.get("http://192.168.1.4:8080/portal/myfood/add.do?userid="+userid+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex)+"&cal="+cal,
                                         new OkHttpCallback(){
                                             @Override
                                             public void onFinish(String status, String msg) {

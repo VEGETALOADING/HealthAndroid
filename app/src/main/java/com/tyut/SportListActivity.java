@@ -106,6 +106,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                             if(!dialog.getTime().equals("0")){
                                                 Mysport mysport = new Mysport();
                                                 mysport.setTime(Integer.parseInt(dialog.getTime()));
+                                                mysport.setCal(Integer.parseInt(dialog.getCal()));
                                                 mysport.setSportid(list.get(position).getId());
                                                 mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
                                                 mysport.setCreateTime(StringUtil.convertDatetime(new Date(), "yyyy-MM-dd"));
@@ -162,6 +163,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                                 Mysport mysport = new Mysport();
                                                 mysport.setTime(Integer.parseInt(dialog.getTime()));
                                                 mysport.setSportid(list2.get(position).getId());
+                                                mysport.setCal(Integer.parseInt(dialog.getCal()));
                                                 mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
                                                 mysport.setCreateTime(StringUtil.convertDatetime(new Date(), "yyyy-MM-dd"));
                                                 mysportList.add(mysport);

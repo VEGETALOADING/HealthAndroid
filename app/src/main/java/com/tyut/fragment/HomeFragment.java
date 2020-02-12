@@ -33,6 +33,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.FoodDetailActivity;
 import com.tyut.HomeActivity;
 import com.tyut.R;
+import com.tyut.RecordActivity;
 import com.tyut.ShowSchemaActivity;
 import com.tyut.SportListActivity;
 import com.tyut.WeightActivity;
@@ -44,13 +45,9 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.SportVO;
 import com.tyut.vo.UserVO;
-import com.tyut.widget.SportTimeDialog;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -87,6 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     ScrollView defaultScrollView;
     LinearLayout schema_ll;
     LinearLayout weight_ll;
+    LinearLayout healthInfo_ll;
 
 
     private static final int SEARCHFOOD_NULL = 0;
@@ -175,11 +173,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         listScrollView = view.findViewById(R.id.scrollview_food);
         defaultScrollView = view.findViewById(R.id.default_scrollview);
         schema_ll = view.findViewById(R.id.schema_ll);
+        healthInfo_ll = view.findViewById(R.id.healthinfo);
 
 
         blank_ll = view.findViewById(R.id.blank_ll);
         weight_ll = view.findViewById(R.id.weight_ll);
 
+        healthInfo_ll.setOnClickListener(this);
         message.setOnClickListener(this);
         cancel.setOnClickListener(this);
         commnon_food.setOnClickListener(this);
@@ -386,6 +386,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                     );
 
                 }
+                break;
             case R.id.schema_ll:
                 Intent intent = new Intent(getActivity(), ShowSchemaActivity.class);
                 getActivity().startActivity(intent);
@@ -394,6 +395,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
 
                 Intent intent1 = new Intent(getActivity(), WeightActivity.class);
                 getActivity().startActivity(intent1);
+                break;
+            case R.id.healthinfo:
+                Intent intent2 = new Intent(getActivity(), RecordActivity.class);
+                getActivity().startActivity(intent2);
                 break;
 
 

@@ -72,6 +72,9 @@ public class RecordFoodDialog extends Dialog implements View.OnClickListener {
     public String getQuantity() {
         return quantity_infact2.getText()+"";
     }
+    public String getCal() {
+        return cal_infact.getText()+"";
+    }
 
     private String foodUnit;
     private String foodQuantity;

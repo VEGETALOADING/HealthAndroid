@@ -45,6 +45,7 @@
         <activity android:name=".ShowSchemaActivity" />
         <activity android:name=".FollowingDetailActivity" />
         <activity android:name=".FollowerDetailActivity" />
+        <activity android:name=".RecordActivity" />
         <activity android:name=".FoodDetailActivity">
 
         </activity>

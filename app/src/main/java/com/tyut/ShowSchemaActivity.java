@@ -118,12 +118,12 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
 
         int year = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(userVO.getBirthday().substring(0, 4));
         if(userVO.getGender() == 0){
-            basic = (int)Math.round((450 + 3.1 * Integer.parseInt(userVO.getHeight()) + 9.2 * Float.parseFloat(weight) - 4.3 * year) * 1.3);
-            standardWeight = StringUtil.keepDecimal((float) ((Integer.parseInt(userVO.getHeight()) - 70) * 0.6), 1);
+            basic = (int)Math.round((450 + 3.1 * Float.parseFloat(userVO.getHeight()) + 9.2 * Float.parseFloat(weight) - 4.3 * year) * 1.3);
+            standardWeight = StringUtil.keepDecimal((float) ((Float.parseFloat(userVO.getHeight()) - 70) * 0.6), 1);
 
         }else{
-            basic = (int)Math.round((90 + 4.8 * Integer.parseInt(userVO.getHeight()) + 13.4 * Float.parseFloat(weight) -5.7 * year) * 1.3);
-            standardWeight = StringUtil.keepDecimal((float) ((Integer.parseInt(userVO.getHeight()) - 80) * 0.7), 1);
+            basic = (int)Math.round((90 + 4.8 * Float.parseFloat(userVO.getHeight()) + 13.4 * Float.parseFloat(weight) -5.7 * year) * 1.3);
+            standardWeight = StringUtil.keepDecimal((float) ((Float.parseFloat(userVO.getHeight()) - 80) * 0.7), 1);
 
         }
         if(userVO.getGoal() == 1){

@@ -38,6 +38,9 @@ public class SportTimeDialog extends Dialog implements View.OnClickListener {
     public String getTime() {
         return time_tv.getText()+"";
     }
+    public String getCal() {
+        return calories_infact.getText()+"";
+    }
 
     private String sportQuantity;
     private String sportName;
