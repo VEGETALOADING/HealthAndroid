@@ -14,6 +14,34 @@ public class HotVO {
     private Integer dinnerHot;
     private Integer sportHot;
 
+    private Float proteinConsumed;
+    private Float fatConsumed;
+    private Float carbConsumed;
+
+    public Float getProteinConsumed() {
+        return proteinConsumed;
+    }
+
+    public void setProteinConsumed(Float proteinConsumed) {
+        this.proteinConsumed = proteinConsumed;
+    }
+
+    public Float getFatConsumed() {
+        return fatConsumed;
+    }
+
+    public void setFatConsumed(Float fatConsumed) {
+        this.fatConsumed = fatConsumed;
+    }
+
+    public Float getCarbConsumed() {
+        return carbConsumed;
+    }
+
+    public void setCarbConsumed(Float carbConsumed) {
+        this.carbConsumed = carbConsumed;
+    }
+
     public List<MysportVO> getMysportVOList() {
         return mysportVOList;
     }

@@ -52,6 +52,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     LinearLayout step_ll;
     LinearLayout habit_ll;
     LinearLayout train_ll;
+    LinearLayout return_ll;
 
     Integer needHot = null;
 
@@ -100,6 +101,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         step_ll = findViewById(R.id.record_step_ll);
         habit_ll = findViewById(R.id.record_habit_ll);
         train_ll = findViewById(R.id.record_train_ll);
+        return_ll = findViewById(R.id.return_j);
 
         dietAndSport_ll.setOnClickListener(this);
         girth_ll.setOnClickListener(this);
@@ -107,6 +109,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         habit_ll.setOnClickListener(this);
         train_ll.setOnClickListener(this);
         step_ll.setOnClickListener(this);
+        return_ll.setOnClickListener(this);
 
 
     }
@@ -119,7 +122,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         Glide.with(this).load("http://192.168.1.4:8080/userpic/" + userVO.getUserpic()).into(userPic);
         userName.setText(userVO.getUsername());
         latestWeight .setText(userVO.getWeight());
-        needHot = StringUtil.getHot(userVO);
+        needHot = StringUtil.getNutritionData(userVO).getHot();
 
 
         OkHttpUtils.get("http://192.168.1.4:8080/portal/girth/select.do?userid="+userVO.getId()+"&type=0",
@@ -178,7 +181,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.record_dietandsport_ll:
-
+                Intent intent = new Intent(RecordActivity.this, DietAndSportActivity.class);
+                RecordActivity.this.startActivity(intent);
                 break;
             case R.id.record_weight_ll:
 
@@ -195,7 +199,9 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.record_habit_ll:
 
                 break;
-
+            case R.id.return_j:
+                finish();
+                break;
         }
     }
 }

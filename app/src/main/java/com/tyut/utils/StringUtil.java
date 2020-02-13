@@ -1,6 +1,7 @@
 package com.tyut.utils;
 
 import com.tyut.MainActivity;
+import com.tyut.vo.NutritionVO;
 import com.tyut.vo.UserVO;
 import com.tyut.vo.Weight;
 
@@ -60,30 +61,46 @@ public class StringUtil {
         return StringUtil.keepDecimal((Float.parseFloat(weight) /  Float.parseFloat(h) / Float.parseFloat(h)), 1);
     }
 
-    public static Integer getHot(UserVO vo){
+    public static NutritionVO getNutritionData(UserVO vo){
         Integer year = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(vo.getBirthday().substring(0, 4));
         Integer basic = null;
 
+        Integer carb = null;
+        Integer protein = null;
+        Integer fat = null;
+        Integer hot = null;
+        Float standardWeight = null;
+
         if(vo.getGender() == 0){
             basic = (int)Math.round((450 + 3.1 * Float.parseFloat(vo.getHeight()) + 9.2 * Float.parseFloat(vo.getWeight()) - 4.3 * year) * 1.3);
+            standardWeight = StringUtil.keepDecimal((float) ((Float.parseFloat(vo.getHeight()) - 70) * 0.6), 1);
 
         }else{
             basic = (int)Math.round((90 + 4.8 * Float.parseFloat(vo.getHeight()) + 13.4 * Float.parseFloat(vo.getWeight()) -5.7 * year) * 1.3);
+            standardWeight = StringUtil.keepDecimal((float) ((Float.parseFloat(vo.getHeight()) - 80) * 0.7), 1);
 
         }
         if(vo.getGoal() == 1){
-           return basic;
+            hot = basic;
+            protein = Math.round(Float.parseFloat(vo.getWeight()) * 2 * 1.3f);
+            fat = (int) Math.round(hot * 0.2 / 9);
+            carb = (int) Math.round((hot * 0.8 - protein * 4) / 4);
+        }  else if(vo.getGoal() == 0){
 
-        } else if(vo.getGoal() == 0){
-
-            return basic - 200;
+            hot = basic - 200;
+            protein = Math.round(Float.parseFloat(vo.getWeight()) * 2 * 1.4f);
+            fat = (int) Math.round(hot * 0.2 / 9);
+            carb = (int) Math.round((hot * 0.8 - protein * 4) / 4);
 
         } else if(vo.getGoal() == 2){
 
-            return basic + 200;
-
+            hot = basic + 200;
+            protein = Math.round(Float.parseFloat(vo.getWeight()) * 2 * 1.5f);
+            fat = (int) Math.round(hot * 0.2 / 9);
+            carb = (int) Math.round((hot * 0.8 - protein * 4) / 4);
         }
-        return null;
+        return new NutritionVO( hot,  carb,  protein,  fat,  standardWeight);
+
     }
 
 

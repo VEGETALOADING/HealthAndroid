@@ -35,6 +35,7 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyProgressView;
+import com.tyut.vo.NutritionVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
@@ -109,14 +110,19 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
-        String height = userVO.getHeight();
-        String weight = userVO.getWeight();
 
-        float bmi = StringUtil.getBMI(weight, height);
+        float bmi = StringUtil.getBMI(userVO.getWeight(), userVO.getHeight());
         bmi_tv.setText(bmi+"");
         bmi_view.setProgress(bmi);
 
-        int year = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(userVO.getBirthday().substring(0, 4));
+        NutritionVO nutritionVO = StringUtil.getNutritionData(userVO);
+        hot = nutritionVO.getHot();
+        protein = nutritionVO.getProtein();
+        fat = nutritionVO.getFat();
+        carb = nutritionVO.getCarb();
+        standardWeight = nutritionVO.getStandardWeight();
+
+        /*int year = Calendar.getInstance().get(Calendar.YEAR) - Integer.parseInt(userVO.getBirthday().substring(0, 4));
         if(userVO.getGender() == 0){
             basic = (int)Math.round((450 + 3.1 * Float.parseFloat(userVO.getHeight()) + 9.2 * Float.parseFloat(weight) - 4.3 * year) * 1.3);
             standardWeight = StringUtil.keepDecimal((float) ((Float.parseFloat(userVO.getHeight()) - 70) * 0.6), 1);
@@ -144,7 +150,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
             protein = Math.round(Float.parseFloat(weight) * 2 * 1.5f);
             fat = (int) Math.round(hot * 0.2 / 9);
             carb = (int) Math.round((hot * 0.8 - protein * 4) / 4);
-        }
+        }*/
         score = 90 -(float) StringUtil.positive(standardWeight - Float.parseFloat(userVO.getWeight()));
         hot_tv.setText(hot+"");
         protein_tv.setText(protein+"");
