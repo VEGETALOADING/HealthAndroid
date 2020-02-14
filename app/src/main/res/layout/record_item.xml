@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/recordPic"
+        android:layout_marginLeft="5dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_vertical"
+        android:src="@mipmap/home_selected"></ImageView>
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/recordName"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:text="default"
+            android:textSize="18sp"></TextView>
+
+        <TextView
+            android:id="@+id/recordQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recordName"
+            android:layout_marginLeft="15dp"
+            android:text="000"></TextView>
+        <TextView
+            android:id="@+id/recordUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/recordQuantity"
+            android:layout_below="@id/recordName"
+            android:text="毫升"></TextView>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_marginLeft="35dp"
+        android:layout_gravity="center"
+        android:id="@+id/recordHot"
+        android:layout_width="50dp"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:text="9999"></TextView>
+    <TextView
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="千卡"></TextView>
+    <ImageView
+        android:layout_gravity="center"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="5dp"
+        android:src="@mipmap/right"
+        ></ImageView>
+
+
+</LinearLayout>

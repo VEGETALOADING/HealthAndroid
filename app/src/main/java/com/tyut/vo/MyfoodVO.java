@@ -59,6 +59,25 @@ public class MyfoodVO {
 
     private String unit;
 
+    private Integer foodQuantity;
+    private Integer foodCal;
+
+    public Integer getFoodCal() {
+        return foodCal;
+    }
+
+    public void setFoodCal(Integer foodCal) {
+        this.foodCal = foodCal;
+    }
+
+    public Integer getFoodQuantity() {
+        return foodQuantity;
+    }
+
+    public void setFoodQuantity(Integer foodQuantity) {
+        this.foodQuantity = foodQuantity;
+    }
+
     public String getName() {
         return name;
     }

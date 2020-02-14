@@ -6,8 +6,8 @@ public class HotVO {
 
     private List<MysportVO> mysportVOList;
     private List<MyfoodVO> breakfastList;
-    private List<MyfoodVO> lunchVOList;
-    private List<MyfoodVO> dinnerVOList;
+    private List<MyfoodVO> lunchList;
+    private List<MyfoodVO> dinnerList;
 
     private Integer breakfastHot;
     private Integer lunchHot;
@@ -58,20 +58,20 @@ public class HotVO {
         this.breakfastList = breakfastList;
     }
 
-    public List<MyfoodVO> getLunchVOList() {
-        return lunchVOList;
+    public List<MyfoodVO> getLunchList() {
+        return lunchList;
     }
 
-    public void setLunchVOList(List<MyfoodVO> lunchVOList) {
-        this.lunchVOList = lunchVOList;
+    public void setLunchList(List<MyfoodVO> lunchList) {
+        this.lunchList = lunchList;
     }
 
-    public List<MyfoodVO> getDinnerVOList() {
-        return dinnerVOList;
+    public List<MyfoodVO> getDinnerList() {
+        return dinnerList;
     }
 
-    public void setDinnerVOList(List<MyfoodVO> dinnerVOList) {
-        this.dinnerVOList = dinnerVOList;
+    public void setDinnerList(List<MyfoodVO> dinnerList) {
+        this.dinnerList = dinnerList;
     }
 
     public Integer getBreakfastHot() {

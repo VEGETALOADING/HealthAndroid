@@ -38,7 +38,7 @@ import com.tyut.widget.RecordWeightDialog;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateUserDataActivity extends AppCompatActivity implements View.OnClickListener, CommonPopWindow.ViewClickListener, TextWatcher {
+public class UpdateUserDataActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 
     LinearLayout gender_ll;
     LinearLayout birthday_ll;
@@ -94,89 +94,6 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
 
 
     }
-
-
-
-    /**
-     * 将选择器放在底部弹出框
-     * @param v
-     */
-    private void setAddressSelectorPopup(View v, int name, String defaultIndex) {
-        int screenHeigh = getResources().getDisplayMetrics().heightPixels;
-
-        CommonPopWindow.newBuilder()
-                .setName(name)
-                .setDefaultIndex(defaultIndex)
-                .setView(R.layout.pickerscoll)
-                .setAnimationStyle(R.style.AnimUp)
-                .setBackgroundDrawable(new BitmapDrawable())
-                .setSize(ViewGroup.LayoutParams.MATCH_PARENT, Math.round(screenHeigh * 0.3f))
-                .setViewOnClickListener(this)
-                .setBackgroundDarkEnable(true)
-                .setBackgroundAlpha(0.7f)
-                .setBackgroundDrawable(new ColorDrawable(999999))
-                .build(this, name, defaultIndex)
-                .showAsBottom(v);
-    }
-    @Override
-    public void getChildView(final PopupWindow mPopupWindow, View view, int mLayoutResId, int name, String defaultIndex) {
-        switch (mLayoutResId) {
-            case R.layout.pickerscoll:
-                TextView imageBtn = view.findViewById(R.id.img_guanbi);
-                PickerScrollView addressSelector = view.findViewById(R.id.address);
-
-                // 设置数据，默认选择第一条
-                addressSelector.setData(datasBeanList, Integer.parseInt(defaultIndex));
-                addressSelector.setSelected(defaultIndex);
-
-                //滚动监听
-                addressSelector.setOnSelectListener(new PickerScrollView.onSelectListener() {
-                    @Override
-                    public void onSelect(GetConfigReq.DatasBean pickers) {
-                        categoryName = pickers.getCategoryName();
-                        id = pickers.getID();
-                    }
-                });
-
-                switch (name){
-                    case R.id.goal_ll:
-                    //完成按钮
-                    imageBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mPopupWindow.dismiss();
-                            goal_tv.setText(categoryName);
-                        }
-                    });
-                    break;
-                    case R.id.gender_ll:
-                        //完成按钮
-                        imageBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mPopupWindow.dismiss();
-                                gender_tv.setText(categoryName);
-                            }
-                        });
-                        break;
-                    case R.id.height_ll:
-                        //完成按钮
-                        imageBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mPopupWindow.dismiss();
-                                height_tv.setText(Integer.parseInt(id) + 130 + "");
-                            }
-                        });
-                        break;
-
-                }
-
-                break;
-        }
-    }
-
-
 
     @Override
     protected void onResume() {

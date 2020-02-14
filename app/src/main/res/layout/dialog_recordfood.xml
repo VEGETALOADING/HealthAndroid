@@ -36,10 +36,11 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textColor="@color/black"></TextView>
+
             <ImageView
                 android:id="@+id/choosedate_iv"
                 android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_height="11dp"
                 android:layout_gravity="center"
                 android:src="@mipmap/icon_triangle_down"></ImageView>
         </LinearLayout>
@@ -57,7 +58,7 @@
         android:id="@+id/main_ll"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="385dp">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp">
@@ -207,7 +208,6 @@
                     android:background="#ffffff"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="-16dp"
                     android:layout_gravity="top"/>
             </com.tyut.view.MyHorizontalScrollView>
 
@@ -231,11 +231,29 @@
                 android:background="@drawable/shape_triangle" />
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/deleteRecord_ll"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/icon_trashcan"></ImageView>
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="删除这条记录"
+                android:textSize="18sp"></TextView>
+        </LinearLayout>
         <TextView
             android:id="@+id/confirm_recordfood_tv"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:background="@color/green_light"
             android:text="确认添加"
             android:textSize="30sp"

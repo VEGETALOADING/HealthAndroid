@@ -5,6 +5,11 @@ import com.tyut.vo.NutritionVO;
 import com.tyut.vo.UserVO;
 import com.tyut.vo.Weight;
 
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -126,6 +131,22 @@ public class StringUtil {
         return  list;
     }
 
+    public static List<String> getRecengtDateList(String date){
+        List<String> list = new ArrayList<String>();
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("MM月-dd日");
+        Calendar calendar = Calendar.getInstance();
+        Date beginDate = string2Date(date, "yyyy-MM-dd");
+
+        for(int i = 5;i>=-1;i--) {
+            calendar.setTime(beginDate);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - i);
+            String strDay =  formatDate.format(calendar.getTime());
+            list.add(strDay);
+        }
+        return  list;
+    }
+
     public static List<String> getRecengtDateListWithYear(){
         List<String> list = new ArrayList<String>();
 
@@ -140,6 +161,47 @@ public class StringUtil {
             list.add(strDay);
         }
         return  list;
+    }
+    public static List<String> getRecengtDateListWithYear(String date){
+        List<String> list = new ArrayList<String>();
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        Date beginDate = string2Date(date, "yyyy-MM-dd");
+
+        for(int i = 5;i>-2;i--) {
+            calendar.setTime(beginDate);
+            calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - i);
+            String strDay =  formatDate.format(calendar.getTime());
+            list.add(strDay);
+        }
+        return list;
+    }
+
+    public static Date string2Date(String strDate,String format){
+
+        DateTimeFormatter dateTimeFormatter= DateTimeFormat.forPattern(format);
+        DateTime dateTime= dateTimeFormatter.parseDateTime(strDate);
+        return dateTime.toDate();
+    }
+
+    public static String getNextDay(String date){
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(string2Date(date, "yyyy-MM-dd"));
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) + 1);
+        return formatDate.format(calendar.getTime());
+    }
+    public static String getLastDay(String date){
+
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(string2Date(date, "yyyy-MM-dd"));
+        calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 1);
+        return formatDate.format(calendar.getTime());
     }
 
     //获取当前时间  xx月xx日
@@ -172,6 +234,7 @@ public class StringUtil {
 
     public static void main(String[] args) {
 
+        System.out.println(getLastDay("2020-02-14"));
     }
 
 

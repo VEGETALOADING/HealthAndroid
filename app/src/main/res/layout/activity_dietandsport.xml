@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/whole_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="@drawable/dim"
+    tools:foreground="">
 
     <LinearLayout
         android:id="@+id/top_ll"
@@ -56,10 +59,13 @@
 
     </LinearLayout>
     <ScrollView
+        android:id="@+id/scrollview_das"
         android:layout_below="@id/top_ll"
         android:layout_above="@id/nav_das"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:foreground="@drawable/dim"
+        tools:foreground="">
         <LinearLayout
             android:layout_gravity="center_horizontal"
             android:layout_width="380dp"
@@ -334,6 +340,7 @@
 
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:visibility="gone"
                 android:id="@+id/noRecord_ll"
@@ -392,120 +399,322 @@
                     android:text="完整记录三餐分析才准确"></TextView>
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/record_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/breakfast_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="早餐"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"></TextView>
 
+                        <TextView
+                            android:id="@+id/breakfastHot"
+                            android:layout_width="50dp"
+                            android:gravity="right"
+                            android:layout_marginLeft="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="9999"></TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="千卡"></TextView>
+                        <ImageView
+                            android:id="@+id/breakfastDetail_iv"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/right"
+                            ></ImageView>
+                    </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/breakfastRv_main"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/lunch_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="午餐"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"></TextView>
+
+                        <TextView
+                            android:id="@+id/lunchHot"
+                            android:layout_width="50dp"
+                            android:gravity="right"
+                            android:layout_marginLeft="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="9999"></TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="千卡"></TextView>
+                        <ImageView
+                            android:id="@+id/lunchDetail_iv"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/right"
+                            ></ImageView>
+                    </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lunchRv_main"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/dinner_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="晚餐"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"></TextView>
+
+                        <TextView
+                            android:id="@+id/dinnerHot"
+                            android:layout_width="50dp"
+                            android:gravity="right"
+                            android:layout_marginLeft="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="9999"></TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="千卡"></TextView>
+                        <ImageView
+                            android:id="@+id/dinnerDetail_iv"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/right"
+                            ></ImageView>
+                    </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/dinnerRv_main"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/sport_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="运动"
+                            android:layout_marginLeft="10dp"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"></TextView>
+
+                        <TextView
+                            android:id="@+id/sportHot"
+                            android:layout_width="50dp"
+                            android:gravity="right"
+                            android:layout_marginLeft="220dp"
+                            android:layout_height="wrap_content"
+                            android:text="9999"></TextView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="千卡"></TextView>
+                        <ImageView
+                            android:id="@+id/sportDetail_iv"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/right"
+                            ></ImageView>
+                    </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/sportRv_main"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_grey"
-        android:layout_above="@id/nav_das"></View>
+
     <LinearLayout
         android:id="@+id/nav_das"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="44.5dp"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:background="#F7F7F7">
-
+        android:background="#F7F7F7"
+        android:foreground="@drawable/dim"
+        tools:foreground="">
+        <View
+            android:id="@+id/navLine_das"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_grey"
+            android:layout_above="@id/nav_das" />
         <LinearLayout
-            android:id="@+id/breakfast_das"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/breakfast_das"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_marginTop="2dp"
-                android:id="@+id/breakfast_iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon_breakfast">
-            </ImageView>
-            <TextView
-                android:id="@+id/tv_breakfast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="+早餐"
-                android:textColor="#5E5E5E"></TextView>
+                <ImageView
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/breakfast_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_breakfast">
+                </ImageView>
+                <TextView
+                    android:id="@+id/tv_breakfast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+早餐"
+                    android:textColor="#5E5E5E"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lunch_das"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/lunch_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_lunch">
+                </ImageView>
+                <TextView
+                    android:id="@+id/tv_lunch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+午餐"
+                    android:textColor="#5E5E5E"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dinner_das"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/dinner_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_dinner">
+                </ImageView>
+                <TextView
+                    android:id="@+id/tv_dinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+晚餐"
+                    android:textColor="#5E5E5E"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sport_das"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/sport_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_sport">
+                </ImageView>
+                <TextView
+                    android:id="@+id/sport_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="+运动"
+                    android:textColor="#5E5E5E"></TextView>
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/lunch_das"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
-            <ImageView
-                android:layout_marginTop="2dp"
-                android:id="@+id/lunch_iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon_lunch">
-            </ImageView>
-            <TextView
-                android:id="@+id/tv_lunch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="+午餐"
-                android:textColor="#5E5E5E"></TextView>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/dinner_das"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_marginTop="2dp"
-                android:id="@+id/dinner_iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon_dinner">
-            </ImageView>
-            <TextView
-                android:id="@+id/tv_dinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="+晚餐"
-                android:textColor="#5E5E5E"></TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/sport_das"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_marginTop="2dp"
-                android:id="@+id/sport_iv"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/icon_sport">
-            </ImageView>
-            <TextView
-                android:id="@+id/sport_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="+运动"
-                android:textColor="#5E5E5E"></TextView>
-        </LinearLayout>
 
     </LinearLayout>
 

@@ -74,7 +74,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                     HotVO hotVO = (HotVO) msg.obj;
                     Integer hotIntake = hotVO.getBreakfastHot()+hotVO.getLunchHot()+hotVO.getDinnerHot();
                     Integer hotConsume = hotVO.getSportHot();
-                    Integer remanent = needHot + hotIntake - hotConsume;
+                    Integer remanent = needHot - hotIntake + hotConsume;
                     remanentHot.setText(remanent > 0 ? (remanent+"") : "0");
 
             }
