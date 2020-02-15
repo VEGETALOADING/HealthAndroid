@@ -26,9 +26,12 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.DietAndSportActivity;
+import com.tyut.FoodDetailActivity;
 import com.tyut.R;
+import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
 import com.tyut.view.RulerView;
@@ -37,6 +40,7 @@ import com.tyut.vo.FoodVO;
 import com.tyut.vo.HotVO;
 import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.ServerResponse;
+import com.tyut.vo.UserVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +90,8 @@ public class FoodPopUpWindow implements View.OnClickListener {
     PopupWindow foodPopupWindow;
     View contentView;
     Context context;
+
+    Integer userId = null;
 
 
 
@@ -188,6 +194,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
             this.foodCal = myfoodVO.getFoodCal().toString();
             this.foodQuantity = myfoodVO.getFoodQuantity().toString();
             this.foodPic = myfoodVO.getPic();
+            this.time = JudgeUtil.getDietName(myfoodVO.getType());
             dateList = StringUtil.getRecengtDateList(myfoodVO.getCreateTime());
             originalList = StringUtil.getRecengtDateList(myfoodVO.getCreateTime());
             dateWithYearList = StringUtil.getRecengtDateListWithYear(myfoodVO.getCreateTime());
@@ -200,6 +207,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
         }else{
             deleteRecord.setVisibility(View.VISIBLE);
             date_tv.setText(myfoodVO.getCreateTime());
+            time_tv.setText(JudgeUtil.getDietName(myfoodVO.getType()));
         }
         initRuler(rulerView, horizontalScrollView);
         initScrollPick();
@@ -227,16 +235,6 @@ public class FoodPopUpWindow implements View.OnClickListener {
 
 
 
-
-
-
-
-
-
-
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -246,6 +244,31 @@ public class FoodPopUpWindow implements View.OnClickListener {
                 }
                 break;
             case R.id.confirm_recordfood_tv:
+                Integer index = dateIndex;
+                String quantity = getQuantity();
+                String cal = getCal();
+                Integer time = JudgeUtil.getDietTime(getTime());
+                Integer foodId = null;
+                if(foodVO == null){
+                    foodId = myfoodVO.getFoodid();
+                }else{
+                    foodId = foodVO.getId();
+                }
+                OkHttpUtils.get("http://192.168.1.4:8080/portal/myfood/add.do?userid="+userId+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex)+"&cal="+cal,
+                        new OkHttpCallback(){
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson=new Gson();
+                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                Looper.prepare();
+                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                Looper.loop();
+                            }
+                        }
+                );
+                foodPopupWindow.dismiss();
                 if(confirmListener != null){
                     confirmListener.onConfirm(this);
                 }
@@ -279,6 +302,9 @@ public class FoodPopUpWindow implements View.OnClickListener {
                         }
                 );
                 foodPopupWindow.dismiss();
+                if(confirmListener != null){
+                    confirmListener.onConfirm(this);
+                }
                 break;
 
         }
@@ -353,9 +379,12 @@ public class FoodPopUpWindow implements View.OnClickListener {
             chooseDate_spv.setSelected(dateList.size() - 2);
             chooseTime_spv.setSelected(0);
         }else{
-            chooseDate_spv.setSelected(dateList.indexOf(myfoodVO.getCreateTime()));
-            dateIndex = dateList.indexOf(myfoodVO.getCreateTime());
-            chooseTime_spv.setSelected(timeList.indexOf(myfoodVO.getType()-1));
+           /* String w = dateList.toString();
+            String z = myfoodVO.getCreateTime().substring(5);
+            Integer x = dateList.indexOf(myfoodVO.getCreateTime().substring(5, 7) + "月" + myfoodVO.getCreateTime().substring(8) + "日");
+            Integer y = timeList.indexOf(JudgeUtil.getDietName(myfoodVO.getType()));*/
+            chooseDate_spv.setSelected(dateList.indexOf(myfoodVO.getCreateTime().substring(5, 7) + "月-" + myfoodVO.getCreateTime().substring(8) + "日"));
+            chooseTime_spv.setSelected(timeList.indexOf(JudgeUtil.getDietName(myfoodVO.getType())));
         }
 
 
@@ -394,6 +423,8 @@ public class FoodPopUpWindow implements View.OnClickListener {
     }
 
     private void initView(){
+        userId = SharedPreferencesUtil.getInstance(context).readInt("userid");
+
         chooseDate_ll = contentView.findViewById(R.id.choosedate_ll);
         date_tv = contentView.findViewById(R.id.date_tv);
         time_tv = contentView.findViewById(R.id.time_tv);

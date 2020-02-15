@@ -51,6 +51,7 @@ import com.tyut.vo.NutritionVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.FoodPopUpWindow;
+import com.tyut.widget.SportPopUpWindow;
 import com.tyut.widget.SportTimeDialog;
 
 import org.w3c.dom.Text;
@@ -147,9 +148,9 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                     hotBar.update(hotIntake,1000);
 
                     final List<MyfoodVO> breakfastList = hotVO.getBreakfastList();
-                    List<MyfoodVO> lunchList = hotVO.getLunchList();
-                    List<MyfoodVO> dinnerList = hotVO.getDinnerList();
-                    List<MysportVO> sportList = hotVO.getMysportVOList();
+                    final List<MyfoodVO> lunchList = hotVO.getLunchList();
+                    final List<MyfoodVO> dinnerList = hotVO.getDinnerList();
+                    final List<MysportVO> sportList = hotVO.getMysportVOList();
                     if(breakfastList.size() > 0){
                         breakfast_ll.setVisibility(View.VISIBLE);
                         breakfastHot_tv.setText(hotVO.getBreakfastHot()+"");
@@ -159,7 +160,6 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                             @Override
                             public void onClick(int position) {
                                 MyfoodVO myfoodVO  = breakfastList.get(position);
-
                                 final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(null, myfoodVO, DietAndSportActivity.this);
                                 foodPopUpWindow.setCancel(new FoodPopUpWindow.IOnCancelListener() {
                                     @Override
@@ -169,7 +169,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
-                                        //tomorrow
+                                        onResume();
                                     }
                                 }).showFoodPopWindow();
 
@@ -187,7 +187,20 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                         lunchRv.setAdapter(new RecordFoodListAdapter(DietAndSportActivity.this, lunchList, new RecordFoodListAdapter.OnItemClickListener() {
                             @Override
                             public void onClick(int position) {
+                                MyfoodVO myfoodVO  = lunchList.get(position);
 
+                                final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(null, myfoodVO, DietAndSportActivity.this);
+                                foodPopUpWindow.setCancel(new FoodPopUpWindow.IOnCancelListener() {
+                                    @Override
+                                    public void onCancel(FoodPopUpWindow dialog) {
+                                        foodPopUpWindow.getFoodPopupWindow().dismiss();
+                                    }
+                                }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
+                                    @Override
+                                    public void onConfirm(FoodPopUpWindow dialog) {
+                                        onResume();
+                                    }
+                                }).showFoodPopWindow();
                             }
                         }));
                     }else{
@@ -202,7 +215,20 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                         dinnerRv.setAdapter(new RecordFoodListAdapter(DietAndSportActivity.this, dinnerList, new RecordFoodListAdapter.OnItemClickListener() {
                             @Override
                             public void onClick(int position) {
+                                MyfoodVO myfoodVO  = dinnerList.get(position);
 
+                                final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(null, myfoodVO, DietAndSportActivity.this);
+                                foodPopUpWindow.setCancel(new FoodPopUpWindow.IOnCancelListener() {
+                                    @Override
+                                    public void onCancel(FoodPopUpWindow dialog) {
+                                        foodPopUpWindow.getFoodPopupWindow().dismiss();
+                                    }
+                                }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
+                                    @Override
+                                    public void onConfirm(FoodPopUpWindow dialog) {
+                                        onResume();
+                                    }
+                                }).showFoodPopWindow();
                             }
                         }));
                     }else{
@@ -217,6 +243,20 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                         sportRv.setAdapter(new RecordSportListAdapter(DietAndSportActivity.this, sportList, new RecordSportListAdapter.OnItemClickListener() {
                             @Override
                             public void onClick(int position) {
+                                MysportVO mysportVO  = sportList.get(position);
+
+                                final SportPopUpWindow sportPopUpWindow = new SportPopUpWindow(null, mysportVO, DietAndSportActivity.this);
+                                sportPopUpWindow.setCancel(new SportPopUpWindow.IOnCancelListener() {
+                                    @Override
+                                    public void onCancel(SportPopUpWindow dialog) {
+                                        sportPopUpWindow.getSportPopupWindow().dismiss();
+                                    }
+                                }).setConfirm(new SportPopUpWindow.IOnConfirmListener() {
+                                    @Override
+                                    public void onConfirm(SportPopUpWindow dialog) {
+                                        onResume();
+                                    }
+                                }).showFoodPopWindow();
 
                             }
                         }));

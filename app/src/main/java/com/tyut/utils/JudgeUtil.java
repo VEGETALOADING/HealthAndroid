@@ -33,5 +33,16 @@ public class JudgeUtil {
         }
         return null;
     }
+    public static String getDietName(Integer time){
+        switch (time){
+            case 1:
+                return "早餐";
+            case 2:
+                return "午餐";
+            case 3:
+                return "晚餐";
+        }
+        return null;
+    }
 
 }

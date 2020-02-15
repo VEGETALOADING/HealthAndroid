@@ -48,6 +48,25 @@ public class MysportVO {
     private String unit;
     private String name;
 
+    private Integer sportQuantity;
+    private Integer sportCal;
+
+    public Integer getSportQuantity() {
+        return sportQuantity;
+    }
+
+    public void setSportQuantity(Integer sportQuantity) {
+        this.sportQuantity = sportQuantity;
+    }
+
+    public Integer getSportCal() {
+        return sportCal;
+    }
+
+    public void setSportCal(Integer sportCal) {
+        this.sportCal = sportCal;
+    }
+
     public String getUnit() {
         return unit;
     }
