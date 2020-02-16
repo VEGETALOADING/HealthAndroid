@@ -94,7 +94,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
                 public void onClick(View v) {
                     UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(mContext).readObject("user", UserVO.class);
 
-                    OkHttpUtils.get("http://192.168.1.10:8080/portal/follow/followornot.do?id=" + mList.get(position).getId() + "&followerid=" + userVO.getId(),
+                    OkHttpUtils.get("http://192.168.1.4:8080/portal/follow/followornot.do?id=" + mList.get(position).getId() + "&followerid=" + userVO.getId(),
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {

@@ -63,7 +63,7 @@
         android:layout_below="@id/top_ll"
         android:layout_above="@id/nav_das"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:foreground="@drawable/dim"
         tools:foreground="">
         <LinearLayout

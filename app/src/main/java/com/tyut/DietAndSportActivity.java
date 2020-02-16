@@ -1,11 +1,13 @@
 package com.tyut;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -86,6 +88,10 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
     LinearLayout lunch_ll;
     LinearLayout dinner_ll;
     LinearLayout sport_ll;
+    LinearLayout navAddBreakfast;
+    LinearLayout navAddLunch;
+    LinearLayout navAddDinner;
+    LinearLayout navAddSpoort;
     TextView breakfastHot_tv;
     TextView lunchHot_tv;
     TextView dinnerHot_tv;
@@ -161,7 +167,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                             public void onClick(int position) {
                                 MyfoodVO myfoodVO  = breakfastList.get(position);
                                 final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(null, myfoodVO, DietAndSportActivity.this);
-                                foodPopUpWindow.setCancel(new FoodPopUpWindow.IOnCancelListener() {
+                                foodPopUpWindow.initialData().setCancel(new FoodPopUpWindow.IOnCancelListener() {
                                     @Override
                                     public void onCancel(FoodPopUpWindow dialog) {
                                         foodPopUpWindow.getFoodPopupWindow().dismiss();
@@ -169,7 +175,10 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
+
+                                        Toast.makeText(DietAndSportActivity.this, "onconfirm", Toast.LENGTH_SHORT).show();
                                         onResume();
+
                                     }
                                 }).showFoodPopWindow();
 
@@ -190,7 +199,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 MyfoodVO myfoodVO  = lunchList.get(position);
 
                                 final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(null, myfoodVO, DietAndSportActivity.this);
-                                foodPopUpWindow.setCancel(new FoodPopUpWindow.IOnCancelListener() {
+                                foodPopUpWindow.initialData().setCancel(new FoodPopUpWindow.IOnCancelListener() {
                                     @Override
                                     public void onCancel(FoodPopUpWindow dialog) {
                                         foodPopUpWindow.getFoodPopupWindow().dismiss();
@@ -198,7 +207,10 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
+                                        Toast.makeText(DietAndSportActivity.this, "onconfirm", Toast.LENGTH_SHORT).show();
+
                                         onResume();
+
                                     }
                                 }).showFoodPopWindow();
                             }
@@ -218,7 +230,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 MyfoodVO myfoodVO  = dinnerList.get(position);
 
                                 final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(null, myfoodVO, DietAndSportActivity.this);
-                                foodPopUpWindow.setCancel(new FoodPopUpWindow.IOnCancelListener() {
+                                foodPopUpWindow.initialData().setCancel(new FoodPopUpWindow.IOnCancelListener() {
                                     @Override
                                     public void onCancel(FoodPopUpWindow dialog) {
                                         foodPopUpWindow.getFoodPopupWindow().dismiss();
@@ -226,6 +238,8 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
+                                        Toast.makeText(DietAndSportActivity.this, "onconfirm", Toast.LENGTH_SHORT).show();
+
                                         onResume();
                                     }
                                 }).showFoodPopWindow();
@@ -308,6 +322,11 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
         dinnerHot_tv = findViewById(R.id.dinnerHot);
         sportHot_tv = findViewById(R.id.sportHot);
 
+        navAddBreakfast = findViewById(R.id.breakfast_das);
+        navAddLunch = findViewById(R.id.lunch_das);
+        navAddDinner = findViewById(R.id.dinner_das);
+        navAddSpoort = findViewById(R.id.sport_das);
+
         scrollView = findViewById(R.id.scrollview_das);
         nav = findViewById(R.id.nav_das);
         whole_rl = findViewById(R.id.whole_rl);
@@ -330,14 +349,23 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
         lastDay.setOnClickListener(this);
         nextDay.setOnClickListener(this);
         day.setOnClickListener(this);
+        navAddBreakfast.setOnClickListener(this);
+        navAddLunch.setOnClickListener(this);
+        navAddDinner.setOnClickListener(this);
+        navAddSpoort.setOnClickListener(this);
 
 
     }
 
     @Override
     protected void onResume() {
+        Log.d("tag", "onResume");
         super.onResume();
         userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        if(getIntent().getStringExtra("date")!=null){
+            currentShowDate = getIntent().getStringExtra("date");
+            day.setText(currentShowDate.substring(5, 7)+"月"+currentShowDate.substring(8)+"日");
+        }
         getHotData(currentShowDate);
 
     }
@@ -347,7 +375,9 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
 
         switch (v.getId()){
             case R.id.return_k:
-                finish();
+
+                Intent intent5 = new Intent(DietAndSportActivity.this, RecordActivity.class);
+                DietAndSportActivity.this.startActivity(intent5);
                 break;
             case R.id.lastday_iv:
                 currentShowDate = StringUtil.getLastDay(currentShowDate);
@@ -408,6 +438,33 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                         getHotData(currentShowDate);
                     }
                 });
+                break;
+            case R.id.breakfast_das:
+                Intent intent = new Intent(DietAndSportActivity.this, FoodListActivity.class);
+                intent.putExtra("createtime", currentShowDate);
+                intent.putExtra("src", "DIETANDSPORTACTIVITY");
+                intent.putExtra("time", "早餐");
+                DietAndSportActivity.this.startActivity(intent);
+                break;
+            case R.id.lunch_das:
+                Intent intent1 = new Intent(DietAndSportActivity.this, FoodListActivity.class);
+                intent1.putExtra("createtime", currentShowDate);
+                intent1.putExtra("src", "DIETANDSPORTACTIVITY");
+                intent1.putExtra("time", "午餐");
+                DietAndSportActivity.this.startActivity(intent1);
+                break;
+            case R.id.dinner_das:
+                Intent intent2 = new Intent(DietAndSportActivity.this, FoodListActivity.class);
+                intent2.putExtra("createtime", currentShowDate);
+                intent2.putExtra("src", "DIETANDSPORTACTIVITY");
+                intent2.putExtra("time", "晚餐");
+                DietAndSportActivity.this.startActivity(intent2);
+                break;
+            case R.id.sport_das:
+                Intent intent4 = new Intent(DietAndSportActivity.this, SportListActivity.class);
+                intent4.putExtra("createtime", currentShowDate);
+                intent4.putExtra("src", "DIETANDSPORTACTIVITY");
+                DietAndSportActivity.this.startActivity(intent4);
                 break;
         }
 
@@ -497,32 +554,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-   /* private void showFoodPopWindow(MyfoodVO myfoodVO){
-        //加载弹出框的布局
-        contentView = LayoutInflater.from(DietAndSportActivity.this).inflate(
-                R.layout.dialog_recordfood, null);
-        TextView date_tv = contentView.findViewById(R.id.date_tv);
-        TextView time_tv = contentView.findViewById(R.id.time_tv);
-        ImageView chooseDate_iv = contentView.findViewById(R.id.choosedate_iv);
-
-
-        foodPopupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        foodPopupWindow.setFocusable(true);// 取得焦点
-        //注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
-        foodPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //点击外部消失
-        foodPopupWindow.setOutsideTouchable(true);
-        //设置可以点击
-        foodPopupWindow.setTouchable(true);
-        //进入退出的动画，指定刚才定义的style
-        foodPopupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
-
-        foodPopupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
-
-    }
-    @Override
+   /* @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(event.getKeyCode()==KeyEvent.KEYCODE_BACK){
             if(foodPopupWindow!=null&&foodPopupWindow.isShowing()){

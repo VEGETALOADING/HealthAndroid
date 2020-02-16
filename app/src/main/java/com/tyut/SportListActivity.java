@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tyut.adapter.RecordSportListAdapter;
 import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -35,8 +36,10 @@ import com.tyut.utils.SharedPreferencesUtil;
 
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.Mysport;
+import com.tyut.vo.MysportVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
+import com.tyut.widget.SportPopUpWindow;
 import com.tyut.widget.SportTimeDialog;
 
 import java.util.ArrayList;
@@ -70,6 +73,8 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
 
     private Badge badge;
     private List<Mysport> mysportList = new ArrayList<>();
+    private String currentShowDate = StringUtil.getCurrentDate("yyyy-MM-dd");
+
 
 
     //子线程主线程通讯
@@ -83,46 +88,39 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                     final List<SportVO> list = (List<SportVO>) msg.obj;
                     rvMain.setLayoutManager(new LinearLayoutManager(SportListActivity.this));
                     rvMain.addItemDecoration(new RecycleViewDivider(SportListActivity.this,  LinearLayoutManager.VERTICAL));
-
                     rvMain.setAdapter(new SportListAdapter(SportListActivity.this, list, new SportListAdapter.OnItemClickListener() {
                         @Override
                         public void onClick(final int position) {
+                            SportVO sportVO  = list.get(position);
 
-                            SportTimeDialog dialog = new SportTimeDialog(SportListActivity.this);
-                            dialog.setSportName(list.get(position).getName())
-                                    .setSportUnit(list.get(position).getUnit())
-                                    .setSportQuantity(list.get(position).getQuantity()+"")
-                                    .setSportPic(list.get(position).getPic())
-                                    .setSportCalories(list.get(position).getCalories()+"")
-                                    .setCancel(new SportTimeDialog.IOnCancelListener() {
-                                        @Override
-                                        public void onCancel(SportTimeDialog dialog) {
-
-                                        }
-                                    })
-                                    .setConfirm(new SportTimeDialog.IOnConfirmListener() {
-                                        @Override
-                                        public void onConfirm(SportTimeDialog dialog) {
-                                            if(!dialog.getTime().equals("0")){
-                                                Mysport mysport = new Mysport();
-                                                mysport.setTime(Integer.parseInt(dialog.getTime()));
-                                                mysport.setCal(Integer.parseInt(dialog.getCal()));
-                                                mysport.setSportid(list.get(position).getId());
-                                                mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
-                                                mysport.setCreateTime(StringUtil.convertDatetime(new Date(), "yyyy-MM-dd"));
-                                                mysportList.add(mysport);
-                                                badge.setBadgeNumber(badge.getBadgeNumber()+1);
-
-                                            }else{
-                                                Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
-                                            }
-
-                                        }
-                                    }).show();
-
+                            final SportPopUpWindow sportPopUpWindow = new SportPopUpWindow(sportVO, null, SportListActivity.this);
+                            sportPopUpWindow.setCreateTime(currentShowDate)
+                                    .setCancel(new SportPopUpWindow.IOnCancelListener() {
+                                @Override
+                                public void onCancel(SportPopUpWindow dialog) {
+                                    sportPopUpWindow.getSportPopupWindow().dismiss();
+                                }
+                            }).setConfirm(new SportPopUpWindow.IOnConfirmListener() {
+                                @Override
+                                public void onConfirm(SportPopUpWindow dialog) {
+                                    if(!dialog.getTime().equals("0")) {
+                                        Mysport mysport = new Mysport();
+                                        mysport.setTime(Integer.parseInt(dialog.getTime()));
+                                        mysport.setCal(Integer.parseInt(dialog.getCal()));
+                                        mysport.setSportid(list.get(position).getId());
+                                        mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
+                                        mysport.setCreateTime(dialog.getCreateTime());
+                                        mysportList.add(mysport);
+                                        badge.setBadgeNumber(badge.getBadgeNumber() + 1);
+                                    }else{
+                                        Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }).showFoodPopWindow();
 
                         }
                     }));
+
                     commonandmy_ll.setVisibility(View.VISIBLE);
                     scrollView.setVisibility(View.VISIBLE);
                     line.setVisibility(View.VISIBLE);
@@ -144,37 +142,33 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                         @Override
                         public void onClick(final int position) {
 
-                            SportTimeDialog dialog = new SportTimeDialog(SportListActivity.this);
-                            dialog.setSportName(list2.get(position).getName())
-                                    .setSportUnit(list2.get(position).getUnit())
-                                    .setSportQuantity(list2.get(position).getQuantity()+"")
-                                    .setSportPic(list2.get(position).getPic())
-                                    .setSportCalories(list2.get(position).getCalories()+"")
-                                    .setCancel(new SportTimeDialog.IOnCancelListener() {
+                            SportVO sportVO  = list2.get(position);
+
+                            final SportPopUpWindow sportPopUpWindow = new SportPopUpWindow(sportVO, null, SportListActivity.this);
+                            sportPopUpWindow.setCreateTime(currentShowDate)
+                                    .setCancel(new SportPopUpWindow.IOnCancelListener() {
                                         @Override
-                                        public void onCancel(SportTimeDialog dialog) {
-
+                                        public void onCancel(SportPopUpWindow dialog) {
+                                            sportPopUpWindow.getSportPopupWindow().dismiss();
                                         }
-                                    })
-                                    .setConfirm(new SportTimeDialog.IOnConfirmListener() {
-                                        @Override
-                                        public void onConfirm(SportTimeDialog dialog) {
-                                            if(!dialog.getTime().equals("0")){
-                                                Mysport mysport = new Mysport();
-                                                mysport.setTime(Integer.parseInt(dialog.getTime()));
-                                                mysport.setSportid(list2.get(position).getId());
-                                                mysport.setCal(Integer.parseInt(dialog.getCal()));
-                                                mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
-                                                mysport.setCreateTime(StringUtil.convertDatetime(new Date(), "yyyy-MM-dd"));
-                                                mysportList.add(mysport);
-                                                badge.setBadgeNumber(badge.getBadgeNumber()+1);
-
-                                            }else{
-                                                Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
-                                            }
-
-                                        }
-                                    }).show();
+                                    }).setConfirm(new SportPopUpWindow.IOnConfirmListener() {
+                                @Override
+                                public void onConfirm(SportPopUpWindow dialog) {
+                                    Toast.makeText(SportListActivity.this, "hhh", Toast.LENGTH_SHORT).show();
+                                    if(!dialog.getTime().equals("0")) {
+                                        Mysport mysport = new Mysport();
+                                        mysport.setTime(Integer.parseInt(dialog.getTime()));
+                                        mysport.setCal(Integer.parseInt(dialog.getCal()));
+                                        mysport.setSportid(list2.get(position).getId());
+                                        mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
+                                        mysport.setCreateTime(dialog.getCreateTime());
+                                        mysportList.add(mysport);
+                                        badge.setBadgeNumber(badge.getBadgeNumber() + 1);
+                                    }else{
+                                        Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }).showFoodPopWindow();
 
                         }
                     }));
@@ -233,6 +227,9 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
+        if (getIntent().getStringExtra("createtime") != null){
+            currentShowDate = getIntent().getStringExtra("createtime");
+        }
 
         //初始化气泡
         initBadge();
@@ -269,9 +266,11 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.return_f:
-                Intent intent = new Intent(SportListActivity.this, HomeActivity.class);
+               /* Intent intent = new Intent(SportListActivity.this, HomeActivity.class);
                 intent.putExtra("src", SPORTLISTACTIVITY);
-                SportListActivity.this.startActivity(intent);
+                SportListActivity.this.startActivity(intent);*/
+               this.finish();
+               break;
             case R.id.my_sport:
                 current_category = 2;
                 my_sport.setTextColor(v.getResources().getColor(R.color.black));
@@ -419,6 +418,14 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                     );
                 }
                 this.finish();
+                Intent intent1 = null;
+                if(getIntent().getStringExtra("src").equals("DIETANDSPORTACTIVITY")){
+                    intent1 = new Intent(SportListActivity.this, DietAndSportActivity.class);
+                    intent1.putExtra("date", currentShowDate);
+                }else if(getIntent().getStringExtra("src").equals("HOMEACTIVITY")){
+                    intent1 = new Intent(SportListActivity.this, HomeActivity.class);
+                }
+                SportListActivity.this.startActivity(intent1);
                 break;
 
 

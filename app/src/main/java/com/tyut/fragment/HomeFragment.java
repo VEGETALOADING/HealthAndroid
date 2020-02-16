@@ -121,15 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                         public void onClick(final int position) {
 
                             Intent intent = new Intent(getActivity(), FoodDetailActivity.class);
-                            intent.putExtra("id", list.get(position).getId());
-                            intent.putExtra("name", list.get(position).getName());
-                            intent.putExtra("quantity", list.get(position).getQuantity());
-                            intent.putExtra("unit", list.get(position).getUnit());
-                            intent.putExtra("calories", list.get(position).getCalories());
-                            intent.putExtra("pic", list.get(position).getPic());
-                            intent.putExtra("protein", list.get(position).getProtein().toString());
-                            intent.putExtra("fat", list.get(position).getFat().toString());
-                            intent.putExtra("carbs", list.get(position).getCarbs().toString());
+                            intent.putExtra("foodvo", list.get(position));
                             getActivity().startActivity(intent);
 
                         }

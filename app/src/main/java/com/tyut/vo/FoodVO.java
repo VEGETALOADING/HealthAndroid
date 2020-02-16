@@ -1,8 +1,9 @@
 package com.tyut.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class FoodVO {
+public class FoodVO implements Serializable {
 
     /**
      *

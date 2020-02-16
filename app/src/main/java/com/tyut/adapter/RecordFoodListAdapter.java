@@ -44,7 +44,7 @@ public class RecordFoodListAdapter extends RecyclerView.Adapter<RecordFoodListAd
             holder.recordHot_tv.setText(mList.get(position).getCal()+"");
             holder.recordQuantity_tv.setText(mList.get(position).getQuantity()+"");
             holder.recordUnit_tv.setText(mList.get(position).getUnit());
-            Glide.with(mContext).load("http://192.168.1.10:8080/foodpic/" + mList.get(position).getPic()).into(holder.recordPic_iv);
+            Glide.with(mContext).load("http://192.168.1.4:8080/foodpic/" + mList.get(position).getPic()).into(holder.recordPic_iv);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

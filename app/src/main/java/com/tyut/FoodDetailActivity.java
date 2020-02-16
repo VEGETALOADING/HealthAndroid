@@ -32,7 +32,9 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
+import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.ServerResponse;
+import com.tyut.widget.FoodPopUpWindow;
 import com.tyut.widget.RecordFoodDialog;
 import com.tyut.widget.SportTimeDialog;
 
@@ -75,6 +77,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
     String carbs;
     String protein;
     String fat;
+    FoodVO foodVO;
 
     Integer userid;
     private static final int ADDFAVORITE = 0;
@@ -143,16 +146,17 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         userid = SharedPreferencesUtil.getInstance(FoodDetailActivity.this).readInt("userid");
-        intent = getIntent();
-        foodId = intent.getIntExtra("id", 0);
-        name = intent.getStringExtra("name");
-        quantity = intent.getIntExtra("quantity", 0);
-        unit = intent.getStringExtra("unit");
-        calories = intent.getIntExtra("calories", 0);
-        pic = intent.getStringExtra("pic");
-        carbs = intent.getStringExtra("carbs");
-        protein = intent.getStringExtra("protein");
-        fat = intent.getStringExtra("fat");
+        foodVO = (FoodVO) getIntent().getSerializableExtra("foodvo");
+
+        foodId = foodVO.getId();
+        name = foodVO.getName();
+        quantity = foodVO.getQuantity();
+        unit = foodVO.getUnit();
+        calories = foodVO.getCalories();
+        pic = foodVO.getPic();
+        carbs = foodVO.getCarbs().toString();
+        protein = foodVO.getProtein().toString();
+        fat = foodVO.getFat().toString();
 
         name_tv.setText(name);
         quantity1_tv.setText(quantity+"");
@@ -262,46 +266,20 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                         }
                 );
             case R.id.record_fooddetail_ll:
-                RecordFoodDialog dialog = new RecordFoodDialog(FoodDetailActivity.this);
-                dialog.setFoodName(name)
-                        .setFoodUnit(unit)
-                        .setFoodQuantity(quantity+"")
-                        .setFoodPic(pic)
-                        .setFoodCal(calories+"")
-                        .setCancel(new RecordFoodDialog.IOnCancelListener() {
-                            @Override
-                            public void onCancel(RecordFoodDialog dialog) {
 
-                            }
-                        })
-                        .setConfirm(new RecordFoodDialog.IOnConfirmListener() {
-                            @Override
-                            public void onConfirm(final RecordFoodDialog dialog) {
-                                Integer dateIndex = dialog.getDateIndex();
-                                String quantity = dialog.getQuantity();
-                                String cal = dialog.getCal();
-                                Integer time = JudgeUtil.getDietTime(dialog.getTime());
-                                OkHttpUtils.get("http://192.168.1.4:8080/portal/myfood/add.do?userid="+userid+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex)+"&cal="+cal,
-                                        new OkHttpCallback(){
-                                            @Override
-                                            public void onFinish(String status, String msg) {
-                                                super.onFinish(status, msg);
-                                                //解析数据
-                                                Gson gson=new Gson();
-                                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
-                                                Looper.prepare();
-                                                Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
-                                                Looper.loop();
-                                                dialog.dismiss();
+                final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(foodVO, null, FoodDetailActivity.this);
+                foodPopUpWindow.initialData().setCancel(new FoodPopUpWindow.IOnCancelListener() {
+                    @Override
+                    public void onCancel(FoodPopUpWindow dialog) {
+                        foodPopUpWindow.getFoodPopupWindow().dismiss();
+                    }
+                }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
+                    @Override
+                    public void onConfirm(FoodPopUpWindow dialog) {
+                        onResume();
+                    }
+                }).showFoodPopWindow();
 
-
-                                            }
-                                        }
-                                );
-
-
-                            }
-                        }).show();
                 break;
 
 

@@ -71,7 +71,7 @@ public class SportPopUpWindow implements View.OnClickListener {
     private String sportName;
     private String sportCalories;
     private String sportPic;
-    private String creatTime;
+    private String createTime = StringUtil.getCurrentDate("yyyy-MM-dd");
     private MysportVO mysportVO;
     private SportVO sportVO;
 
@@ -95,12 +95,12 @@ public class SportPopUpWindow implements View.OnClickListener {
         this.sportPopupWindow = sportPopupWindow;
     }
 
-    public String getCreatTime() {
-        return creatTime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public SportPopUpWindow setCreatTime(String creatTime) {
-        this.creatTime = creatTime;
+    public SportPopUpWindow setCreateTime(String createTime) {
+        this.createTime = createTime;
         return this;
     }
 
@@ -233,7 +233,7 @@ public class SportPopUpWindow implements View.OnClickListener {
 
                 }else{
 
-                    //新建运动
+                    //添加运动到列表
                 }
 
                 sportPopupWindow.dismiss();

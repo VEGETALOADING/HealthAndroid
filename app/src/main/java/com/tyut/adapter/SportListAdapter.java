@@ -44,7 +44,7 @@ public class SportListAdapter extends RecyclerView.Adapter<SportListAdapter.Line
             holder.calories_tv.setText(mList.get(position).getCalories()+"");
             holder.quantity_tv.setText(mList.get(position).getQuantity()+"");
             holder.unit_tv.setText(mList.get(position).getUnit());
-            Glide.with(mContext).load("http://192.168.1.10:8080/sportpic/" + mList.get(position).getPic()).into(holder.sport_pic);
+            Glide.with(mContext).load("http://192.168.1.4:8080/sportpic/" + mList.get(position).getPic()).into(holder.sport_pic);
 
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
