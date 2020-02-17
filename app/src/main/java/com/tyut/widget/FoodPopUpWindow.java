@@ -275,8 +275,6 @@ public class FoodPopUpWindow implements View.OnClickListener {
                 }
                 break;
             case R.id.confirm_recordfood_tv:
-                tag = false;
-                Integer index = dateIndex;
                 String quantity = getQuantity();
                 String cal = getCal();
                 Integer time = JudgeUtil.getDietTime(getTime());
@@ -291,9 +289,6 @@ public class FoodPopUpWindow implements View.OnClickListener {
                                     //解析数据
                                     Gson gson=new Gson();
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
-                                    if(serverResponse.getStatus() == 0){
-                                        tag = true;
-                                    }
                                     Looper.prepare();
                                     Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
                                     Looper.loop();
@@ -433,6 +428,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
             public void onSelect(String data) {
                 date = data;
                 dateIndex = originalList.indexOf(data);
+                createTime = dateWithYearList.get(dateIndex);
 
             }
         });

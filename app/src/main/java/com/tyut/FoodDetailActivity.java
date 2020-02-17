@@ -35,7 +35,6 @@ import com.tyut.vo.FoodVO;
 import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.widget.FoodPopUpWindow;
-import com.tyut.widget.RecordFoodDialog;
 import com.tyut.widget.SportTimeDialog;
 
 

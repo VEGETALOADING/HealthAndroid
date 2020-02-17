@@ -36,6 +36,9 @@
         <activity android:name=".WeightActivity">
 
         </activity>
+        <activity android:name=".GirthActivity">
+
+        </activity>
         <activity android:name=".UpdateUserInfoActivity" />
         <activity android:name=".UpdateUsernameActivity" />
         <activity android:name=".UpdatePhoneActivity" />

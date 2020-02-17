@@ -185,7 +185,8 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 RecordActivity.this.startActivity(intent);
                 break;
             case R.id.record_weight_ll:
-
+                Intent intent1 = new Intent(RecordActivity.this, WeightActivity.class);
+                RecordActivity.this.startActivity(intent1);
                 break;
             case R.id.record_step_ll:
 
@@ -194,13 +195,16 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
 
                 break;
             case R.id.record_girth_ll:
-
+                Intent intent3 = new Intent(RecordActivity.this, GirthActivity.class);
+                RecordActivity.this.startActivity(intent3);
                 break;
             case R.id.record_habit_ll:
 
                 break;
             case R.id.return_j:
-                finish();
+                Intent intent2 = new Intent(RecordActivity.this, HomeActivity.class);
+                intent2.putExtra("src", 0);
+                RecordActivity.this.startActivity(intent2);
                 break;
         }
     }

@@ -33,7 +33,6 @@ import com.tyut.utils.StringUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.vo.Weight;
-import com.tyut.widget.RecordFoodDialog;
 import com.tyut.widget.RecordWeightDialog;
 
 import java.util.List;

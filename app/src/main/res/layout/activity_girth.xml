@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/top_ll"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:id="@+id/return_m"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_return">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="返回"
+                android:textColor="@color/black"></TextView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="围度记录"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:paddingLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"></TextView>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="#F7F7F7">
+
+        <LinearLayout
+            android:id="@+id/girth_curve"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="2dp"
+                android:id="@+id/img_curve"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_curve_unselected">
+            </ImageView>
+            <TextView
+                android:id="@+id/tv_curve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="曲线"
+                android:textColor="#5E5E5E"></TextView>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/girth_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="2dp"
+                android:id="@+id/img_date"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/icon_calendar_unselected">
+            </ImageView>
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="日历"
+                android:textColor="#5E5E5E"></TextView>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/girth_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_ll"
+        android:layout_above="@+id/nav"></RelativeLayout>
+</RelativeLayout>
