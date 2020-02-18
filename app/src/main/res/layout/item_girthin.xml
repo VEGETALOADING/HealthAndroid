@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_gravity="center"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/girthItem_type"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="大腿围"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="20sp"></TextView>
+        <TextView
+            android:id="@+id/girthItem_value"
+            android:layout_marginLeft="150dp"
+            android:layout_width="80dp"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:text="59.6"
+            ></TextView>
+        <TextView
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="厘米"
+            ></TextView>
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/right"></ImageView>
+    </LinearLayout>
+
+</LinearLayout>

@@ -44,5 +44,22 @@ public class JudgeUtil {
         }
         return null;
     }
+    public static String getGirthName(Integer type){
+        switch (type){
+            case 0:
+                return "腰围";
+            case 1:
+                return "大腿围";
+            case 2:
+                return "小腿围";
+            case 3:
+                return "臀围";
+            case 4:
+                return "胸围";
+            case 5:
+                return "手臂围";
+        }
+        return null;
+    }
 
 }

@@ -13,6 +13,7 @@
     <color name="green_lighter">#DDFFF1</color>
     <color name="blue">#0000FF</color>
     <color name="green">#00FF00</color>
+    <color name="defaultBackground">#fafafa</color>
 
 
 

@@ -125,7 +125,7 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
                         curveView1.drawTheChart();
                         curveView1.drawTheChartByMPAndroid(yaoChart);
                     }
-                    
+
                     if(girthListVO.getXiaotuiList().size() == 0){
                         xiaotuiChart.setVisibility(View.GONE);
                         noXiaotuiData.setVisibility(View.VISIBLE);
@@ -275,16 +275,6 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
                     }
                 }
         );
-       /* xList.add("a");
-        xList.add("b");
-        xList.add("c");
-        xList.add("d");
-        xList.add("e");
-        yList.add(new Entry(0, 50));
-        yList.add(new Entry(1, 60));
-        yList.add(new Entry(2, 65));
-        yList.add(new Entry(3, 55));
-        yList.add(new Entry(4, 70));*/
 
     }
 
@@ -322,30 +312,32 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        Integer type = null;
         switch (v.getId()){
             case R.id.recordyaowei_btn:
-                type = 0;
+                showPopUpWindow(0);
                 break;
             case R.id.recorddatuiwei_btn:
-                type = 1;
+                showPopUpWindow(1);
                 break;
             case R.id.recordtunwei_btn:
-                type = 3;
+                showPopUpWindow(3);
                 break;
             case R.id.recordbiwei_btn:
-                type = 5;
+                showPopUpWindow(5);
                 break;
             case R.id.recordxiaotuiwei_btn:
-                type = 2;
+                showPopUpWindow(2);
                 break;
             case R.id.recordxiongwei_btn:
-                type = 4;
+                showPopUpWindow(4);
                 break;
-            default:
-                type = 0;
         }
-        final GirthPopUpWindow girthPopUpWindow = new GirthPopUpWindow(getActivity(), type);
+
+
+    }
+
+    private void showPopUpWindow(Integer type){
+        final GirthPopUpWindow girthPopUpWindow = new GirthPopUpWindow(getActivity(), type, null, null);
         girthPopUpWindow.setCancel(new GirthPopUpWindow.IOnCancelListener() {
             @Override
             public void onCancel(GirthPopUpWindow dialog) {
@@ -358,6 +350,5 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
                 onResume();
             }
         }).showFoodPopWindow();
-
     }
 }

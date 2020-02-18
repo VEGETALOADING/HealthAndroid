@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.tyut.fragment.GirthCurveFragment;
+import com.tyut.fragment.GirthDateFragment;
 import com.tyut.fragment.WeightCalendarFragment;
 import com.tyut.fragment.WeightCurveFragment;
 import com.tyut.fragment.WeightProgressFragment;
@@ -63,15 +64,13 @@ public class GirthActivity extends AppCompatActivity implements View.OnClickList
         curve_ll.setOnClickListener(this);
         return_ll.setOnClickListener(this);
 
-        attachFragment(CURVEFRAGMENT_TAG);
 
-
-        /*Intent intent = getIntent();
+        Intent intent = getIntent();
         if(intent.getIntExtra("src", 0 ) == 0){
-            attachFragment(PROGRESSFRAGMENT_TAG);
+            attachFragment(CURVEFRAGMENT_TAG);
         }else if(intent.getIntExtra("src", 0 ) == 1){
-            attachFragment(MYFRAGMENT_TAG);
-        }*/
+            attachFragment(DATEFRAGMENT_TAG);
+        }
 
     }
 
@@ -101,7 +100,7 @@ public class GirthActivity extends AppCompatActivity implements View.OnClickList
                 img_curve.setImageResource(R.mipmap.icon_curve_unselected);
                 tv_curve.setTextColor(Color.rgb(94,94,94));
                 break;
-            case R.id.return_h:
+            case R.id.return_m:
                 Intent intent = new Intent(GirthActivity.this, RecordActivity.class);
                 /*intent.putExtra("src", HOMEFRAGMENT_TAG);*/
                 GirthActivity.this.startActivity(intent);
@@ -126,7 +125,7 @@ public class GirthActivity extends AppCompatActivity implements View.OnClickList
                 fragment = new GirthCurveFragment();
 
             }else if(fragmentTag.equals(DATEFRAGMENT_TAG)){
-                fragment = new WeightProgressFragment();
+                fragment = new GirthDateFragment();
             }
 
             fragmentTransaction.add(fragment, fragmentTag);

@@ -54,16 +54,20 @@ public class GirthPopUpWindow implements View.OnClickListener {
     private ScrollPickView chooseDate_spv;
 
 
-    List<String> dateList = StringUtil.getRecengtDateList();
+    /*List<String> dateList = StringUtil.getRecengtDateList();
     List<String> originalList = StringUtil.getRecengtDateList();
-    List<String> dateWithYearList = StringUtil.getRecengtDateListWithYear();
+    List<String> dateWithYearList = StringUtil.getRecengtDateListWithYear();*/
+    List<String> dateList = new ArrayList<>();
+    List<String> originalList = new ArrayList<>();
+    List<String> dateWithYearList = new ArrayList<>();
 
     Boolean showChooseDate = false;
     private String date;
     Integer dateIndex=5;//默认今天
-    private Float defaultValue = 40.0f;
+    private Float defaultValue = null;
     private Integer type;
     private String length;
+    private String createTime;
 
     public String getLength() {
         return length_tv.getText()+"";
@@ -104,13 +108,27 @@ public class GirthPopUpWindow implements View.OnClickListener {
         return this;
     }
 
-    public GirthPopUpWindow(Context context, Integer type) {
+    public GirthPopUpWindow(Context context, Integer type, Float defaultValue, String createTime) {
 
         this.context = context;
         this.type = type;
+        this.defaultValue = defaultValue;
+        this.createTime = createTime;
+
         contentView = LayoutInflater.from(context).inflate(
                 R.layout.dialog_recordgirth, null);
         initView();
+        if(createTime == null){
+            dateList = StringUtil.getRecengtDateList();
+            originalList = StringUtil.getRecengtDateList();
+            dateWithYearList = StringUtil.getRecengtDateListWithYear();
+            date_tv.setText(StringUtil.getCurrentDate("MM月-dd日"));
+        }else{
+            dateList = StringUtil.getRecengtDateList(createTime);
+            originalList = StringUtil.getRecengtDateList(createTime);
+            dateWithYearList = StringUtil.getRecengtDateListWithYear(createTime);
+            date_tv.setText(createTime.substring(5, 7)+"月"+createTime.substring(8)+"日");
+        }
         initRuler(rulerView, horizontalScrollView);
         initScrollPick();
 
@@ -198,7 +216,7 @@ public class GirthPopUpWindow implements View.OnClickListener {
         rulerView.setHorizontalScrollView(horizontalScrollView);
 
 
-        rulerView.setDefaultScaleValue(defaultValue);
+        rulerView.setDefaultScaleValue(defaultValue-20);
 
 
 
@@ -241,6 +259,7 @@ public class GirthPopUpWindow implements View.OnClickListener {
             public void onSelect(String data) {
                 date = data;
                 dateIndex = originalList.indexOf(data);
+                createTime = dateWithYearList.get(dateIndex);
 
             }
         });
@@ -279,36 +298,49 @@ public class GirthPopUpWindow implements View.OnClickListener {
         name_tv = contentView.findViewById(R.id.name);
         how_tv = contentView.findViewById(R.id.how);
 
+
         switch (type){
             case 0:
                 name_tv.setText("腰围");
                 how_tv.setText("屏住呼吸，水平测量腰部最细处");
-                defaultValue = 40.0f;
+                if (defaultValue == null) {
+                    defaultValue = 40.0f;
+                }
                 break;
             case 1:
                 name_tv.setText("大腿围");
                 how_tv.setText("双腿分开，水平测量大腿根下方3厘米");
-                defaultValue = 40.0f;
+                if (defaultValue == null) {
+                    defaultValue = 40.0f;
+                }
                 break;
             case 2:
                 name_tv.setText("小腿围");
                 how_tv.setText("双腿分开，水平测量小腿最粗处");
-                defaultValue = 30.0f;
+                if (defaultValue == null) {
+                    defaultValue = 30.0f;
+                }
                 break;
             case 3:
                 name_tv.setText("臀围");
                 how_tv.setText("双腿并拢，水平测量臀部最丰满处");
-                defaultValue = 60.0f;
+                if (defaultValue == null) {
+                    defaultValue = 60.0f;
+                }
                 break;
             case 4:
                 name_tv.setText("胸围");
                 how_tv.setText("屏住呼吸，水平测量胸部最丰满处");
-                defaultValue = 80.0f;
+                if (defaultValue == null) {
+                    defaultValue = 80.0f;
+                }
                 break;
             case 5:
                 name_tv.setText("手臂围");
                 how_tv.setText("手臂自然下垂，水平测量上臂最粗处");
-                defaultValue = 30.0f;
+                if (defaultValue == null) {
+                    defaultValue = 30.0f;
+                }
                 break;
         }
 
