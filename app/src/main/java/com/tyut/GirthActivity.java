@@ -101,8 +101,14 @@ public class GirthActivity extends AppCompatActivity implements View.OnClickList
                 tv_curve.setTextColor(Color.rgb(94,94,94));
                 break;
             case R.id.return_m:
-                Intent intent = new Intent(GirthActivity.this, RecordActivity.class);
-                /*intent.putExtra("src", HOMEFRAGMENT_TAG);*/
+                Intent intent = null;
+                if(getIntent().getStringExtra("src").equals("HOMEACTIVITY")){
+                    intent = new Intent(GirthActivity.this, HomeActivity.class);
+                    intent.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
+
+                }else if(getIntent().getStringExtra("src").equals("RECORDACTIVITY")){
+                    intent = new Intent(GirthActivity.this, RecordActivity.class);
+                }
                 GirthActivity.this.startActivity(intent);
                 break;
         }

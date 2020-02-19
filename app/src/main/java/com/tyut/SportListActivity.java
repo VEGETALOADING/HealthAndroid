@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -27,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.adapter.RecordSportListAdapter;
 import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -36,14 +34,11 @@ import com.tyut.utils.SharedPreferencesUtil;
 
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.Mysport;
-import com.tyut.vo.MysportVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
 import com.tyut.widget.SportPopUpWindow;
-import com.tyut.widget.SportTimeDialog;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import q.rorbin.badgeview.Badge;

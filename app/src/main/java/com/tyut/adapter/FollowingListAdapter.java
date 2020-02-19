@@ -31,7 +31,7 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
     @Override
     public FollowingListAdapter.LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        //传入Item布局
-        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.following_item, parent, false));
+        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_following, parent, false));
 
     }
 

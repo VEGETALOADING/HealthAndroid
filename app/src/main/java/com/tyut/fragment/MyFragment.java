@@ -74,7 +74,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.my_fragment, container, false);
+        View view =  inflater.inflate(R.layout.fragment_my, container, false);
 
         user_photo = view.findViewById(R.id.user_photo);
         user_name = view.findViewById(R.id.user_username);

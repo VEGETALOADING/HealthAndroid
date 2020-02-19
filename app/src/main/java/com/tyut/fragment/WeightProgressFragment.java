@@ -20,12 +20,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.FoodDetailActivity;
 import com.tyut.R;
 import com.tyut.UpdateUserDataActivity;
-import com.tyut.UpdateUserInfoActivity;
-import com.tyut.WeightActivity;
-import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
@@ -67,7 +63,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.weightprogress_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_weightprogress, container, false);
 
         initialweight_tv = view.findViewById(R.id.initialweight_tv);
         initialunit_tv = view.findViewById(R.id.initialweightunit_tv);

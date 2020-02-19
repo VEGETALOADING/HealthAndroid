@@ -31,14 +31,11 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.FoodDetailActivity;
-import com.tyut.HomeActivity;
 import com.tyut.R;
 import com.tyut.RecordActivity;
 import com.tyut.ShowSchemaActivity;
-import com.tyut.SportListActivity;
 import com.tyut.WeightActivity;
 import com.tyut.adapter.FoodListAdapter;
-import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
@@ -145,7 +142,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view =  inflater.inflate(R.layout.home_fragment, container, false);
+        View view =  inflater.inflate(R.layout.fragment_home, container, false);
 
         userpic = view.findViewById(R.id.userpic_home);
         username = view.findViewById(R.id.username_home);

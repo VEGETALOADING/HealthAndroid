@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import com.tyut.R;
 import com.tyut.view.ScrollPickView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -72,7 +71,7 @@ public class ChooseOneDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_chooseone);
+        setContentView(R.layout.popupwindow_chooseone);
 
 
         //设置宽度

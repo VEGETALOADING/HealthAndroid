@@ -12,14 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.bumptech.glide.Glide;
 import com.tyut.R;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
-import com.tyut.view.RulerView;
 import com.tyut.view.WeightRulerView;
-
-import org.w3c.dom.Text;
 
 
 public class RecordWeightDialog extends Dialog implements View.OnClickListener {
@@ -95,7 +91,7 @@ public class RecordWeightDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_recordweight);
+        setContentView(R.layout.popupwindow_weight);
 
         //设置宽度
         WindowManager m = getWindow().getWindowManager();

@@ -182,6 +182,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()){
             case R.id.record_dietandsport_ll:
                 Intent intent = new Intent(RecordActivity.this, DietAndSportActivity.class);
+                intent.putExtra("src", "RECORDACTIVITY");
                 RecordActivity.this.startActivity(intent);
                 break;
             case R.id.record_weight_ll:
@@ -196,6 +197,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.record_girth_ll:
                 Intent intent3 = new Intent(RecordActivity.this, GirthActivity.class);
+                intent3.putExtra("src", "RECORDACTIVITY");
                 RecordActivity.this.startActivity(intent3);
                 break;
             case R.id.record_habit_ll:

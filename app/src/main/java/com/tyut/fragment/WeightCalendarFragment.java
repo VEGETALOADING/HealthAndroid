@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,10 +25,6 @@ import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.RecordWeightDialog;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class WeightCalendarFragment extends Fragment implements OnClickListener {
 
     CalendarView calendarView;
@@ -38,7 +33,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.weightcalendar_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_weightcalendar, container, false);
 
         calendarView = view.findViewById(R.id.weight_cv);
         button = view.findViewById(R.id.calendar_record_btn);

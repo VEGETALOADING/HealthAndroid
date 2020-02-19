@@ -7,8 +7,6 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,29 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.R;
-import com.tyut.SportListActivity;
 import com.tyut.adapter.GirthOutAdapter;
-import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
-import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.view.CurveView;
-import com.tyut.vo.GirthByDate;
-import com.tyut.vo.GirthListVO;
 import com.tyut.vo.GirthVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.SportVO;
-import com.tyut.widget.GirthPopUpWindow;
-import com.tyut.widget.SportPopUpWindow;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +64,7 @@ public class GirthDateFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.girthdate_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_girthdate, container, false);
         recyclerView = view.findViewById(R.id.girthOutRv_main);
         return view;
     }

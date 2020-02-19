@@ -1,44 +1,30 @@
 package com.tyut.widget;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.os.Looper;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.R;
-import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
 import com.tyut.view.RulerView;
-import com.tyut.view.ScrollPickView;
-import com.tyut.vo.FoodVO;
-import com.tyut.vo.MyfoodVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.MysportVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SportVO;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SportPopUpWindow implements View.OnClickListener {
@@ -151,7 +137,7 @@ public class SportPopUpWindow implements View.OnClickListener {
         this.sportVO = sportVO;
 
         contentView = LayoutInflater.from(context).inflate(
-                R.layout.dialog_sporttime, null);
+                R.layout.popupwindow_sport, null);
 
         if(mysportVO == null){
             this.sportName = sportVO.getName();

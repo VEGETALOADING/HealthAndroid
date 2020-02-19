@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.FoodListAdapter;
-import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -36,16 +35,10 @@ import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
 import com.tyut.vo.Myfood;
-import com.tyut.vo.MyfoodVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.SportVO;
 import com.tyut.widget.FoodPopUpWindow;
-import com.tyut.widget.SportPopUpWindow;
-import com.tyut.widget.SportTimeDialog;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import q.rorbin.badgeview.Badge;

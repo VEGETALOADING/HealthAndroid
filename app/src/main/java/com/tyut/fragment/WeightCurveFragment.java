@@ -1,6 +1,5 @@
 package com.tyut.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -10,14 +9,12 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -30,18 +27,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.FollowerDetailActivity;
-import com.tyut.FollowerListActivity;
-import com.tyut.FoodDetailActivity;
 import com.tyut.R;
-import com.tyut.UpdateUsernameActivity;
-import com.tyut.adapter.FollowerListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
-import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.utils.StringUtil;
-import com.tyut.vo.FollowerVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.Weight;
 
@@ -104,7 +93,7 @@ public class WeightCurveFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.weightcurve_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_weightcurve, container, false);
         lineChart_weight = view.findViewById(R.id.curve_weight);
         noWeightData = view.findViewById(R.id.noweightdata_rl);
         noBodyFatData = view.findViewById(R.id.nobodyfatdate_rl);

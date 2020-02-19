@@ -5,7 +5,6 @@
     android:layout_gravity="center"
     android:background="@drawable/dialog"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -13,25 +12,27 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/chooseheight_dl_close"
+            android:layout_width="150dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="130dp"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:text="身高"
-            android:textSize="20sp"></TextView>
+            android:layout_marginLeft="120dp"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/black"></TextView>
 
         <ImageView
-            android:id="@+id/chooseheight_dl_close"
+            android:id="@+id/weight_dl_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginLeft="75dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="80dp"
             android:src="@mipmap/icon_close"></ImageView>
     </LinearLayout>
 
-
     <RelativeLayout
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
@@ -42,7 +43,7 @@
             android:id="@+id/ch_height_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginTop="50dp"
             android:gravity="bottom"
             android:text="185.0"
@@ -54,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:layout_marginLeft="190dp"
+            android:layout_toRightOf="@id/ch_height_tv"
             android:gravity="bottom"
             android:text="厘米"
             android:textColor="@color/green_light"
@@ -73,7 +74,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
-                android:layout_marginLeft="-55dp"
                 android:background="#ffffff" />
 
 

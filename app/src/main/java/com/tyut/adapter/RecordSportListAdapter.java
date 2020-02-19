@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tyut.R;
-import com.tyut.vo.MyfoodVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.MysportVO;
 
 import java.util.List;
@@ -33,7 +31,7 @@ public class RecordSportListAdapter extends RecyclerView.Adapter<RecordSportList
     @Override
     public RecordSportListAdapter.LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        //传入Item布局
-        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.record_item, parent, false));
+        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_record, parent, false));
 
     }
 

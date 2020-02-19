@@ -1,20 +1,13 @@
 package com.tyut;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,37 +22,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.tu.circlelibrary.CirclePercentBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.RecordFoodListAdapter;
 import com.tyut.adapter.RecordSportListAdapter;
-import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.CircleProgressBar;
-import com.tyut.view.MyProgressView;
-import com.tyut.vo.FollowerVO;
 import com.tyut.vo.FoodVO;
-import com.tyut.vo.GirthVO;
 import com.tyut.vo.HotVO;
 import com.tyut.vo.MyfoodVO;
-import com.tyut.vo.Mysport;
 import com.tyut.vo.MysportVO;
 import com.tyut.vo.NutritionVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.FoodPopUpWindow;
 import com.tyut.widget.SportPopUpWindow;
-import com.tyut.widget.SportTimeDialog;
-
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
-import java.util.Date;
 import java.util.List;
 
 public class DietAndSportActivity extends AppCompatActivity implements View.OnClickListener {
@@ -376,7 +359,15 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
         switch (v.getId()){
             case R.id.return_k:
 
-                Intent intent5 = new Intent(DietAndSportActivity.this, RecordActivity.class);
+                Intent intent5 = null;
+                if(getIntent().getStringExtra("src").equals("HOMEACTIVITY")){
+                    intent5 = new Intent(DietAndSportActivity.this, HomeActivity.class);
+                    intent5.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
+
+                }else if(getIntent().getStringExtra("src").equals("RECORDACTIVITY")){
+                    intent5 = new Intent(DietAndSportActivity.this, RecordActivity.class);
+                }
+
                 DietAndSportActivity.this.startActivity(intent5);
                 break;
             case R.id.lastday_iv:

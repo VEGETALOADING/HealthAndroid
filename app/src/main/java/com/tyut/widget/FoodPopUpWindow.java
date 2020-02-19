@@ -1,32 +1,20 @@
 package com.tyut.widget;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.os.Looper;
-import android.os.Message;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.tyut.DietAndSportActivity;
-import com.tyut.FoodDetailActivity;
 import com.tyut.R;
 import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
@@ -37,13 +25,10 @@ import com.tyut.view.MyHorizontalScrollView;
 import com.tyut.view.RulerView;
 import com.tyut.view.ScrollPickView;
 import com.tyut.vo.FoodVO;
-import com.tyut.vo.HotVO;
 import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.UserVO;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -192,7 +177,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
         this.myfoodVO = myfoodVO;
 
         contentView = LayoutInflater.from(context).inflate(
-                R.layout.dialog_recordfood, null);
+                R.layout.popupwindow_food, null);
 
 
     }

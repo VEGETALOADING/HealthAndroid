@@ -16,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 
 import com.android.tu.circlelibrary.CirclePercentBar;
@@ -24,21 +23,15 @@ import com.bumptech.glide.Glide;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.adapter.FoodListAdapter;
-import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
-import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
-import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.widget.FoodPopUpWindow;
-import com.tyut.widget.SportTimeDialog;
 
 
-import java.util.Date;
 import java.util.List;
 
 public class FoodDetailActivity extends AppCompatActivity implements View.OnClickListener {

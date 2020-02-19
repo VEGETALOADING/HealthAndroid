@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.tyut.FollowerDetailActivity;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -72,7 +71,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
     @Override
     public FollowerListAdapter.LinearViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        //传入Item布局
-        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.follower_item, parent, false));
+        return new LinearViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_follower, parent, false));
 
     }
 

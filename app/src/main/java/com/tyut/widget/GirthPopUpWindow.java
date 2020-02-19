@@ -13,23 +13,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.R;
-import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.GirthRulerView;
 import com.tyut.view.MyHorizontalScrollView;
-import com.tyut.view.RulerView;
 import com.tyut.view.ScrollPickView;
-import com.tyut.vo.MysportVO;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.SportVO;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +109,7 @@ public class GirthPopUpWindow implements View.OnClickListener {
         this.createTime = createTime;
 
         contentView = LayoutInflater.from(context).inflate(
-                R.layout.dialog_recordgirth, null);
+                R.layout.popupwindow_girth, null);
         initView();
         if(createTime == null){
             dateList = StringUtil.getRecengtDateList();

@@ -1,7 +1,5 @@
 package com.tyut.fragment;
 
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,17 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.DietAndSportActivity;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -37,17 +27,7 @@ import com.tyut.view.CurveView;
 import com.tyut.vo.GirthListVO;
 import com.tyut.vo.GirthVO;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.Weight;
-import com.tyut.widget.FoodPopUpWindow;
 import com.tyut.widget.GirthPopUpWindow;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.GraphicalView;
-import org.achartengine.chart.PointStyle;
-import org.achartengine.model.CategorySeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -215,7 +195,7 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.girthcurve_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_girthcurve, container, false);
         yaoChart = view.findViewById(R.id.curve_yaowei);
         noYaoData = view.findViewById(R.id.noyaoweidata_rl);
         datuiChart = view.findViewById(R.id.curve_datuiwei);

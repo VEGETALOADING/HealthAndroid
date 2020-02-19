@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -15,19 +17,37 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.tyut.adapter.RecordFoodListAdapter;
+import com.tyut.adapter.RecordSportListAdapter;
 import com.tyut.fragment.ActivityFragment;
 import com.tyut.fragment.FriendFragment;
 import com.tyut.fragment.HomeFragment;
 import com.tyut.fragment.MyFragment;
+import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.utils.ViewUtil;
+import com.tyut.vo.HotVO;
+import com.tyut.vo.MyfoodVO;
+import com.tyut.vo.MysportVO;
+import com.tyut.vo.UserVO;
+import com.tyut.widget.FoodPopUpWindow;
+import com.tyut.widget.GirthPopUpWindow;
+import com.tyut.widget.SportPopUpWindow;
+import com.tyut.widget.WeightPopUpWindow;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
+    RelativeLayout whole_rl;
     LinearLayout home_LinearLayout;
     LinearLayout friend_LinearLayout;
     LinearLayout activity_LinearLayout;
@@ -44,10 +64,26 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     TextView tv_my;
     private PopupWindow mPop;
 
+    Integer currentFragment;
+
+    //private static int alpha;
+    //private static final int CHANGEALPHA = 0;
     private static final String HOMEFRAGMENT_TAG="HOME";
     private static final String FRIENDFRAGMENT_TAG="FRIEND";
     private static final String ACTIVITYFRAGMENT_TAG="ACTIVITY";
     private static final String MYFRAGMENT_TAG="MY";
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull final Message msg) {
+
+            switch (msg.what){
+                case 0:
+                    whole_rl.getForeground().setAlpha((int)msg.obj);
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +105,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tv_friend = (TextView)findViewById(R.id.tv_friend);
         tv_activity = (TextView)findViewById(R.id.tv_activity);
         tv_my = (TextView)findViewById(R.id.tv_my);
+        whole_rl = findViewById(R.id.whole_rl);
 
+        if (whole_rl.getForeground()!=null){
+            whole_rl.getForeground().setAlpha(0);
+        }
 
         home_LinearLayout.setOnClickListener(this);
         friend_LinearLayout.setOnClickListener(this);
@@ -78,10 +118,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         add_LinearLayout.setOnClickListener(this);
 
         Intent intent = getIntent();
-        if(intent.getIntExtra("src", 0 ) == 0){
+        if(intent.getIntExtra("homeFragment", 0 ) == 0){
             attachFragment(HOMEFRAGMENT_TAG);
-        }else if(intent.getIntExtra("src", 0 ) == 1){
+        }else if(intent.getIntExtra("homeFragment", 0 ) == 1){
             attachFragment(MYFRAGMENT_TAG);
+        }else if(intent.getIntExtra("homeFragment", 0 ) == 2){
+            attachFragment(FRIENDFRAGMENT_TAG);
+        }else if(intent.getIntExtra("homeFragment", 0 ) == 3){
+            attachFragment(ACTIVITYFRAGMENT_TAG);
         }
 
     }
@@ -189,6 +233,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 mPop.dismiss();
                 break;
             case R.id.diet_ll:
+                mPop.dismiss();
+                Intent intent1 = new Intent(HomeActivity.this, DietAndSportActivity.class);
+                intent1.putExtra("homeFragment", currentFragment);
+                intent1.putExtra("src", "HOMEACTIVITY");
+                HomeActivity.this.startActivity(intent1);
                 break;
             case R.id.sport_ll:
                 mPop.dismiss();
@@ -197,12 +246,34 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HomeActivity.this.startActivity(intent);
                 break;
             case R.id.weight_ll:
+                mPop.dismiss();
+                UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+                ViewUtil.changeAlpha(mHandler, 0);
+                final WeightPopUpWindow weightPopUpWindow = new WeightPopUpWindow(HomeActivity.this, Float.parseFloat(userVO.getWeight()), null, true);
+                weightPopUpWindow.setCancel(new WeightPopUpWindow.IOnCancelListener() {
+                    @Override
+                    public void onCancel(WeightPopUpWindow dialog) {
+                        weightPopUpWindow.getWeightPopUpWindow().dismiss();
+                    }
+                }).showFoodPopWindow();
+                weightPopUpWindow.getWeightPopUpWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        ViewUtil.changeAlpha(mHandler, 1);
+                    }
+                });
+
                 break;
             case R.id.activity_ll:
                 break;
             case R.id.punchin_ll:
                 break;
             case R.id.girth_ll:
+                mPop.dismiss();
+                Intent intent2 = new Intent(HomeActivity.this, GirthActivity.class);
+                intent2.putExtra("homeFragment", currentFragment);
+                intent2.putExtra("src", "HOMEACTIVITY");
+                HomeActivity.this.startActivity(intent2);
                 break;
         }
 
@@ -222,15 +293,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             if(fragmentTag.equals(HOMEFRAGMENT_TAG)){
                 fragment = new HomeFragment();
+                currentFragment = 0;
 
             }else if(fragmentTag.equals(FRIENDFRAGMENT_TAG)){
                 fragment = new FriendFragment();
+                currentFragment = 2;
             }
             else if(fragmentTag.equals(ACTIVITYFRAGMENT_TAG)){
                 fragment = new ActivityFragment();
+                currentFragment = 3;
             }
             else if(fragmentTag.equals(MYFRAGMENT_TAG)){
                 fragment = new MyFragment();
+                currentFragment = 1;
+
             }
             fragmentTransaction.add(fragment, fragmentTag);
 
@@ -243,4 +319,47 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         fragmentTransaction.commit();
 
     }
+
+    /*private void changeAlpha(int x){
+        if(x == 0){//背景变暗
+            alpha = 0;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (alpha < 127) {
+                        try {
+                            Thread.sleep(4);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = CHANGEALPHA;
+                        alpha += 1; //每次加1，逐渐变暗
+                        msg.obj = alpha;
+                        mHandler.sendMessage(msg);
+                    }
+                }
+            }).start();
+        }else if(x == 1){
+            alpha = 127;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (alpha > 0) {
+                        try {
+                            Thread.sleep(4);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Message msg = mHandler.obtainMessage();
+                        msg.what = CHANGEALPHA;
+                        alpha -= 1; //每次加1，逐渐变暗
+                        msg.obj = alpha;
+                        mHandler.sendMessage(msg);
+                    }
+                }
+            }).start();
+
+        }
+    }*/
 }

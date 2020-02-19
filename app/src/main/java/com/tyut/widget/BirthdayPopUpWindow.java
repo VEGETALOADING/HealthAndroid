@@ -1,16 +1,14 @@
 package com.tyut.widget;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Point;
-import android.os.Bundle;
-import android.view.Display;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 
 import com.tyut.R;
 import com.tyut.utils.StringUtil;
@@ -22,26 +20,33 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class ChooseBirthdayDialog extends Dialog implements View.OnClickListener {
+public class BirthdayPopUpWindow implements View.OnClickListener {
 
+    private ImageView close_iv;
+    private TextView confirm_tv;
+    private ScrollPickView chooseYear;
+    private ScrollPickView chooseMonth;
+    private ScrollPickView chooseDay;
+    private String year;
+    private String month;
+    private String day;
+    private String defaultYear;
+    private String defaultMonth;
+    private String defaultDay;
 
-    ImageView close_iv;
-    TextView confirm_tv;
-    ScrollPickView chooseYear;
-    ScrollPickView chooseMonth;
-    ScrollPickView chooseDay;
-    String year;
-    String month;
-    String day;
-    String defaultYear;
-    String defaultMonth;
-    String defaultDay;
+    private PopupWindow birthdayPopUpWindow;
+    private View contentView;
+    private Context context;
+
+    public String getDate(){
+        return getYear().substring(0, 4) + "-" + getMonth().substring(0, 2) + "-" + getDay().substring(0, 2);
+    }
 
     public String getDefaultYear() {
         return defaultYear;
     }
 
-    public ChooseBirthdayDialog setDefaultYear(String defaultYear) {
+    public BirthdayPopUpWindow setDefaultYear(String defaultYear) {
         this.defaultYear = defaultYear;
         return this;
     }
@@ -50,7 +55,7 @@ public class ChooseBirthdayDialog extends Dialog implements View.OnClickListener
         return defaultMonth;
     }
 
-    public ChooseBirthdayDialog setDefaultMonth(String defaultMonth) {
+    public BirthdayPopUpWindow setDefaultMonth(String defaultMonth) {
         this.defaultMonth = defaultMonth;
         return this;
     }
@@ -59,7 +64,7 @@ public class ChooseBirthdayDialog extends Dialog implements View.OnClickListener
         return defaultDay;
     }
 
-    public ChooseBirthdayDialog setDefaultDay(String defaultDay) {
+    public BirthdayPopUpWindow setDefaultDay(String defaultDay) {
         this.defaultDay = defaultDay;
         return this;
     }
@@ -88,85 +93,90 @@ public class ChooseBirthdayDialog extends Dialog implements View.OnClickListener
         this.day = day;
     }
 
-    private IOnCancelListener cancelListener;
-    private IOnConfirmListener confirmListener;
+    private BirthdayPopUpWindow.IOnCancelListener cancelListener;
+    private BirthdayPopUpWindow.IOnConfirmListener confirmListener;
+
+    public PopupWindow getBirthdayPopUpWindow() {
+        return birthdayPopUpWindow;
+    }
 
 
-    public ChooseBirthdayDialog setCancel(IOnCancelListener cancelListener) {
+    public BirthdayPopUpWindow setCancel(BirthdayPopUpWindow.IOnCancelListener cancelListener) {
         this.cancelListener = cancelListener;
         return this;
     }
 
 
-    public ChooseBirthdayDialog setConfirm(IOnConfirmListener confirmListener) {
+    public BirthdayPopUpWindow setConfirm(BirthdayPopUpWindow.IOnConfirmListener confirmListener) {
         this.confirmListener = confirmListener;
         return this;
     }
 
-    public ChooseBirthdayDialog(@NonNull Context context) {
-        super(context);
-    }
+    public BirthdayPopUpWindow(Context context, String defaultBirthday) {
 
-    public ChooseBirthdayDialog(@NonNull Context context, int themeId) {
-        super(context, themeId);
-    }
+        this.context = context;
+        this.defaultYear = defaultBirthday.substring(0, 4);
+        this.defaultMonth =  defaultBirthday.substring(5, 7);
+        this.defaultDay =  defaultBirthday.substring(8, 10);
+        this.year = defaultBirthday.substring(0, 4)+"年";
+        this.month =  defaultBirthday.substring(5, 7)+"月";
+        this.day =  defaultBirthday.substring(8, 10)+"日";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_choosebirthday);
-
-
-        //设置宽度
-        WindowManager m = getWindow().getWindowManager();
-        Display d = m.getDefaultDisplay();
-        WindowManager.LayoutParams p = getWindow().getAttributes();
-        Point size = new Point();
-        d.getSize(size);
-        p.width = (int) (size.x *0.8);
-        getWindow().setAttributes(p);
-
-
-        close_iv = findViewById(R.id.choosebirthday_dl_close);
-        chooseYear = findViewById(R.id.chooseyear_spv);
-        chooseMonth = findViewById(R.id.choosemonth_spv);
-        chooseDay = findViewById(R.id.chooseday_spv);
-        confirm_tv = findViewById(R.id.choosebirthday_confirm_tv);
-
-        confirm_tv.setOnClickListener(this);
-        close_iv.setOnClickListener(this);
-
+        contentView = LayoutInflater.from(context).inflate(
+                R.layout.PopUpWindow_birthday, null);
+        initView();
         initScrollPick();
 
 
     }
 
+    public void showFoodPopWindow(){
+
+        birthdayPopUpWindow = new PopupWindow(contentView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        birthdayPopUpWindow.setFocusable(true);// 取得焦点
+        //注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
+        birthdayPopUpWindow.setBackgroundDrawable(new BitmapDrawable());
+        //点击外部消失
+        birthdayPopUpWindow.setOutsideTouchable(true);
+        //设置可以点击
+        birthdayPopUpWindow.setTouchable(true);
+        //进入退出的动画，指定刚才定义的style
+        birthdayPopUpWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+
+        birthdayPopUpWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+
+
+    }
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.choosebirthday_dl_close:
+                birthdayPopUpWindow.dismiss();
                 if(cancelListener != null){
                     cancelListener.onCancel(this);
                 }
-                dismiss();
                 break;
             case R.id.choosebirthday_confirm_tv:
+
                 if(confirmListener != null){
                     confirmListener.onConfirm(this);
                 }
-                dismiss();
+                birthdayPopUpWindow.dismiss();
                 break;
-
         }
     }
 
     public interface IOnCancelListener{
-        void onCancel(ChooseBirthdayDialog dialog);
+        void onCancel(BirthdayPopUpWindow weightPopUpWindow);
     }
     public interface IOnConfirmListener{
-        void onConfirm(ChooseBirthdayDialog dialog);
+        void onConfirm(BirthdayPopUpWindow weightPopUpWindow);
     }
-
 
     private void initScrollPick(){
 
@@ -231,6 +241,19 @@ public class ChooseBirthdayDialog extends Dialog implements View.OnClickListener
                 day = data;
             }
         });
+
+    }
+
+    private void initView(){
+
+        close_iv = contentView.findViewById(R.id.choosebirthday_dl_close);
+        chooseYear = contentView.findViewById(R.id.chooseyear_spv);
+        chooseMonth = contentView.findViewById(R.id.choosemonth_spv);
+        chooseDay = contentView.findViewById(R.id.chooseday_spv);
+        confirm_tv = contentView.findViewById(R.id.choosebirthday_confirm_tv);
+
+        confirm_tv.setOnClickListener(this);
+        close_iv.setOnClickListener(this);
 
     }
 
