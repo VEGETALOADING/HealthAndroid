@@ -144,7 +144,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
         //查数据
         userId = SharedPreferencesUtil.getInstance(getActivity()).readInt("userid");
 
-        OkHttpUtils.get("http://192.168.1.4:8080/portal/weight/list.do?userid="+userId,
+        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/weight/list.do?userid="+userId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -205,7 +205,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
                             public void onConfirm(RecordWeightDialog dialog) {
 
                                 String weight = dialog.getWeight();
-                                OkHttpUtils.get("http://192.168.1.4:8080/portal/weight/add.do?userid="+userId+"&weight="+weight+"&createTime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                                OkHttpUtils.get("http://"+getActivity().getString(R.string.localhost)+"/portal/weight/add.do?userid="+userId+"&weight="+weight+"&createTime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
                                         new OkHttpCallback(){
                                             @Override
                                             public void onFinish(String status, String msg) {

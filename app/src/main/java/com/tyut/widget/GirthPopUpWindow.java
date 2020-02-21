@@ -157,7 +157,7 @@ public class GirthPopUpWindow implements View.OnClickListener {
                 }
                 break;
             case R.id.confirm_recordgirth_tv:
-                OkHttpUtils.get("http://192.168.1.4:8080/portal/girth/add.do?userid="+userId+"&type="+type+"&value="+getLength()+"&createTime="+dateWithYearList.get(dateIndex),
+                OkHttpUtils.get("http://"+context.getString(R.string.localhost)+"/portal/girth/add.do?userid="+userId+"&type="+type+"&value="+getLength()+"&createTime="+dateWithYearList.get(dateIndex),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

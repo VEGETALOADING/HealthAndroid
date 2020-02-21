@@ -98,7 +98,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
             }else{
                 phone_status.setText("已验证");
             }
-            Glide.with(this).load("http://192.168.1.4:8080/userpic/" + userVO.getUserpic()).into(user_pic);
+            Glide.with(this).load("http://"+this.getString(R.string.localhost)+"/userpic/" + userVO.getUserpic()).into(user_pic);
 
         }
     }

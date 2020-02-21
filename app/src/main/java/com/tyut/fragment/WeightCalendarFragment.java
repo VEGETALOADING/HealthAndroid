@@ -95,7 +95,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                     createTime = date;
                 }
                 String weight = dialog.getWeight();
-                OkHttpUtils.get("http://192.168.1.4:8080/portal/weight/add.do?userid=" + userVO.getId() + "&weight=" + weight + "&createTime=" + createTime,
+                OkHttpUtils.get("http://"+getActivity().getString(R.string.localhost)+"/portal/weight/add.do?userid=" + userVO.getId() + "&weight=" + weight + "&createTime=" + createTime,
                         new OkHttpCallback() {
                             @Override
                             public void onFinish(String status, String msg) {

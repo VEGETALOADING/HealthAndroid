@@ -85,7 +85,7 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
         //查数据
         UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
 
-        OkHttpUtils.get("http://192.168.1.4:8080/portal/follow/findfollower.do?id=" + userVO.getId(),
+        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/follow/findfollower.do?id=" + userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

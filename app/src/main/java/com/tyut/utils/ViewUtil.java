@@ -1,10 +1,14 @@
 package com.tyut.utils;
 
+import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
+import android.view.WindowManager;
+import android.widget.EditText;
 
 public class ViewUtil {
 
+    //背景变亮变暗
     public static void changeAlpha(final Handler mHandler, int x){
         if(x == 0){//背景变暗
             final int[] alpha = {0};
@@ -46,5 +50,13 @@ public class ViewUtil {
             }).start();
 
         }
+    }
+
+    //键盘自动弹出
+    public static void showSoftInputFromWindow(Activity context, EditText editText){
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 }

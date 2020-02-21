@@ -27,11 +27,18 @@
         </activity>
         <activity android:name=".LoginActivity">
 
+        </activity>
+        <activity android:name=".ShareActivity"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".WeightActivity">
 

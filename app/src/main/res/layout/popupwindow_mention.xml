@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/defaultBackground">
+
+    <LinearLayout
+        android:id="@+id/top_ll"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/cancel_mention"
+            android:gravity="center"
+            android:textColor="@color/green_light"
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="取消"></TextView>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="8"
+            android:layout_height="wrap_content"
+            android:text="选择好友"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:gravity="center"></TextView>
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/confirm_mention"
+            android:gravity="center"
+            android:textColor="@color/green_light"
+            android:textSize="20sp"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="确认"></TextView>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/searchfriend_et"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:hint="搜索"
+        android:background="@drawable/tv_grey"
+        android:gravity="center"
+        android:textSize="20sp"></EditText>
+    <ScrollView
+        android:id="@+id/friend_sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friendRv_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"></androidx.recyclerview.widget.RecyclerView>
+
+    </ScrollView>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/not_found_tv"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_below="@+id/line_view"
+        android:text="抱歉，没有找到相关的选项"
+        android:gravity="center"
+        android:textColor="@color/nav_text_default"></TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></View>
+
+
+</LinearLayout>

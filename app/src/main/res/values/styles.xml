@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,6 +14,7 @@
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
         <!-- 指定消失的动画xml -->
     </style>
+
     <!--Dialog-->
     <style name="SportDialog" parent="Theme.AppCompat.Dialog">
         <item name="android:windowNoTitle">true</item>
@@ -26,6 +27,29 @@
         <item name="android:background">#FFFFFF</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+
+    <declare-styleable name="MyCheckBox">
+        <!-- 选中时圆的颜色 -->
+        <attr name="mcb_check_circle_color" format="color" />
+        <!-- 未选中时圆的颜色 -->
+        <attr name="mcb_uncheck_circle_color" format="color" />
+        <!-- 选中时的钩子的颜色 -->
+        <attr name="mcb_check_hook_color" format="color" />
+        <!-- 未选中时的钩子的颜色 -->
+        <attr name="mcb_uncheck_hook_color" format="color" />
+        <!-- 是否选中 -->
+        <attr name="mcb_is_check" format="boolean" />
+        <!-- 风格 -->
+        <attr name="mcb_style" format="enum">
+            <!-- 普通，对勾是有颜色的 -->
+            <enum name="normal" value="1" />
+            <!-- 镂空，就是对勾是透明的 -->
+            <enum name="hollow_out" value="2" />
+        </attr>
+        <!-- 线宽 -->
+        <attr name="mcb_line_width" format="float|dimension|reference" />
+    </declare-styleable>
 
 
 

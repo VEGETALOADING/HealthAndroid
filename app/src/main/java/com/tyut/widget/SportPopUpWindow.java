@@ -202,7 +202,7 @@ public class SportPopUpWindow implements View.OnClickListener {
 
                 if(sportVO == null){
                     //更新运动
-                    OkHttpUtils.get("http://192.168.1.4:8080/portal/mysport/update.do?userid="+userId+"&id="+mysportVO.getId()+"&time="+time+"&cal="+cal,
+                    OkHttpUtils.get("http://"+context.getString(R.string.localhost)+"/portal/mysport/update.do?userid="+userId+"&id="+mysportVO.getId()+"&time="+time+"&cal="+cal,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -229,7 +229,7 @@ public class SportPopUpWindow implements View.OnClickListener {
                 break;
 
             case R.id.deleteRecord_ll:
-                OkHttpUtils.get("http://192.168.1.4:8080/portal/mysport/delete.do?userid="+userId+"&id="+mysportVO.getId(),
+                OkHttpUtils.get("http://"+context.getString(R.string.localhost)+"/portal/mysport/delete.do?userid="+userId+"&id="+mysportVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -321,7 +321,7 @@ public class SportPopUpWindow implements View.OnClickListener {
         sport_quantity.setText(sportQuantity + "");
         sport_calories.setText(sportCalories + "");
         time_tv.setText(sportQuantity+"");
-        Glide.with(context).load("http://192.168.1.4:8080/sportpic/" + sportPic).into(sport_pic);
+        Glide.with(context).load("http://"+context.getString(R.string.localhost)+"/sportpic/" + sportPic).into(sport_pic);
 
         confirm_tv.setOnClickListener(this);
         close_iv.setOnClickListener(this);

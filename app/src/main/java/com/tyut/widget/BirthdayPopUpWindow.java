@@ -123,7 +123,7 @@ public class BirthdayPopUpWindow implements View.OnClickListener {
         this.day =  defaultBirthday.substring(8, 10)+"日";
 
         contentView = LayoutInflater.from(context).inflate(
-                R.layout.PopUpWindow_birthday, null);
+                R.layout.popupwindow_birthday, null);
         initView();
         initScrollPick();
 

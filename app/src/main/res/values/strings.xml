@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">health</string>
+    <string name="localhost">"+this.getString(R.string.localhost)+"</string>
 </resources>

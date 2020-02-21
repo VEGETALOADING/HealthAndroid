@@ -156,7 +156,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         unit1_tv.setText(unit);
         unit2_tv.setText(unit);
         calories_tv.setText(calories+"");
-        Glide.with(this).load("http://192.168.1.4:8080/foodpic/" + pic).into(pic_iv);
+        Glide.with(this).load("http://"+this.getString(R.string.localhost)+"/foodpic/" + pic).into(pic_iv);
         carbs_tv.setText(carbs);
         protein_tv.setText(protein);
         fat_tv.setText(fat);
@@ -170,7 +170,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         fat_bar.setPercentData(fat_Percent, new DecelerateInterpolator());
         carb_bar.setPercentData(carbs_Percent, new DecelerateInterpolator());
 
-        OkHttpUtils.get("http://192.168.1.4:8080/portal/favorite/find.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
+        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/favorite/find.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -221,7 +221,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                 hotunit_tv.setText("千焦");
                 break;
             case R.id.favoritefood_detail_ll:
-                OkHttpUtils.get("http://192.168.1.4:8080/portal/favorite/addorcancel.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
+                OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/favorite/addorcancel.do?userid="+ userid +"&category="+0+"&objectid="+foodId,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
