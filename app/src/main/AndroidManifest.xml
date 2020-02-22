@@ -26,18 +26,22 @@
 
         </activity>
         <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ShareActivity"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+        </activity>
+
+        <activity android:name=".AddStatusActivity">
 
         </activity>
         <activity android:name=".WeightActivity">
@@ -61,6 +65,16 @@
         <activity android:name=".FoodDetailActivity">
 
         </activity>
+        
+        <provider
+            android:authorities="com.tyut.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"></meta-data>
+        </provider>
     </application>
 
 </manifest>

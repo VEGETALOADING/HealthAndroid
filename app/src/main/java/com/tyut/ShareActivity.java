@@ -2,12 +2,22 @@ package com.tyut;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +29,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -41,8 +53,12 @@ import com.tyut.widget.BirthdayPopUpWindow;
 import com.tyut.widget.ChooseMentionPopUpWindow;
 import com.tyut.widget.ChooseOnePopUpWindow;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -53,10 +69,27 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private MyCheckBox seeable_checkBox;
     private EditText content_et;
     private ImageView camera_iv;
+    private TextView wordCount;
+    private LinearLayout fromAlbum_ll;
+    private LinearLayout takePhoto_ll;
+    private TextView commit_tv;
+
     private LinearLayout photoList_ll;
     private List<Integer> photoList;
     private List<Integer> userIdMentioned;
     private List<UserVO> vos;
+    private List<String> photos = new ArrayList<>();
+    private LayoutInflater mInflater;
+    private File tempFile;
+    private Bitmap bm;
+
+    private Integer random = 0;
+
+    private Uri imageUri;
+    private static final int REQUEST_CODE_CAMERA = 1;
+    private static final int REQUEST_CODE_GALLERY = 3;
+    private static final int PHOTO_REQUEST_CUT = 2;
+
 
     private RelativeLayout mention_rl;
 
@@ -89,14 +122,19 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         badgeBound = findViewById(R.id.badgeBound);
         mention_rl = findViewById(R.id.mention_rl);
         whole_rl = findViewById(R.id.whole_rl);
+        wordCount = findViewById(R.id.wordCount);
+        fromAlbum_ll = findViewById(R.id.fromAlbum);
+        takePhoto_ll = findViewById(R.id.takePhoto_ll);
+        commit_tv = findViewById(R.id.commit_share);
 
+        content_et.addTextChangedListener(new textWatcher());
         if (whole_rl.getForeground()!=null){
             whole_rl.getForeground().setAlpha(0);
         }
 
 
         onKeyBoardListener();
-        ViewUtil.showSoftInputFromWindow(ShareActivity.this, content_et);
+        //ViewUtil.showSoftInputFromWindow(ShareActivity.this, content_et);
 
         initBadge();
 
@@ -113,36 +151,11 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        photoList = new ArrayList<>();
-        photoList.add(R.mipmap.diet);
-        photoList.add(R.mipmap.icon_calendar_selected);
-        photoList.add(R.mipmap.icon_foodgrey);
-        photoList.add(R.mipmap.add_sport);
-        photoList.add(R.mipmap.icon_girth);
-
-        badge.setBadgeNumber(photoList.size());
-
-        for (int i = 0; i < photoList.size(); i++)
-        {
-            LayoutInflater mInflater = LayoutInflater.from(this);
-            final View view = mInflater.inflate(R.layout.item_sharephoto,
-                    photoList_ll, false);
-            final ImageView photoItem = view.findViewById(R.id.photo_item);
-            ImageView deleteItem = view.findViewById(R.id.deletephoto_iv);
-            photoItem.setImageResource(photoList.get(i));
-            final int finalI = i;
-            deleteItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    photoList.remove(photoList.get(finalI - index++));
-                    photoList_ll.removeView(view);
-                    badge.setBadgeNumber(badge.getBadgeNumber() - 1);
-                }
-            });
-            photoList_ll.addView(view);
-        }
 
         mention_rl.setOnClickListener(this);
+        fromAlbum_ll.setOnClickListener(this);
+        takePhoto_ll.setOnClickListener(this);
+        commit_tv.setOnClickListener(this);
 
 
 
@@ -151,9 +164,10 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        mInflater = LayoutInflater.from(this);
         userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
 
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/friend/find.do?id=" + userVO.getId(),
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/friend/find.do?id=" + userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -210,6 +224,41 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 });*/
 
                 break;
+            case R.id.takePhoto_ll:
+
+                startCamera();
+
+                break;
+
+            case R.id.fromAlbum:
+               /* // 从相册中去获取
+                Intent intent = new Intent();
+                *//* 开启Pictures画面Type设定为image *//*
+                intent.setType("image/*");
+                *//* 使用Intent.ACTION_GET_CONTENT这个Action *//*
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, getImageUri(getFile()));
+
+                *//* 取得相片后返回本画面 *//*
+                startActivityForResult(intent, REQUEST_CODE_GALLERY);*/
+                //调用相册
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");//相片类型
+                startActivityForResult(intent, REQUEST_CODE_GALLERY);
+
+                break;
+
+            case R.id.commit_share:
+
+
+                OkHttpUtils.uploadMultipy("http://192.168.1.9:8080/uploadmultipy", photos,null, new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        Log.e("com.tyut", msg);
+                    }
+                });
+                break;
         }
 
     }
@@ -248,6 +297,212 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
+    /*
+     * 监控EditText改变情况，记录输入的字符数
+     */
+    class textWatcher implements TextWatcher {
+
+        private CharSequence temp;
+        private boolean isEdit = true;
+        private int selectionStart ;
+        private int selectionEnd ;
+        @Override
+        public void beforeTextChanged(CharSequence s, int arg1, int arg2,
+                                      int arg3) {
+            temp = s;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int arg1, int arg2,
+                                  int arg3) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            selectionStart = content_et.getSelectionStart();
+            selectionEnd = content_et.getSelectionEnd();
+            int remainCount = (200 - content_et.getText().toString().length());
+
+            if (temp.length() > 200) {
+                Toast.makeText(ShareActivity.this,
+                        "您输入的的已经超过8个字符", Toast.LENGTH_SHORT)
+                        .show();
+                s.delete(selectionStart-1, selectionEnd);
+                int tempSelection = selectionStart;
+                content_et.setText(s);
+                content_et.setSelection(tempSelection);
+                wordCount.setTextColor(getResources().getColor(R.color.red));
+            }else{
+                wordCount.setTextColor(getResources().getColor(R.color.nav_text_default));
+            }
+            wordCount.setText("" + remainCount);
+
+        }
+
+    }
+
+    private void startCamera(){
+
+
+
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getImageUri(getFile()));
+
+        startActivityForResult(intent, REQUEST_CODE_CAMERA);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if(requestCode == REQUEST_CODE_CAMERA){
+            if(resultCode == RESULT_OK){
+                crop(imageUri);//裁剪图片
+                /*不裁剪直接上传
+                  try {
+                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                    badge.setBadgeNumber(badge.getBadgeNumber() + 1);
+                    LayoutInflater mInflater = LayoutInflater.from(this);
+                    final View view = mInflater.inflate(R.layout.item_sharephoto,
+                            photoList_ll, false);
+                    final ImageView photoItem = view.findViewById(R.id.photo_item);
+                    ImageView deleteItem = view.findViewById(R.id.deletephoto_iv);
+                    photoItem.setImageBitmap(bitmap);
+                    deleteItem.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            photoList_ll.removeView(view);
+                            badge.setBadgeNumber(badge.getBadgeNumber() - 1);
+                        }
+                    });
+                    photoList_ll.addView(view);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }*/
+            }
+        }else if(requestCode == PHOTO_REQUEST_CUT){
+            if(data != null)
+            {
+                bm = data.getParcelableExtra("data");
+                final File file = ViewUtil.bitmap2File(bm, getFile());
+                photos.add(file.getAbsolutePath());
+
+                badge.setBadgeNumber(badge.getBadgeNumber() + 1);
+
+                final View view = mInflater.inflate(R.layout.item_sharephoto,
+                        photoList_ll, false);
+                final ImageView photoItem = view.findViewById(R.id.photo_item);
+                ImageView deleteItem = view.findViewById(R.id.deletephoto_iv);
+                photoItem.setImageBitmap(bm);
+                deleteItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        photoList_ll.removeView(view);
+                        badge.setBadgeNumber(badge.getBadgeNumber() - 1);
+                        photos.remove(file.getAbsolutePath());
+                    }
+                });
+                photoList_ll.addView(view);
+
+            }
+        }else if(requestCode == REQUEST_CODE_GALLERY){
+            if(resultCode == RESULT_OK && data!=null){
+              /*  Uri uri = data.getData();
+                Bitmap bit = null;
+                try {
+                    bit = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                final View view = mInflater.inflate(R.layout.item_sharephoto,
+                        photoList_ll, false);
+                final ImageView photoItem = view.findViewById(R.id.photo_item);
+                ImageView deleteItem = view.findViewById(R.id.deletephoto_iv);
+                photoItem.setImageBitmap(bit);
+                deleteItem.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        photoList_ll.removeView(view);
+                        badge.setBadgeNumber(badge.getBadgeNumber() - 1);
+                    }
+                });
+                photoList_ll.addView(view);*/
+
+                crop(data.getData());//裁剪图片
+                /*不裁剪直接上传
+                  try {
+                    Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                    badge.setBadgeNumber(badge.getBadgeNumber() + 1);
+                    LayoutInflater mInflater = LayoutInflater.from(this);
+                    final View view = mInflater.inflate(R.layout.item_sharephoto,
+                            photoList_ll, false);
+                    final ImageView photoItem = view.findViewById(R.id.photo_item);
+                    ImageView deleteItem = view.findViewById(R.id.deletephoto_iv);
+                    photoItem.setImageBitmap(bitmap);
+                    deleteItem.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            photoList_ll.removeView(view);
+                            badge.setBadgeNumber(badge.getBadgeNumber() - 1);
+                        }
+                    });
+                    photoList_ll.addView(view);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }*/
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void crop(Uri uri){
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        //裁剪框的比例：1：1
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        //裁剪后输出图片的尺寸大小
+        intent.putExtra("outputX", 200);
+        intent.putExtra("outputY", 200);
+
+        intent.putExtra("outputFormat", "JPEG");//图片格式
+        intent.putExtra("noFaceDetection", true);//取消人脸识别
+        intent.putExtra("return-data", true);
+        //开启一个带有返回值的ACTIVITY, 请求码位PHOTO_REQUEST_CUT
+        startActivityForResult(intent, PHOTO_REQUEST_CUT);
+    }
+
+    private File getFile(){
+        tempFile = new File(getExternalCacheDir(), random++ + ".png");
+        if(tempFile.exists()){
+            tempFile.delete();
+        }
+        try {
+            tempFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return tempFile;
+    }
+
+    private Uri getImageUri(File file){
+        if(Build.VERSION.SDK_INT >= 24){
+            //FileProvider获取
+
+            imageUri = FileProvider.getUriForFile(this, "com.tyut.fileprovider" ,file);
+
+        }else {
+            imageUri = Uri.fromFile(file);
+        }
+        return imageUri;
+    }
 
 
 

@@ -119,13 +119,13 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         super.onResume();
         //初始化页面
         UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
-        Glide.with(this).load("http://"+this.getString(R.string.localhost)+"/userpic/" + userVO.getUserpic()).into(userPic);
+        Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
         userName.setText(userVO.getUsername());
         latestWeight .setText(userVO.getWeight());
         needHot = StringUtil.getNutritionData(userVO).getHot();
 
 
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/girth/select.do?userid="+userVO.getId()+"&type=0",
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/girth/select.do?userid="+userVO.getId()+"&type=0",
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -152,7 +152,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 }
         );
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/hot/select.do?userId="+userVO.getId()+"&date="+StringUtil.getCurrentDate("yyyy-MM-dd"),
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/hot/select.do?userId="+userVO.getId()+"&date="+StringUtil.getCurrentDate("yyyy-MM-dd"),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

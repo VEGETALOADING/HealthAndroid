@@ -40,7 +40,7 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
 
         if(mList.size() > position){
             holder.username_tv.setText(mList.get(position).getUsername());
-            Glide.with(mContext).load("http://"+mContext.getString(R.string.localhost)+"/userpic/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
+            Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
 
         /*holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -80,7 +80,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
 
         if(mList.size() > position){
             holder.username_tv.setText(mList.get(position).getUsername());
-            Glide.with(mContext).load("http://"+mContext.getString(R.string.localhost)+"/userpic/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
+            Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
             if(mList.get(position).getRel() == 0){
                 holder.follow_btn.setText("关注");
                 holder.follow_btn.setBackground(mContext.getResources().getDrawable(R.drawable.btn_green));
@@ -93,7 +93,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
                 public void onClick(View v) {
                     UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(mContext).readObject("user", UserVO.class);
 
-                    OkHttpUtils.get("http://"+mContext.getString(R.string.localhost)+"/portal/follow/followornot.do?id=" + mList.get(position).getId() + "&followerid=" + userVO.getId(),
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/followornot.do?id=" + mList.get(position).getId() + "&followerid=" + userVO.getId(),
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {

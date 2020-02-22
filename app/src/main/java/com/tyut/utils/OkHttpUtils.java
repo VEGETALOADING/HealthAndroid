@@ -1,15 +1,19 @@
 package com.tyut.utils;
 import android.widget.ListView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -69,6 +73,66 @@ public class OkHttpUtils {
 
     }
 
+    /**
+     *图片上传
+     **/
+    //String url图片上传接口
+    public static void upload(String url, String filePath, Map<String, String> params, OkHttpCallback callback){
+
+        java.io.File file = new File(filePath);
+
+
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                //文件上传三个参数（1.参数名）
+                .addFormDataPart("userpic",
+                        file.getName(),
+                        RequestBody.create(MediaType.parse("application/octet-stream"),
+                                file));
+
+        if(params!=null) {
+            Set<String> strings = params.keySet();
+
+            for (String string : strings) {
+                String key = string;
+                String value = params.get(key);
+                builder.addFormDataPart(string, params.get(string));
+            }
+        }
+        okhttp3.RequestBody formBody = builder.build();
+
+        okhttp3.Request request = new okhttp3.Request.Builder().url(url).post(formBody).build();
+        CLIENT.newCall(request).enqueue(callback);
+    }
+
+    //多图片上传
+    public static void uploadMultipy(String url, List<String> filePaths, Map<String, String> params, OkHttpCallback callback){
+
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+
+        for (String filePath : filePaths) {
+            java.io.File file = new File(filePath);
+            //文件上传三个参数（1.参数名）
+            builder.addFormDataPart("userpic",
+                    file.getName(),
+                    RequestBody.create(MediaType.parse("application/octet-stream"),
+                            file));
+        }
+        if(params!=null) {
+            Set<String> strings = params.keySet();
+
+            for (String string : strings) {
+                String key = string;
+                String value = params.get(key);
+                builder.addFormDataPart(string, params.get(string));
+            }
+        }
+        okhttp3.RequestBody formBody = builder.build();
+
+        okhttp3.Request request = new okhttp3.Request.Builder().url(url).post(formBody).build();
+        CLIENT.newCall(request).enqueue(callback);
+    }
 
 
 }

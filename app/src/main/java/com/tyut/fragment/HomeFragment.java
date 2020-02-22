@@ -208,7 +208,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
 
             username.setText(userVO.getUsername());
-            Glide.with(this).load("http://"+this.getString(R.string.localhost)+"/userpic/" + userVO.getUserpic()).into(userpic);
+            Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userpic);
             weight.setText(Double.parseDouble(userVO.getWeight())+"");
 
             float BMI = StringUtil.getBMI(userVO.getWeight(), userVO.getHeight());
@@ -343,7 +343,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             case R.id.confirm_searchfoodpop:
                 if(changeConfirmTv()){
                     mPop.dismiss();
-                    OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/food/condition.do?name="+ search.getText().toString() +"&order="+condition2+"&orderby="+condition1,
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/food/condition.do?name="+ search.getText().toString() +"&order="+condition2+"&orderby="+condition1,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -406,7 +406,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                 inputMethodManager.hideSoftInputFromWindow(search.getWindowToken(), 0); //隐藏
 
                 String name = String.valueOf(search.getText());
-                OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/food/list.do?name="+name,
+                OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?name="+name,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

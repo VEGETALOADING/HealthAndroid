@@ -1,10 +1,19 @@
 package com.tyut.utils;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import androidx.core.app.NavUtils;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class ViewUtil {
 
@@ -58,5 +67,21 @@ public class ViewUtil {
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
         context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
+
+    public static File bitmap2File(Bitmap bm, File file){
+
+        BufferedOutputStream bos = null;
+        try {
+            bos = new BufferedOutputStream(new FileOutputStream(file));
+            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            bos.flush();
+            bos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 }

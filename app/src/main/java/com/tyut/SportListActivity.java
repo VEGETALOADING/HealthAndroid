@@ -231,7 +231,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
 
 
         //查数据
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/sport/list.do?userid=0",
+        OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid=0",
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -271,7 +271,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 my_sport.setTextColor(v.getResources().getColor(R.color.black));
                 common_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 Integer userid = SharedPreferencesUtil.getInstance(this).readInt("userid");
-                OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/sport/list.do?userid="+userid,
+                OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid="+userid,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -297,7 +297,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 current_category = 1;
                 my_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 common_sport.setTextColor(v.getResources().getColor(R.color.black));
-                OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/sport/list.do?userid=0",
+                OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid=0",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -336,7 +336,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 if(current_category == 1){
                     my_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     common_sport.setTextColor(v.getResources().getColor(R.color.black));
-                    OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/sport/list.do?userid=0",
+                    OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid=0",
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -361,7 +361,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                     my_sport.setTextColor(v.getResources().getColor(R.color.black));
                     common_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     Integer userid1 = SharedPreferencesUtil.getInstance(this).readInt("userid");
-                    OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/sport/list.do?userid="+userid1,
+                    OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid="+userid1,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -394,7 +394,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }*/
-                    OkHttpUtils.post("http://"+this.getString(R.string.localhost)+"//portal/mysport/addbatch.do/",list_json,
+                    OkHttpUtils.post("http://192.168.1.9:8080//portal/mysport/addbatch.do/",list_json,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -437,7 +437,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 inputMethodManager.hideSoftInputFromWindow(search_et.getWindowToken(), 0); //隐藏
 
                 String name = String.valueOf(search_et.getText());
-                OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"//portal/sport/list.do?userid=0&name="+name,
+                OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid=0&name="+name,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

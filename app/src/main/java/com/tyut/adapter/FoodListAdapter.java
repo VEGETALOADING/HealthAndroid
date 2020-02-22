@@ -43,7 +43,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.Linear
             holder.foodcalories_tv.setText(mList.get(position).getCalories()+"");
             holder.foodquantity_tv.setText(mList.get(position).getQuantity()+"");
             holder.foodunit_tv.setText(mList.get(position).getUnit());
-            Glide.with(mContext).load("http://"+mContext.getString(R.string.localhost)+"/foodpic/" + mList.get(position).getPic()).into(holder.food_pic);
+            Glide.with(mContext).load("http://192.168.1.9:8080/foodpic/" + mList.get(position).getPic()).into(holder.food_pic);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

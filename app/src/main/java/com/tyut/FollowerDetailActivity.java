@@ -58,7 +58,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
             switch (msg.what){
                 case 0:
                     UserVO vo = (UserVO) msg.obj;
-                    Glide.with(FollowerDetailActivity.this).load("http://"+FollowerDetailActivity.this.getString(R.string.localhost)+"/userpic/" + vo.getUserpic()).into(user_photo);
+                    Glide.with(FollowerDetailActivity.this).load("http://192.168.1.9:8080/userpic/" + vo.getUserpic()).into(user_photo);
                     user_name.setText(vo.getUsername()+"");
                     break;
                 case 1:
@@ -112,7 +112,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
             follow_btn.setText("已关注");
             follow_btn.setBackground(getResources().getDrawable(R.drawable.btn_grey));
         }
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/user/search.do?id="+current_followerId,
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/user/search.do?id="+current_followerId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -134,7 +134,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
                     }
                 });
 
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/follow/findfollowercount.do?id=" + current_followerId,
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowercount.do?id=" + current_followerId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -151,7 +151,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
                     }
                 }
         );
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/follow/findfollowingcount.do?followerid=" + current_followerId,
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowingcount.do?followerid=" + current_followerId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -168,7 +168,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
                     }
                 }
         );
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/activity/findactivitycount.do?userid=" + current_followerId,
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findactivitycount.do?userid=" + current_followerId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -199,7 +199,7 @@ public class FollowerDetailActivity extends AppCompatActivity implements OnClick
                 FollowerDetailActivity.this.startActivity(intent);
                 break;
             case R.id.follower_isFollow_btn:
-                OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/follow/followornot.do?id=" + current_followerId + "&followerid=" + userVO.getId(),
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/followornot.do?id=" + current_followerId + "&followerid=" + userVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

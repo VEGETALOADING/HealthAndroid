@@ -266,7 +266,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
                 Integer foodId = null;
                 if(foodVO == null){
                     foodId = myfoodVO.getFoodid();
-                    OkHttpUtils.get("http://"+context.getString(R.string.localhost)+"/portal/myfood/add.do?userid="+userId+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex)+"&cal="+cal,
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/myfood/add.do?userid="+userId+"&type="+time+"&foodid="+foodId+"&quantity="+quantity+"&createTime="+dateWithYearList.get(dateIndex)+"&cal="+cal,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -304,7 +304,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
                 break;
             case R.id.deleteRecord_ll:
                 tag = false;
-                OkHttpUtils.get("http://"+context.getString(R.string.localhost)+"/portal/myfood/delete.do?userid="+myfoodVO.getUserid()+"&id="+myfoodVO.getId(),
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/myfood/delete.do?userid="+myfoodVO.getUserid()+"&id="+myfoodVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -472,7 +472,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
         food_cal.setText(foodCal + "");
         unit_infact.setText(foodUnit+"");
         unit_infact2.setText(foodUnit+"");
-        Glide.with(context).load("http://"+context.getString(R.string.localhost)+"/foodpic/" + foodPic).into(food_pic);
+        Glide.with(context).load("http://192.168.1.9:8080/foodpic/" + foodPic).into(food_pic);
 
         confirm_tv.setOnClickListener(this);
         close_iv.setOnClickListener(this);

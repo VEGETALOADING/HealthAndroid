@@ -231,7 +231,7 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
 
         Integer userid = SharedPreferencesUtil.getInstance(getActivity()).readInt("userid");
 
-        OkHttpUtils.get("http://"+this.getString(R.string.localhost)+"/portal/girth/list.do?userid="+userid,
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/girth/list.do?userid="+userid,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

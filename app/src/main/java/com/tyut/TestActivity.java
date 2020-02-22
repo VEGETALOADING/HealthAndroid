@@ -53,16 +53,10 @@ import java.util.Map;
 
 public class TestActivity extends AppCompatActivity {
 
-    CircleProgressBar color_progress_view;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
-        color_progress_view = findViewById(R.id.color_progress_view);
-        color_progress_view.setBarColor(R.color.red);
-        color_progress_view.setCircleWidth(10f);
-        color_progress_view.setMaxStepNum(1000);
-        color_progress_view.update(500,1000);
 
     }
 

@@ -60,7 +60,7 @@ public class ChooseMentionAdapter extends RecyclerView.Adapter {
             final MultiViewHolder viewHolder = (MultiViewHolder) holder;
 
             viewHolder.userName_tv.setText(datas.get(position).getUsername());
-            Glide.with(mContext).load("http://"+mContext.getString(R.string.localhost)+"/userpic/" + datas.get(position).getUserpic()).into(((MultiViewHolder) holder).userPic_iv);
+            Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + datas.get(position).getUserpic()).into(((MultiViewHolder) holder).userPic_iv);
 
             viewHolder.mCheckBox.setChecked(isSelected.get(position));
             viewHolder.itemView.setSelected(isSelected.get(position));

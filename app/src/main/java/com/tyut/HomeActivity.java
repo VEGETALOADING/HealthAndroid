@@ -265,6 +265,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.activity_ll:
+                Intent intent3 = new Intent(HomeActivity.this, ShareActivity.class);
+                HomeActivity.this.startActivity(intent3);
                 break;
             case R.id.punchin_ll:
                 break;
