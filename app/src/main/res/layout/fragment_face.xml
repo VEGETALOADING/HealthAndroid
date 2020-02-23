@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/face_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"></androidx.viewpager.widget.ViewPager>
+
+    <com.tyut.view.EmojiIndicatorView
+        android:id="@+id/face_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="150dp"
+        android:gravity="center_horizontal"></com.tyut.view.EmojiIndicatorView>
+
+
+</FrameLayout>

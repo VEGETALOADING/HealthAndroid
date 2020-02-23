@@ -82,7 +82,7 @@ public class ChooseMentionPopUpWindow implements View.OnClickListener {
 
     }
 
-    public void showFoodPopWindow(){
+    public void showMentionPopWindow(){
 
         mentionPopUpWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT,

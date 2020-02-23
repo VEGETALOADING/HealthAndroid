@@ -3,6 +3,7 @@ import android.widget.ListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +107,7 @@ public class OkHttpUtils {
     }
 
     //多图片上传
-    public static void uploadMultipy(String url, List<String> filePaths, Map<String, String> params, OkHttpCallback callback){
+    public static void uploadMultipy(String url, String fileParam, List<String> filePaths, Map<String, String> params, OkHttpCallback callback){
 
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
@@ -114,17 +115,18 @@ public class OkHttpUtils {
         for (String filePath : filePaths) {
             java.io.File file = new File(filePath);
             //文件上传三个参数（1.参数名）
-            builder.addFormDataPart("userpic",
+            builder.addFormDataPart(fileParam,
                     file.getName(),
                     RequestBody.create(MediaType.parse("application/octet-stream"),
                             file));
         }
         if(params!=null) {
-            Set<String> strings = params.keySet();
 
+            Set<String> strings = params.keySet();
             for (String string : strings) {
-                String key = string;
-                String value = params.get(key);
+
+                String value = params.get(string);
+
                 builder.addFormDataPart(string, params.get(string));
             }
         }

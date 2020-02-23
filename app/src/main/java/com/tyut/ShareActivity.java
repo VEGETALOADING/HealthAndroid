@@ -16,9 +16,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,30 +44,41 @@ import androidx.core.content.FileProvider;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.ChooseMentionAdapter;
+import com.tyut.fragment.FaceFragment;
+import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.SoftKeyBoardListener;
+import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.view.MyCheckBox;
+import com.tyut.vo.Emoji;
 import com.tyut.vo.FollowerVO;
+import com.tyut.vo.HotVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.BirthdayPopUpWindow;
 import com.tyut.widget.ChooseMentionPopUpWindow;
 import com.tyut.widget.ChooseOnePopUpWindow;
+import com.tyut.widget.TopicPopUpWindow;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
-public class ShareActivity extends AppCompatActivity implements View.OnClickListener {
+public class ShareActivity extends AppCompatActivity implements View.OnClickListener,  FaceFragment.OnEmojiClickListener {
 
     private RelativeLayout whole_rl;
     private MyCheckBox seeable_checkBox;
@@ -79,11 +94,19 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private List<Integer> userIdMentioned;
     private List<UserVO> vos;
     private List<String> photos = new ArrayList<>();
+    private List<String> recentTopics;
+
+    private LinearLayout addPhoto_hide_ll;
+    private LinearLayout addFace_hide_ll;
+
+    private TextView test;
+
     private LayoutInflater mInflater;
     private File tempFile;
     private Bitmap bm;
 
     private Integer random = 0;
+    private Integer activityId = null;
 
     private Uri imageUri;
     private static final int REQUEST_CODE_CAMERA = 1;
@@ -92,6 +115,9 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
 
     private RelativeLayout mention_rl;
+    private RelativeLayout topic_rl;
+    private RelativeLayout photo_rl;
+    private RelativeLayout face_rl;
 
     private Badge badge;
     private View badgeBound;
@@ -120,12 +146,22 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         seeable_checkBox = findViewById(R.id.mycheckbox);
         camera_iv = findViewById(R.id.camera_iv);
         badgeBound = findViewById(R.id.badgeBound);
+
         mention_rl = findViewById(R.id.mention_rl);
+        topic_rl = findViewById(R.id.topic_rl);
+        face_rl = findViewById(R.id.face_rl);
+        photo_rl = findViewById(R.id.photo_rl);
+
         whole_rl = findViewById(R.id.whole_rl);
         wordCount = findViewById(R.id.wordCount);
         fromAlbum_ll = findViewById(R.id.fromAlbum);
         takePhoto_ll = findViewById(R.id.takePhoto_ll);
         commit_tv = findViewById(R.id.commit_share);
+
+        test = findViewById(R.id.test);
+
+        addFace_hide_ll = findViewById(R.id.addFace_hide_ll);
+        addPhoto_hide_ll = findViewById(R.id.addPhoto_hide_ll);
 
         content_et.addTextChangedListener(new textWatcher());
         if (whole_rl.getForeground()!=null){
@@ -151,13 +187,18 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
+        FaceFragment faceFragment = FaceFragment.Instance();
+        getSupportFragmentManager().beginTransaction().add(R.id.faceContent,faceFragment).commit();
+
 
         mention_rl.setOnClickListener(this);
+        face_rl.setOnClickListener(this);
+        photo_rl.setOnClickListener(this);
         fromAlbum_ll.setOnClickListener(this);
         takePhoto_ll.setOnClickListener(this);
         commit_tv.setOnClickListener(this);
-
-
+        topic_rl.setOnClickListener(this);
+        test.setOnClickListener(this);
 
     }
 
@@ -189,11 +230,29 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         switch (v.getId()){
+            case R.id.face_rl:
+                if(imm.isActive(content_et)){
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                addFace_hide_ll.setVisibility(View.VISIBLE);
+                addPhoto_hide_ll.setVisibility(View.GONE);
+                break;
+
+            case R.id.photo_rl:
+                if(imm.isActive(content_et)){
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                addFace_hide_ll.setVisibility(View.GONE);
+                addPhoto_hide_ll.setVisibility(View.VISIBLE);
+                break;
+
+            case R.id.test:
+                Toast.makeText(this, content_et.getText().toString(), Toast.LENGTH_SHORT).show();
+                break;
             case R.id.mention_rl:
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if(imm.isActive(content_et)){
                     imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
                 }
@@ -215,7 +274,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                     }
-                }).showFoodPopWindow();
+                }).showMentionPopWindow();
                /* mentionPopUpWindow.getMentionPopUpWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
@@ -224,6 +283,51 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 });*/
 
                 break;
+
+            case R.id.topic_rl:
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findtopic.do?userid=" + userVO.getId(),
+                        new OkHttpCallback(){
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson=new Gson();
+                                ServerResponse<List<String>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<String>>>(){}.getType());
+                                if(serverResponse.getStatus() == 0){
+                                    recentTopics = serverResponse.getData();
+                                }else{
+                                    Looper.prepare();
+                                    Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Looper.loop();
+                                }
+                            }
+                        }
+                );
+                if(recentTopics != null){
+                    List<String> testHot = new ArrayList<>();
+                    testHot.add("新年快乐");
+                    testHot.add("平安喜乐");
+                    final TopicPopUpWindow topicPopUpWindow =
+                            new TopicPopUpWindow(ShareActivity.this, recentTopics, testHot);
+                    topicPopUpWindow.showTopicPopWindow();
+                    topicPopUpWindow.getTopicPopUpWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            if(topicPopUpWindow.getSelectedTopic()!=null){
+                                int selectionStart = content_et.getSelectionStart();// 光标位置
+                                Editable editable = content_et.getText();// 原先内容
+                                // 在光标位置插入内容// 话题后面插入空格,至关重要
+                                /*//变色
+                                SpannableString spannableString = new SpannableString("#" +  topicPopUpWindow.getSelectedTopic() + "# ");
+                                spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.green)), 0,spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                */
+                                editable.insert(selectionStart, "#" +  topicPopUpWindow.getSelectedTopic() + "# ");
+                                content_et.setSelection(content_et.getSelectionStart());// 移动光标到添加的内容后面
+                            }
+                        }
+                    });
+                }
+                break;
             case R.id.takePhoto_ll:
 
                 startCamera();
@@ -231,36 +335,104 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.fromAlbum:
-               /* // 从相册中去获取
-                Intent intent = new Intent();
-                *//* 开启Pictures画面Type设定为image *//*
-                intent.setType("image/*");
-                *//* 使用Intent.ACTION_GET_CONTENT这个Action *//*
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, getImageUri(getFile()));
-
-                *//* 取得相片后返回本画面 *//*
-                startActivityForResult(intent, REQUEST_CODE_GALLERY);*/
                 //调用相册
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                final Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");//相片类型
                 startActivityForResult(intent, REQUEST_CODE_GALLERY);
 
                 break;
 
             case R.id.commit_share:
-
-
-                OkHttpUtils.uploadMultipy("http://192.168.1.9:8080/uploadmultipy", photos,null, new OkHttpCallback(){
+                String content = null;
+                String createTime = null;
+                try {
+                    content = URLEncoder.encode(content_et.getText().toString(), "UTF-8");
+                    createTime = URLEncoder.encode(StringUtil.getCurrentDate("yyyy-MM-dd HH:mm:ss"), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Map<String, String> map = new HashMap<>();
+                map.put("content", content);
+                map.put("createTime", createTime);
+                map.put("userid", userVO.getId()+"");
+                OkHttpUtils.uploadMultipy("http://192.168.1.9:8080/portal/activity/share.do", "pic", photos,  map, new OkHttpCallback() {
                     @Override
                     public void onFinish(String status, String msg) {
-                        Log.e("com.tyut", msg);
+
+                        Gson gson = new Gson();
+                        ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                        if(serverResponse.getStatus() == 0){
+                            Intent intent1 = null;
+                            if("HOMEACTIVITY".equals(getIntent().getStringExtra("src"))){
+                                intent1 = new Intent(ShareActivity.this, HomeActivity.class);
+                                intent1.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
+                            }else{
+
+                            }
+                            ShareActivity.this.startActivity(intent1);
+
+                        }
+                        Looper.prepare();
+                        Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                        Looper.loop();
+
                     }
                 });
+
                 break;
         }
 
+
+    }
+
+
+    @Override
+    public void onEmojiDelete() {
+        String text = content_et.getText().toString();
+        if (text.isEmpty()) {
+            return;
+        }
+        if ("]".equals(text.substring(text.length() - 1, text.length()))) {
+            int index = text.lastIndexOf("[");
+            if (index == -1) {
+                int action = KeyEvent.ACTION_DOWN;
+                int code = KeyEvent.KEYCODE_DEL;
+                KeyEvent event = new KeyEvent(action, code);
+                content_et.onKeyDown(KeyEvent.KEYCODE_DEL, event);
+                displayTextView();
+                return;
+            }
+            content_et.getText().delete(index, text.length());
+            displayTextView();
+            return;
+        }
+        int action = KeyEvent.ACTION_DOWN;
+        int code = KeyEvent.KEYCODE_DEL;
+        KeyEvent event = new KeyEvent(action, code);
+        content_et.onKeyDown(KeyEvent.KEYCODE_DEL, event);
+        displayTextView();
+    }
+
+    private void displayTextView() {
+        try {
+            EmojiUtil.handlerEmojiText(content_et, content_et.getText().toString(), this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onEmojiClick(Emoji emoji) {
+        if (emoji != null) {
+            int index = content_et.getSelectionStart();
+            Editable editable = content_et.getEditableText();
+            if (index < 0) {
+                editable.append(emoji.getContent());
+            } else {
+                editable.insert(index, emoji.getContent());
+            }
+        }
+        displayTextView();
     }
     private void initBadge() {
         badge = new QBadgeView(this)
