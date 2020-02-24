@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.adapter.RVAdapter;
+import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
@@ -69,7 +69,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     List<ActivityVO> activityVOList = (List<ActivityVO>) msg.obj;
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(ActivityActivity.this, LinearLayoutManager.VERTICAL, false));
                     mRecyclerView.addItemDecoration(new DividerItemDecoration(ActivityActivity.this, DividerItemDecoration.VERTICAL));
-                    mRecyclerView.setAdapter(new RVAdapter(ActivityActivity.this, activityVOList));
+                    mRecyclerView.setAdapter(new ActivityListAdapter(ActivityActivity.this, activityVOList));
                     break;
             }
         }

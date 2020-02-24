@@ -14,10 +14,7 @@ import com.bumptech.glide.Glide;
 import com.tyut.R;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.NinePhotoView;
-import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -30,14 +27,14 @@ import java.util.List;
  * 描述 :
  */
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.RVHolder> {
+public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.RVHolder> {
 
     private Context context;
     private List<ActivityVO> mList;
 
 
 
-    public RVAdapter(Context context, List<ActivityVO> mList) {
+    public ActivityListAdapter(Context context, List<ActivityVO> mList) {
         super();
         this.context = context;
         this.mList = mList;

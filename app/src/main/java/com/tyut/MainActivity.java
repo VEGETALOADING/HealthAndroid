@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
-import com.tyut.adapter.RVAdapter;
-import com.tyut.view.MyProgressView;
+import com.tyut.adapter.ActivityListAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mRecyclerView.setAdapter(new RVAdapter(this,  null));
+        mRecyclerView.setAdapter(new ActivityListAdapter(this,  null));
     }
 }
 
