@@ -59,26 +59,14 @@ public class FaceFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         emojiList = EmojiUtil.getEmojiList();
-        /*try {
-            //用SharedPerference来保存我们最近使用的表情
-            if (recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME) != null) {
-                recentlyEmojiList = (ArrayList<Emoji>) recentManager.getCollection(RecentEmojiManager.PREFERENCE_NAME);
-            } else {
-                recentlyEmojiList = new ArrayList<>();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }*/
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_face, container, false);
-        faceViewPager = (ViewPager) view.findViewById(R.id.face_viewPager);
-        faceIndicator = (EmojiIndicatorView) view.findViewById(R.id.face_indicator);
+        faceViewPager = view.findViewById(R.id.face_viewPager);
+        faceIndicator = view.findViewById(R.id.face_indicator);
         initViews();
         return view;
     }

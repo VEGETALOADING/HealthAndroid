@@ -231,6 +231,45 @@ public class StringUtil {
     }
 
 
+    public static String convertSharetime(String datetime) throws ParseException {
+
+        DateFormat source = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = source.parse(datetime);
+
+        Date now = new Date();
+
+        //计算和当前时间差多少秒
+        long diff = (now.getTime() - date.getTime()) / 1000;
+
+        if(diff<60){
+            return "刚刚";
+        }else if(diff < 60* 60){
+            return diff / 60 +  "分钟前";
+        }else if(diff < 60 * 60 * 3){
+            return diff / 60 / 60 + "小时前";
+        }else{  // 今天HH时mm分发布
+
+            //构造一个date，表示今天的凌晨 00:00:00
+
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            calendar.set(year, month ,day, 0,0,0 );
+
+            Date today = calendar.getTime();
+
+            if(date.after(today)){
+                return "今天" + new SimpleDateFormat("HH时mm分").format(date);
+            }else{
+                return new SimpleDateFormat("yyyy年MM月dd日 HH时mm分").format(date);
+            }
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
 

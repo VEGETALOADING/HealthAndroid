@@ -112,11 +112,18 @@ public class FollowingListActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (v.getId()){
             case R.id.return_d:
-                Intent intent = new Intent(FollowingListActivity.this, HomeActivity.class);
-                intent.putExtra("src", FOLLOWINGLISTACTIVITY);
-                FollowingListActivity.this.startActivity(intent);
+                if(getIntent().getStringExtra("src").equals("ActivityActivity")){
+                    this.finish();
+                }else if(getIntent().getStringExtra("src").equals("HomeActivity")){
+                    intent = new Intent(FollowingListActivity.this, HomeActivity.class);
+                    intent.putExtra("src", "FollowerListActivity");
+                    intent.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
+                    FollowingListActivity.this.startActivity(intent);
+                }
+                break;
         }
     }
 }

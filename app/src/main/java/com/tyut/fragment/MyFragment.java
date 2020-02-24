@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.tyut.ActivityActivity;
 import com.tyut.FollowerListActivity;
 import com.tyut.FollowingListActivity;
 import com.tyut.LoginActivity;
@@ -64,7 +65,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 case 1:
                     following_count.setText(String.valueOf(Math.round((Double) msg.obj)));
                     break;
-                case 3:
+                case 2:
                     activity_count.setText(String.valueOf(Math.round((Double) msg.obj)));
                     break;
             }
@@ -200,15 +201,22 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         );
                 break;
             case R.id.activity_ll:
-
+                Intent intent4 = new Intent(getActivity(), ActivityActivity.class);
+                intent4.putExtra("src", "HOMEACTIVITY");
+                intent4.putExtra("homeFragment", 1);
+                getActivity().startActivity(intent4);
                 break;
 
             case R.id.follower_ll:
                 Intent intent3 = new Intent(getActivity(), FollowerListActivity.class);
+                intent3.putExtra("src", "HOMEACTIVITY");
+                intent3.putExtra("homeFragment", 1);
                 getActivity().startActivity(intent3);
                 break;
             case R.id.following_ll:
                 Intent intent = new Intent(getActivity(), FollowingListActivity.class);
+                intent.putExtra("src", "HOMEACTIVITY");
+                intent.putExtra("homeFragment", 1);
                 getActivity().startActivity(intent);
                 break;
             case R.id.userinfo_rl:

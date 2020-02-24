@@ -32,7 +32,6 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView rvMain;
     private LinearLayout return_ll;
     private static final int FOLLOWERLIST = 0;
-    private static final int FOLLOWERISTACTIVITY = 1;
 
 
     //子线程主线程通讯
@@ -113,11 +112,19 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
+
         switch (v.getId()){
             case R.id.return_e:
-                Intent intent = new Intent(FollowerListActivity.this, HomeActivity.class);
-                intent.putExtra("src", FOLLOWERISTACTIVITY);
-                FollowerListActivity.this.startActivity(intent);
+                if(getIntent().getStringExtra("src").equals("ActivityActivity")){
+                    this.finish();
+                    //intent = new Intent(FollowerListActivity.this, ActivityActivity.class);
+                }else if(getIntent().getStringExtra("src").equals("HomeActivity")){
+                    intent = new Intent(FollowerListActivity.this, HomeActivity.class);
+                    intent.putExtra("src", "FollowerListActivity");
+                    intent.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
+                    FollowerListActivity.this.startActivity(intent);
+                }
         }
     }
 }
