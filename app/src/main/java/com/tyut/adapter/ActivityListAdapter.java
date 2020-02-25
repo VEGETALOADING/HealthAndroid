@@ -1,24 +1,49 @@
 package com.tyut.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.tyut.FoodDetailActivity;
+import com.tyut.MainActivity;
 import com.tyut.R;
+import com.tyut.utils.OkHttpCallback;
+import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.NinePhotoView;
 import com.tyut.vo.ActivityVO;
+import com.tyut.vo.ServerResponse;
+import com.tyut.vo.UserVO;
 
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Idtk on 2017/3/9.
@@ -40,6 +65,31 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         this.mList = mList;
     }
 
+    private static final int ADDFAVORITE = 0;
+    private static final int CANCELFAVORITE = 1;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull final Message msg) {
+
+            switch (msg.what){
+
+                case 0:
+                    //holder.content_tv.setText("xxx");
+                    /*ActivityListAdapter.this.holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
+                    ActivityListAdapter.this.holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.green_light));
+                    ActivityListAdapter.this.holder.favorite_tv.setText(msg.obj+"");*/
+                    break;
+                case 1:
+
+
+                    break;
+
+
+            }
+        }
+    };
+
     @Override
     public RVHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_activity,parent,false);
@@ -48,11 +98,49 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
 
     @Override
-    public void onBindViewHolder(RVHolder holder, int position) {
+    public void onBindViewHolder(final RVHolder holder, final int position) {
+        final UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(context).readObject("user", UserVO.class);
 
         if(position < mList.size()) {
             holder.userName_tv.setText(mList.get(position).getUsername() + "");
-            holder.content_tv.setText(mList.get(position).getContent());
+            //holder.content_tv.setText(mList.get(position).getContent());
+            String str = mList.get(position).getContent();
+            SpannableStringBuilder style=new SpannableStringBuilder(str);
+            Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
+            Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+            Set<Integer> mentionKeys = mentionMap.keySet();
+            Set<Integer> topicKeys = topicsMap.keySet();
+
+            //设置部分文字点击事件
+            holder.content_tv.setMovementMethod(LinkMovementMethod.getInstance());
+            ClickableSpan mentionClickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    Toast.makeText(context, "mentionClickableSpan!", Toast.LENGTH_SHORT).show();
+                }
+            };
+            ClickableSpan topicsClickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View widget) {
+                    Toast.makeText(context, "topicsClickableSpan!", Toast.LENGTH_SHORT).show();
+                }
+            };
+            for (Integer key : mentionKeys) {
+
+                style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.green_light)),key,mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                style.setSpan(mentionClickableSpan, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            }
+
+            for (Integer key : topicKeys) {
+
+                style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.green_light)),key,topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                style.setSpan(topicsClickableSpan, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            }
+
+            holder.content_tv.setText(style);
+
             Glide.with(context).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userPic_iv);
 
             try {
@@ -60,6 +148,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             if (mList.get(position).getIfFavorite()) {
                 holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
                 holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.green_light));
@@ -76,8 +165,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 holder.like_iv.setImageResource(R.mipmap.icon_like_selected);
                 holder.like_tv.setTextColor(context.getResources().getColor(R.color.green_light));
             } else {
-                holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
-                holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
+                holder.like_iv.setImageResource(R.mipmap.icon_favorite_unselected);
+                holder.like_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
             }
             if (mList.get(position).getLikeCount() > 0) {
                 holder.like_tv.setText(mList.get(position).getLikeCount() + "");
@@ -85,9 +174,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 holder.like_tv.setText("赞");
             }
             if (mList.get(position).getCommentCount() > 0) {
-                holder.like_tv.setText(mList.get(position).getCommentCount() + "");
+                holder.comment_tv.setText(mList.get(position).getCommentCount() + "");
             } else {
-                holder.like_tv.setText("评论");
+                holder.comment_tv.setText("评论");
             }
 
             if(mList.get(position).getPic() != null && !"".equals(mList.get(position).getPic())) {
@@ -96,6 +185,123 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 MyNineAdapter adapter = new MyNineAdapter(context, picList);
                 holder.mNinePhoto.setAdapter(adapter);
             }
+
+            holder.favorite_ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/favorite/addorcancel.do?userid="+userVO.getId()+"&category=1&objectid="+mList.get(position).getId(),
+                    new OkHttpCallback(){
+                        @Override
+                        public void onFinish(String status, final String msg) {
+                            super.onFinish(status, msg);
+                            //解析数据
+                            Gson gson=new Gson();
+                            final ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                            if(serverResponse.getStatus() == 0){
+                                if((Double) serverResponse.getData() == 45){
+
+                                    //子线程更新UI
+                                    ((Activity)context).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
+                                            holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.green_light));
+                                            holder.favorite_tv.setText(serverResponse.getMsg());
+                                        }
+                                    });
+                                    Looper.prepare();
+                                    Toast.makeText(context, "收藏成功", Toast.LENGTH_LONG).show();
+                                    Looper.loop();
+
+
+                                }else if((Double) serverResponse.getData() == 47){
+
+                                    ((Activity)context).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
+                                            holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
+                                            holder.favorite_tv.setText( Double.parseDouble(serverResponse.getMsg()) == 0 ? "收藏" : serverResponse.getMsg());
+                                        }
+                                    });
+
+                                    Looper.prepare();
+                                    Toast.makeText(context, "取消收藏", Toast.LENGTH_LONG).show();
+                                    Looper.loop();
+                                }
+                            }else{
+                                Looper.prepare();
+                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                Looper.loop();
+                            }
+
+                        }
+                    }
+                );
+                }
+            });
+            holder.comment_ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Toast.makeText(context, "comment", Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.like_ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&activityid="+mList.get(position).getId(),
+                            new OkHttpCallback(){
+                                @Override
+                                public void onFinish(String status, final String msg) {
+                                    super.onFinish(status, msg);
+                                    //解析数据
+                                    Gson gson=new Gson();
+                                    final ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                    if(serverResponse.getStatus() == 0){
+                                        if((Double) serverResponse.getData() == 56){
+
+                                            //点赞成功
+                                            //子线程更新UI
+                                            ((Activity)context).runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    holder.like_iv.setImageResource(R.mipmap.icon_like_selected);
+                                                    holder.like_tv.setTextColor(context.getResources().getColor(R.color.green_light));
+                                                    holder.like_tv.setText(serverResponse.getMsg());
+                                                }
+                                            });
+                                            Looper.prepare();
+                                            Toast.makeText(context, "已点赞", Toast.LENGTH_LONG).show();
+                                            Looper.loop();
+
+
+                                        }else if((Double) serverResponse.getData() == 58){
+
+                                            ((Activity)context).runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    holder.like_iv.setImageResource(R.mipmap.icon_like_unselected);
+                                                    holder.like_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
+                                                    holder.like_tv.setText( Double.parseDouble(serverResponse.getMsg()) == 0 ? "赞" : serverResponse.getMsg());
+                                                }
+                                            });
+
+                                            Looper.prepare();
+                                            Toast.makeText(context, "已取消", Toast.LENGTH_LONG).show();
+                                            Looper.loop();
+                                        }
+                                    }else{
+                                        Looper.prepare();
+                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Looper.loop();
+                                    }
+
+                                }
+                            }
+                    );
+                }
+            });
         }
 
     }
@@ -104,6 +310,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     public int getItemCount() {
         return mList.size();
     }
+
 
     class RVHolder extends RecyclerView.ViewHolder{
 
@@ -140,6 +347,8 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             like_tv = itemView.findViewById(R.id.like_tv);
             comment_tv = itemView.findViewById(R.id.comment_tv);
             favorite_tv = itemView.findViewById(R.id.favorite_tv);
+
+
         }
     }
 }

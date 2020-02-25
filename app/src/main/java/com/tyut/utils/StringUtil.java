@@ -18,7 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringUtil {
     public static String divison(float a,int b) {
@@ -268,7 +272,41 @@ public class StringUtil {
         }
     }
 
+    public static Map<Integer, Integer> getTopics(String str){
+        String reg = "#[^#]+#";//定义正则表达式
+        //Pattern patten = Pattern.compile(reg);//编译正则表达式
+        Matcher matcher = Pattern.compile(reg).matcher(str);// 指定要匹配的字符串
 
+        List<String> matchStrs = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+
+        while (matcher.find()) { //此处find（）每次被调用后，会偏移到下一个匹配
+            matchStrs.add(matcher.group());//获取当前匹配的值
+        }
+
+        for (int i = 0; i < matchStrs.size(); i++) {
+            map.put(str.indexOf(matchStrs.get(i), 0), str.indexOf(matchStrs.get(i), 0)+matchStrs.get(i).length());
+        }
+        return map;
+    }
+
+    public static Map<Integer, Integer> getMention(String str){
+        String reg = "@([^\\s|\\/|:|@]+)";//定义正则表达式
+        //Pattern patten = Pattern.compile(reg);//编译正则表达式
+        Matcher matcher = Pattern.compile(reg).matcher(str);// 指定要匹配的字符串
+
+        List<String> matchStrs = new ArrayList<>();
+        Map<Integer, Integer> map = new HashMap<>();
+
+        while (matcher.find()) { //此处find（）每次被调用后，会偏移到下一个匹配
+            matchStrs.add(matcher.group());//获取当前匹配的值
+        }
+
+        for (int i = 0; i < matchStrs.size(); i++) {
+            map.put(str.indexOf(matchStrs.get(i), 0), str.indexOf(matchStrs.get(i), 0)+matchStrs.get(i).length());
+        }
+        return map;
+    }
 
 
     public static void main(String[] args) {

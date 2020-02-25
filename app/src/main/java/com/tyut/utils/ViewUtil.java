@@ -1,10 +1,12 @@
 package com.tyut.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import androidx.core.app.NavUtils;
@@ -68,6 +70,9 @@ public class ViewUtil {
         editText.requestFocus();
         context.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
+
+
+
 
     public static File bitmap2File(Bitmap bm, File file){
 
