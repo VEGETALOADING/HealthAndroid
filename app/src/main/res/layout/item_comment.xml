@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/userpic_commentItem"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_launcher_background"></ImageView>
+
+        <TextView
+            android:layout_toRightOf="@id/userpic_commentItem"
+            android:id="@+id/username_commentItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:text="default"
+            android:textColor="@color/black"
+            android:textSize="15sp"></TextView>
+        <TextView
+            android:layout_below="@id/username_commentItem"
+            android:layout_toRightOf="@id/userpic_commentItem"
+            android:id="@+id/commentTime_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:text="default"
+            android:textColor="@color/nav_text_default"
+            android:textSize="15sp"></TextView>
+        <TextView
+            android:id="@+id/like_count_tv"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="250dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="X"></TextView>
+        <ImageView
+            android:id="@+id/like_comment_iv"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="270dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/icon_like_unselected"></ImageView>
+        <ImageView
+            android:id="@+id/comment_comment_iv"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="310dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/icon_comment_unselected"></ImageView>
+    </RelativeLayout>
+    <TextView
+        android:layout_marginVertical="15dp"
+        android:id="@+id/content_commentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="来点描述"
+        android:textSize="20sp"
+        android:textColor="@color/black" />
+
+</LinearLayout>

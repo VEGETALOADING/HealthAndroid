@@ -56,13 +56,16 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     private Context context;
     private List<ActivityVO> mList;
+    private OnItemClickListener mListener;
 
 
 
-    public ActivityListAdapter(Context context, List<ActivityVO> mList) {
+
+    public ActivityListAdapter(Context context, List<ActivityVO> mList, OnItemClickListener listener) {
         super();
         this.context = context;
         this.mList = mList;
+        this.mListener = listener;
     }
 
     private static final int ADDFAVORITE = 0;
@@ -250,7 +253,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             holder.like_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&activityid="+mList.get(position).getId(),
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+mList.get(position).getId()+"&category=0",
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, final String msg) {
@@ -302,6 +305,12 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     );
                 }
             });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mListener.onClick(position);
+                }
+            });
         }
 
     }
@@ -309,6 +318,9 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+    public interface OnItemClickListener{
+        void onClick(int position);
     }
 
 

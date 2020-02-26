@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
+import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
@@ -85,10 +87,17 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     activity_count.setText(String.valueOf(Math.round((Double) msg.obj)));
                     break;
                 case 4:
-                    List<ActivityVO> activityVOList = (List<ActivityVO>) msg.obj;
+                    final List<ActivityVO> activityVOList = (List<ActivityVO>) msg.obj;
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(ActivityActivity.this, LinearLayoutManager.VERTICAL, false));
                     mRecyclerView.addItemDecoration(new DividerItemDecoration(ActivityActivity.this, DividerItemDecoration.VERTICAL));
-                    mRecyclerView.setAdapter(new ActivityListAdapter(ActivityActivity.this, activityVOList));
+                    mRecyclerView.setAdapter(new ActivityListAdapter(ActivityActivity.this, activityVOList, new ActivityListAdapter.OnItemClickListener() {
+                        @Override
+                        public void onClick(int position) {
+                            Intent intent = new Intent(ActivityActivity.this, ActivityDetailActivity.class);
+                            intent.putExtra("activity", activityVOList.get(position));
+                            ActivityActivity.this.startActivity(intent);
+                        }
+                    }));
                     break;
                 case 5:
                     activityTime_tv.setText((String)msg.obj);

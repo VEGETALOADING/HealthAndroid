@@ -19,6 +19,10 @@
         <activity android:name=".FollowingListActivity"></activity>
         <activity android:name=".FollowerListActivity"></activity>
         <activity android:name=".SportListActivity"></activity>
+        <activity android:name=".ActivityDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"><!-- 键盘不将导航栏顶起-->
+
+        </activity>
         <activity android:name=".FoodListActivity"></activity>
         <activity android:name=".ActivityActivity"></activity>
         <activity android:name=".MainActivity">

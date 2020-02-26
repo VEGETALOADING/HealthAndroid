@@ -2,6 +2,7 @@ package com.tyut.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Looper;
@@ -27,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.ActivityActivity;
+import com.tyut.ActivityDetailActivity;
 import com.tyut.R;
 import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.adapter.TopicAdapter;
@@ -65,10 +67,17 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
 
             switch (msg.what){
                 case 0:
-                    List<ActivityVO> activityVOList = (List<ActivityVO>) msg.obj;
+                    final List<ActivityVO> activityVOList = (List<ActivityVO>) msg.obj;
                     activity_Rv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                     activity_Rv.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL));
-                    activity_Rv.setAdapter(new ActivityListAdapter(context, activityVOList));
+                    activity_Rv.setAdapter(new ActivityListAdapter(context, activityVOList, new ActivityListAdapter.OnItemClickListener() {
+                        @Override
+                        public void onClick(int position) {
+                            Intent intent = new Intent(context, ActivityDetailActivity.class);
+                            intent.putExtra("activity", activityVOList.get(position));
+                            context.startActivity(intent);
+                        }
+                    }));
                     break;
             }
         }
