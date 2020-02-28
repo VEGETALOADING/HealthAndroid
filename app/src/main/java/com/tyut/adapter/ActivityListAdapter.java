@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +31,18 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.FoodDetailActivity;
 import com.tyut.MainActivity;
 import com.tyut.R;
+import com.tyut.UpdateUserDataActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+import com.tyut.utils.ViewUtil;
 import com.tyut.view.NinePhotoView;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
+import com.tyut.widget.ChooseOnePopUpWindow;
+import com.tyut.widget.DeleteActivityPUW;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -57,15 +62,20 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     private Context context;
     private List<ActivityVO> mList;
     private OnItemClickListener mListener;
+    private OnUpdateListener updateListener;
+    private OnFlushListener flushListener;
 
+    public ActivityListAdapter setFlushListener(OnFlushListener flushListener) {
+        this.flushListener = flushListener;
+        return this;
+    }
 
-
-
-    public ActivityListAdapter(Context context, List<ActivityVO> mList, OnItemClickListener listener) {
+    public ActivityListAdapter(Context context, List<ActivityVO> mList, OnItemClickListener listener, OnUpdateListener updateListener) {
         super();
         this.context = context;
         this.mList = mList;
         this.mListener = listener;
+        this.updateListener = updateListener;
     }
 
     private static final int ADDFAVORITE = 0;
@@ -168,7 +178,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 holder.like_iv.setImageResource(R.mipmap.icon_like_selected);
                 holder.like_tv.setTextColor(context.getResources().getColor(R.color.green_light));
             } else {
-                holder.like_iv.setImageResource(R.mipmap.icon_favorite_unselected);
+                holder.like_iv.setImageResource(R.mipmap.icon_like_unselected);
                 holder.like_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
             }
             if (mList.get(position).getLikeCount() > 0) {
@@ -305,6 +315,76 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     );
                 }
             });
+
+            holder.more_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(flushListener != null){
+                        flushListener.onFlush(0);
+                    }
+                    final DeleteActivityPUW deleteActivityPUW = new DeleteActivityPUW(context, mList.get(position));
+                    deleteActivityPUW
+                            .setDelete(new DeleteActivityPUW.IDeleteListener() {
+                                @Override
+                                public void onDelete(DeleteActivityPUW puw) {
+                                    OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId(),
+                                            new OkHttpCallback(){
+                                                @Override
+                                                public void onFinish(String status, final String msg) {
+                                                    super.onFinish(status, msg);
+                                                    //解析数据
+                                                    Gson gson=new Gson();
+                                                    final ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                                    if(serverResponse.getStatus() == 0){
+                                                        ((Activity)context).runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                if(updateListener != null){
+                                                                    updateListener.onUpdate(position);
+                                                                }
+                                                            }
+                                                        });
+
+                                                    }else{
+                                                        Looper.prepare();
+                                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                                        Looper.loop();
+                                                    }
+
+                                                }
+                                            }
+                                    );
+                                }
+                            })
+                            /*.setTOP(new DeleteActivityPUW.ITopListener() {
+                                @Override
+                                public void onTop(DeleteActivityPUW deleteActivityPUW) {
+
+                                }
+                            })
+                            .setShare(new DeleteActivityPUW.IShareListener() {
+                                @Override
+                                public void onShare(DeleteActivityPUW deleteActivityPUW) {
+
+                                }
+                            })*/
+                            .showFoodPopWindow();
+                    deleteActivityPUW.getPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            ((Activity)context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(flushListener != null){
+                                        flushListener.onFlush(1);
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -321,6 +401,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
     }
     public interface OnItemClickListener{
         void onClick(int position);
+    }
+
+    public interface OnUpdateListener{
+        void onUpdate(int position);
+    }
+
+    public interface OnFlushListener{
+        void onFlush(int i);
     }
 
 

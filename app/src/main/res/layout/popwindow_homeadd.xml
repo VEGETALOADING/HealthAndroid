@@ -5,7 +5,7 @@
     android:background="#DDFFF1">
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="10dp"
         android:id="@+id/diet_ll"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="10dp"
         android:layout_below="@+id/diet_ll"
         android:id="@+id/girth_ll"
         android:layout_width="80dp"
@@ -133,7 +133,7 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="185dp"
+            android:layout_marginLeft="160dp"
             android:src="@mipmap/icon_close"></ImageView>
     </LinearLayout>
 

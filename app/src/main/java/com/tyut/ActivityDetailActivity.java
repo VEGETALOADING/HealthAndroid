@@ -95,6 +95,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
 
 
     private ActivityVO activityVO;
+    private Integer activityId;
     private CommentVO commentVO;
     private Integer objectId;
     private Integer category;
@@ -103,6 +104,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
 
 
     private static final int COMMENTVOLIST = 0;
+    private static final int ACTIVITYVO = 1;
 
 
     @Override
@@ -171,7 +173,9 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         commentNone_tv.setVisibility(View.GONE);
                         comment_Rv.setLayoutManager(new LinearLayoutManager(ActivityDetailActivity.this, LinearLayoutManager.VERTICAL, false));
                         comment_Rv.addItemDecoration(new DividerItemDecoration(ActivityDetailActivity.this, DividerItemDecoration.VERTICAL));
-                        comment_Rv.setAdapter(new CommentListAdapter(ActivityDetailActivity.this, commentVOList, new CommentListAdapter.OnItemClickListener() {
+                        comment_Rv.setAdapter(new CommentListAdapter(ActivityDetailActivity.this,
+                                commentVOList,
+                                new CommentListAdapter.OnItemClickListener() {
                             @Override
                             public void onClick(int position) {
                                 //回复
@@ -188,8 +192,103 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                 commentAc_et.setFocusableInTouchMode(true);
                                 commentAc_et.requestFocus();
                             }
+                        }, new CommentListAdapter.OnUpdateListener(){
+                            @Override
+                            public void onUpdate() {
+
+                                ActivityDetailActivity.this.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        /*int commentCount = Integer.parseInt(comment_tv.getText().toString());
+                                        if(commentCount == 1){
+                                            comment_tv.setText("评论");
+                                        }else{
+                                            comment_tv.setText(commentCount - 1);
+                                        }*/
+                                        onResume();
+                                    }
+                                });
+                            }
                         }));
                     }
+                    break;
+                case 1 :
+                    activityVO = ((List<ActivityVO>)msg.obj).get(0);
+
+                    Glide.with(ActivityDetailActivity.this).load("http://192.168.1.9:8080/userpic/" + activityVO.getUserpic()).into(userPic_iv);
+                    userName_tv.setText(activityVO.getUsername());
+                    try {
+                        shareTime_tv.setText(StringUtil.convertSharetime(activityVO.getCreateTime()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                {
+                    if (activityVO.getIfFavorite()) {
+                        favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
+                        favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
+                    } else {
+                        favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
+                        favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.nav_text_default));
+                    }
+                    if (activityVO.getFavoriteCount() > 0) {
+                        favorite_tv.setText(activityVO.getFavoriteCount() + "");
+                    } else {
+                        favorite_tv.setText("收藏");
+                    }
+                    if (activityVO.getIfLike()) {
+                        like_iv.setImageResource(R.mipmap.icon_like_selected);
+                        like_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
+                    } else {
+                        like_iv.setImageResource(R.mipmap.icon_like_unselected);
+                        like_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.nav_text_default));
+                    }
+                    if (activityVO.getLikeCount() > 0) {
+                        like_tv.setText(activityVO.getLikeCount() + "");
+                    } else {
+                        like_tv.setText("赞");
+                    }
+                    if (activityVO.getCommentCount() > 0) {
+                        comment_tv.setText(activityVO.getCommentCount() + "");
+                    } else {
+                        comment_tv.setText("评论");
+                    }
+                }
+                {
+                    String str = activityVO.getContent();
+                    SpannableStringBuilder style = new SpannableStringBuilder(str);
+                    Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
+                    Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+                    Set<Integer> mentionKeys = mentionMap.keySet();
+                    Set<Integer> topicKeys = topicsMap.keySet();
+                    //设置部分文字点击事件
+                    content_tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    ClickableSpan mentionClickableSpan = new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            Toast.makeText(ActivityDetailActivity.this, "mentionClickableSpan!", Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    ClickableSpan topicsClickableSpan = new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            Toast.makeText(ActivityDetailActivity.this, "topicsClickableSpan!", Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    for (Integer key : mentionKeys) {
+
+                        style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)), key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        style.setSpan(mentionClickableSpan, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+
+                    for (Integer key : topicKeys) {
+
+                        style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)), key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        style.setSpan(topicsClickableSpan, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    }
+                    content_tv.setText(style);
+                }
                     break;
 
 
@@ -202,83 +301,34 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
     protected void onResume() {
         super.onResume();
         onKeyBoardListener();
+        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         userVO = (UserVO) SharedPreferencesUtil.getInstance(ActivityDetailActivity.this).readObject("user", UserVO.class);
-        activityVO = (ActivityVO) getIntent().getSerializableExtra("activity");
-        Glide.with(this).load("http://192.168.1.9:8080/userpic/" + activityVO.getUserpic()).into(userPic_iv);
-        userName_tv.setText(activityVO.getUsername());
-        try {
-            shareTime_tv.setText(StringUtil.convertSharetime(activityVO.getCreateTime()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        {
-            if (activityVO.getIfFavorite()) {
-                favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
-                favorite_tv.setTextColor(this.getResources().getColor(R.color.green_light));
-            } else {
-                favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
-                favorite_tv.setTextColor(this.getResources().getColor(R.color.nav_text_default));
-            }
-            if (activityVO.getFavoriteCount() > 0) {
-                favorite_tv.setText(activityVO.getFavoriteCount() + "");
-            } else {
-                favorite_tv.setText("收藏");
-            }
-            if (activityVO.getIfLike()) {
-                like_iv.setImageResource(R.mipmap.icon_like_selected);
-                like_tv.setTextColor(this.getResources().getColor(R.color.green_light));
-            } else {
-                like_iv.setImageResource(R.mipmap.icon_favorite_unselected);
-                like_tv.setTextColor(this.getResources().getColor(R.color.nav_text_default));
-            }
-            if (activityVO.getLikeCount() > 0) {
-                like_tv.setText(activityVO.getLikeCount() + "");
-            } else {
-                like_tv.setText("赞");
-            }
-            if (activityVO.getCommentCount() > 0) {
-                comment_tv.setText(activityVO.getCommentCount() + "");
-            } else {
-                comment_tv.setText("评论");
-            }
-        }
-        {
-            String str = activityVO.getContent();
-            SpannableStringBuilder style = new SpannableStringBuilder(str);
-            Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
-            Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
-            Set<Integer> mentionKeys = mentionMap.keySet();
-            Set<Integer> topicKeys = topicsMap.keySet();
-            //设置部分文字点击事件
-            content_tv.setMovementMethod(LinkMovementMethod.getInstance());
-            ClickableSpan mentionClickableSpan = new ClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    Toast.makeText(ActivityDetailActivity.this, "mentionClickableSpan!", Toast.LENGTH_SHORT).show();
+        activityId = (Integer) getIntent().getIntExtra("activityid", 0);
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+userVO.getId()+"&id=" + activityId,
+                new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        super.onFinish(status, msg);
+                        //解析数据
+                        Gson gson=new Gson();
+                        ServerResponse<List<ActivityVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<ActivityVO>>>(){}.getType());
+                        if(serverResponse.getStatus() == 0) {
+                            Message message = new Message();
+                            message.what= ACTIVITYVO;
+                            message.obj = serverResponse.getData();
+                            mHandler.sendMessage(message);
+                        }else{
+                            Looper.prepare();
+                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Looper.loop();
+                        }
+
+                    }
                 }
-            };
-            ClickableSpan topicsClickableSpan = new ClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    Toast.makeText(ActivityDetailActivity.this, "topicsClickableSpan!", Toast.LENGTH_SHORT).show();
-                }
-            };
-            for (Integer key : mentionKeys) {
+        );
 
-                style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)), key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                style.setSpan(mentionClickableSpan, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            }
-
-            for (Integer key : topicKeys) {
-
-                style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)), key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                style.setSpan(topicsClickableSpan, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            }
-            content_tv.setText(style);
-        }
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/find.do?objectid="+activityVO.getId()+"&category=0&currentUserId="+userVO.getId(),
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/find.do?objectid="+activityId+"&category=0&currentUserId="+userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

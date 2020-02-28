@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/top_ll"
         android:layout_gravity="center"
-        android:layout_width="450dp"
+        android:layout_width="match_parent"
         android:background="#3AF9AC"
         android:layout_height="220dp">
         <LinearLayout
@@ -31,9 +32,9 @@
         </LinearLayout>
     </LinearLayout>
     <RelativeLayout
-        android:layout_width="380dp"
+        android:layout_width="320dp"
+        android:layout_marginLeft="20dp"
         android:layout_height="250dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="70dp"
         android:background="#ffffff">
 

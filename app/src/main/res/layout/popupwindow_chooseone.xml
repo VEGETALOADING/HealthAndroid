@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_marginLeft="185dp"
+            android:layout_marginLeft="170dp"
             android:gravity="center"
             android:text="选择"
             android:textSize="20sp"></TextView>
@@ -23,7 +23,7 @@
             android:id="@+id/chooseone_dl_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="150dp"
+            android:layout_marginLeft="130dp"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_close"></ImageView>
     </LinearLayout>

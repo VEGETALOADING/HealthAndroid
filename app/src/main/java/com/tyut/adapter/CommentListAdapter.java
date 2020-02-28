@@ -3,6 +3,7 @@ package com.tyut.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,12 +18,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -49,13 +55,15 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
     private Context mContext;
     private OnItemClickListener mListener;
+    private OnUpdateListener updateListener;
 
 
     private List<CommentVO> mList;
-    public CommentListAdapter(Context context, List<CommentVO> list, OnItemClickListener listener){
+    public CommentListAdapter(Context context, List<CommentVO> list, OnItemClickListener listener, OnUpdateListener updateListener){
         this.mContext = context;
         this.mListener = listener;
         this.mList = list;
+        this.updateListener = updateListener;
     }
 
     //子线程主线程通讯
@@ -85,6 +93,53 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     public void onBindViewHolder(@NonNull final CommentListAdapter.LinearViewHolder holder, final int position) {
         final UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(mContext).readObject("user", UserVO.class);
         if(mList.size() > position){
+
+            if(userVO.getId() == mList.get(position).getUserid()){
+                holder.delete_iv.setVisibility(View.VISIBLE);
+            }else {
+                holder.delete_iv.setVisibility(View.GONE);
+            }
+            holder.delete_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog alertDialog = new AlertDialog.Builder(mContext)
+                            .setMessage("确定要删除吗？")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                //添加"Yes"按钮
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                     OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId(),
+                                             new OkHttpCallback(){
+                                @Override
+                                public void onFinish(String status, final String msg) {
+                                    super.onFinish(status, msg);
+                                    //解析数据
+                                    Gson gson=new Gson();
+                                    final ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                    if(serverResponse.getStatus() == 0){
+                                        updateListener.onUpdate();
+                                    }
+                                    Looper.prepare();
+                                    Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Looper.loop();
+
+
+                                }
+                            }
+                    );
+                                }
+                            })
+
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                //添加取消
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                }
+                            }).create();
+                    alertDialog.show();
+
+                }
+            });
             CommentVO vo = mList.get(position);
             holder.username_tv.setText(vo.getUserName());
             Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + vo.getUserpic()).into(holder.userpic_iv);
@@ -205,6 +260,26 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                 }
             });
 
+            if(mList.get(position).getReplyList().size() > 3){
+                holder.replyCount_ll.setVisibility(View.VISIBLE);
+                holder.replyCount_tv.setText(mList.get(position).getReplyList().size()+"");
+            }else{
+                holder.replyCount_ll.setVisibility(View.GONE);
+            }
+            if(mList.get(position).getReplyList().size() != 0) {
+                holder.replyRv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+                //holder.replyRv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+                holder.replyRv.setAdapter(new ReplyListAdapter(mContext, mList.get(position).getReplyList(), new ReplyListAdapter.OnItemClickListener() {
+                    @Override
+                    public void onClick(int position) {
+                        Toast.makeText(mContext, "评论评论", Toast.LENGTH_LONG).show();
+                    }
+                }));
+            }else{
+                holder.replyRv.setVisibility(View.GONE);
+            }
+
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -232,6 +307,11 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         private ImageView comment_iv;
         private TextView content_tv;
         private TextView likeCount_tv;
+        private ImageView delete_iv;
+
+        private LinearLayout replyCount_ll;
+        private TextView replyCount_tv;
+        private RecyclerView replyRv;
         public LinearViewHolder(@NonNull View itemView) {
             super(itemView);
             username_tv = itemView.findViewById(R.id.username_commentItem);
@@ -241,6 +321,11 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             comment_iv = itemView.findViewById(R.id.comment_comment_iv);
             content_tv = itemView.findViewById(R.id.content_commentItem);
             likeCount_tv = itemView.findViewById(R.id.like_count_tv);
+            delete_iv = itemView.findViewById(R.id.delete_comment_iv);
+            replyCount_ll = itemView.findViewById(R.id.replycount_ll);
+            replyCount_tv = itemView.findViewById(R.id.replycount_tv);
+            replyRv = itemView.findViewById(R.id.reply_Rv);
+
 
         }
     }
@@ -248,4 +333,9 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     public interface OnItemClickListener{
         void onClick(int position);
     }
+
+    public interface OnUpdateListener{
+        void onUpdate();
+    }
+
 }

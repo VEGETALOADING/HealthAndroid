@@ -2,15 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical" android:layout_width="360dp"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:id="@+id/whole_ll"
     android:foreground="@drawable/dim"
     tools:foreground="">
     <LinearLayout
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp">
         <LinearLayout
             android:id="@+id/return_i"
@@ -47,7 +48,7 @@
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="370dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
         <LinearLayout
@@ -112,8 +113,7 @@
                 android:textStyle="bold"></TextView>
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -211,8 +211,7 @@
                 android:textStyle="bold"></TextView>
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content">
 
                 <TextView
@@ -266,8 +265,7 @@
                 android:textStyle="bold"></TextView>
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content">
 
                 <TextView

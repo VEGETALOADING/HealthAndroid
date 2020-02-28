@@ -77,7 +77,7 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
                             intent.putExtra("activity", activityVOList.get(position));
                             context.startActivity(intent);
                         }
-                    }));
+                    }, null));
                     break;
             }
         }

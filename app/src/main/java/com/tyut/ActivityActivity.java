@@ -94,8 +94,18 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onClick(int position) {
                             Intent intent = new Intent(ActivityActivity.this, ActivityDetailActivity.class);
-                            intent.putExtra("activity", activityVOList.get(position));
+                            intent.putExtra("activityid", activityVOList.get(position).getId());
                             ActivityActivity.this.startActivity(intent);
+                        }
+                    }, new ActivityListAdapter.OnUpdateListener() {
+                        @Override
+                        public void onUpdate(int position) {
+                            onResume();
+                        }
+                    }).setFlushListener(new ActivityListAdapter.OnFlushListener() {
+                        @Override
+                        public void onFlush(int i) {
+                            ViewUtil.changeAlpha(mHandler, i);
                         }
                     }));
                     break;

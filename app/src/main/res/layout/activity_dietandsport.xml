@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/whole_rl"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:foreground="@drawable/dim"
@@ -24,7 +25,7 @@
         </ImageView>
 
         <RelativeLayout
-            android:layout_marginLeft="105dp"
+            android:layout_marginLeft="80dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
             <ImageView
@@ -68,7 +69,7 @@
         tools:foreground="">
         <LinearLayout
             android:layout_gravity="center_horizontal"
-            android:layout_width="380dp"
+            android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <LinearLayout

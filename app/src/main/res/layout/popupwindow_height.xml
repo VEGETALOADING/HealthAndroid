@@ -12,22 +12,21 @@
 
 
         <TextView
-            android:id="@+id/chooseheight_dl_close"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:text="身高"
-            android:layout_marginLeft="120dp"
+            android:layout_marginLeft="105dp"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="@color/black"></TextView>
 
         <ImageView
-            android:id="@+id/weight_dl_close"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginLeft="75dp"
+            android:id="@+id/chooseheight_dl_close"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="75dp"
             android:src="@mipmap/icon_close"></ImageView>
     </LinearLayout>
 

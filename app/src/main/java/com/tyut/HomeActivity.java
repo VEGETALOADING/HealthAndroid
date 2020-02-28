@@ -227,6 +227,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                 int[] location = new int[2];
                 add_LinearLayout.getLocationOnScreen(location);
+                mPop.setAnimationStyle(R.style.mypopwindow_anim_style);
                 mPop.showAtLocation(v, Gravity.NO_GRAVITY, (location[0] + v.getWidth() / 2) - popupWidth / 2, location[1] - popupHeight);
                 break;
             case R.id.close_ll:

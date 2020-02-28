@@ -3,7 +3,8 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_gravity="center"
+    android:layout_width="360dp">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -12,7 +13,7 @@
     <LinearLayout
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="40dp">
         <LinearLayout
             android:id="@+id/return_c"
@@ -49,7 +50,7 @@
 
     <LinearLayout
         android:layout_marginTop="40dp"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
@@ -128,7 +129,7 @@
 
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
@@ -172,7 +173,7 @@
 
     <LinearLayout
         android:layout_marginTop="20dp"
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
@@ -202,7 +203,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="144dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"

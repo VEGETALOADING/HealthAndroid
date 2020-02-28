@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
     android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/top_ll"
@@ -28,12 +29,13 @@
                 android:textColor="@color/black"></TextView>
         </LinearLayout>
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="添加运动"
             android:textSize="20sp"
             android:paddingLeft="5dp"
             android:textStyle="bold"
+            android:layout_marginLeft="35dp"
             android:layout_gravity="center_vertical"
             android:gravity="center"></TextView>
 
@@ -41,7 +43,7 @@
             android:id="@+id/commit_btn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="58dp"
             android:text="完成"
             android:textSize="18sp"
             android:gravity="center"
@@ -51,10 +53,10 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/search_ll"
-        android:layout_width="380dp"
+        android:layout_width="340dp"
         android:gravity="center"
+        android:layout_marginLeft="10dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/top_ll">
         <EditText
