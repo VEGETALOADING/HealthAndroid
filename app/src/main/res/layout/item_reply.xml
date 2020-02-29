@@ -19,7 +19,7 @@
         <TextView
             android:id="@+id/content_ol"
             android:layout_marginLeft="5dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:singleLine="false"
@@ -56,7 +56,7 @@
             android:text="/@浪子回头:"></TextView>
         <TextView
             android:id="@+id/content_tl"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="回复xxxxxxxxxxxxxxxxxxxx"

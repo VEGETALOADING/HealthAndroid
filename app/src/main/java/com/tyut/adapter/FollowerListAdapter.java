@@ -110,13 +110,13 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
                                         message.obj = holder;
                                         mHandler.sendMessage(message);
                                     /*Looper.prepare();
-                                    Toast.makeText(FollowingDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FollowingDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();*/
 
                                     }else  if((double)serverResponse.getData() == 20){
                                         //取关失败
                                         Looper.prepare();
-                                        Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }else  if((double)serverResponse.getData() == 17){
                                         //关注成功
@@ -130,7 +130,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
                                     }else  if((double)serverResponse.getData() == 18){
                                         //关注失败
                                         Looper.prepare();
-                                        Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 

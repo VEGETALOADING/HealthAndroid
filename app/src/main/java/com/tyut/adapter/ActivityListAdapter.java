@@ -2,6 +2,7 @@ package com.tyut.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -28,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tyut.ActivityDetailActivity;
 import com.tyut.FoodDetailActivity;
 import com.tyut.MainActivity;
 import com.tyut.R;
@@ -202,6 +204,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             holder.favorite_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     OkHttpUtils.get("http://192.168.1.9:8080/portal/favorite/addorcancel.do?userid="+userVO.getId()+"&category=1&objectid="+mList.get(position).getId(),
                     new OkHttpCallback(){
                         @Override
@@ -220,11 +223,10 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                                             holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
                                             holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.green_light));
                                             holder.favorite_tv.setText(serverResponse.getMsg());
+                                            Toast.makeText(context, "收藏成功", Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                    Looper.prepare();
-                                    Toast.makeText(context, "收藏成功", Toast.LENGTH_LONG).show();
-                                    Looper.loop();
+
 
 
                                 }else if((Double) serverResponse.getData() == 47){
@@ -235,16 +237,14 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                                             holder.favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
                                             holder.favorite_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
                                             holder.favorite_tv.setText( Double.parseDouble(serverResponse.getMsg()) == 0 ? "收藏" : serverResponse.getMsg());
+                                            Toast.makeText(context, "取消收藏", Toast.LENGTH_SHORT).show();
                                         }
                                     });
 
-                                    Looper.prepare();
-                                    Toast.makeText(context, "取消收藏", Toast.LENGTH_LONG).show();
-                                    Looper.loop();
                                 }
                             }else{
                                 Looper.prepare();
-                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
 
@@ -257,12 +257,16 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(context, "comment", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, ActivityDetailActivity.class);
+                    intent.putExtra("activityid", mList.get(position).getId());
+                    intent.putExtra("action", 1);
+                    context.startActivity(intent);
                 }
             });
             holder.like_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+mList.get(position).getId()+"&category=0",
                             new OkHttpCallback(){
                                 @Override
@@ -282,11 +286,11 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                                                     holder.like_iv.setImageResource(R.mipmap.icon_like_selected);
                                                     holder.like_tv.setTextColor(context.getResources().getColor(R.color.green_light));
                                                     holder.like_tv.setText(serverResponse.getMsg());
+                                                    Toast.makeText(context, "已点赞", Toast.LENGTH_SHORT).show();
+
                                                 }
                                             });
-                                            Looper.prepare();
-                                            Toast.makeText(context, "已点赞", Toast.LENGTH_LONG).show();
-                                            Looper.loop();
+
 
 
                                         }else if((Double) serverResponse.getData() == 58){
@@ -297,16 +301,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                                                     holder.like_iv.setImageResource(R.mipmap.icon_like_unselected);
                                                     holder.like_tv.setTextColor(context.getResources().getColor(R.color.nav_text_default));
                                                     holder.like_tv.setText( Double.parseDouble(serverResponse.getMsg()) == 0 ? "赞" : serverResponse.getMsg());
+                                                    Toast.makeText(context, "已取消", Toast.LENGTH_SHORT).show();
+
                                                 }
                                             });
 
-                                            Looper.prepare();
-                                            Toast.makeText(context, "已取消", Toast.LENGTH_LONG).show();
-                                            Looper.loop();
                                         }
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 
@@ -339,17 +342,19 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                                                         ((Activity)context).runOnUiThread(new Runnable() {
                                                             @Override
                                                             public void run() {
+                                                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                                                 if(updateListener != null){
                                                                     updateListener.onUpdate(position);
                                                                 }
                                                             }
                                                         });
 
-                                                    }else{
+                                                    }else {
                                                         Looper.prepare();
-                                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                                         Looper.loop();
                                                     }
+
 
                                                 }
                                             }

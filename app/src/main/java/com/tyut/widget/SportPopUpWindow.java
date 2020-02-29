@@ -211,7 +211,7 @@ public class SportPopUpWindow implements View.OnClickListener {
                                     Gson gson=new Gson();
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
                                     Looper.prepare();
-                                    Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -238,7 +238,7 @@ public class SportPopUpWindow implements View.OnClickListener {
                                 Gson gson=new Gson();
                                 ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
                                 Looper.prepare();
-                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
                         }

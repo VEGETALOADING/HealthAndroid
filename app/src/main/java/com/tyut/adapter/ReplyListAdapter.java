@@ -46,13 +46,14 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
     private Context mContext;
     private OnItemClickListener mListener;
 
-
     private List<Reply> mList;
     public ReplyListAdapter(Context context, List<Reply> list, OnItemClickListener listener){
         this.mContext = context;
         this.mListener = listener;
         this.mList = list;
     }
+
+
 
     //子线程主线程通讯
     @SuppressLint("HandlerLeak")
@@ -113,10 +114,11 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
                 }
             });
 
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClick(position);
+                    mListener.onClick(mList.get(position));
                 }
             });
 
@@ -155,8 +157,9 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
     }
 
     public interface OnItemClickListener{
-        void onClick(int position);
+        void onClick(Reply reply);
     }
+
 
 
 }

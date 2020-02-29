@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
 
             case R.id.login:
-                //Toast.makeText(this, "loginButton", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "loginButton", Toast.LENGTH_SHORT).show();
 
                 //获取数据
                 String username = username_et.getText().toString();
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 //解析接口返回的数据
                                /* Looper.prepare();
-                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 Looper.loop();*/
                                Gson gson = new Gson();
 
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     LoginActivity.this.startActivity(intent);
 
                                     Looper.prepare();
-                                    Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
 
@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }else{
 
                                     Looper.prepare();
-                                    Toast.makeText(LoginActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(LoginActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -116,11 +116,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
             case R.id.loginbyphone:
-                Toast.makeText(this, "loginbyphoneButton", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "loginbyphoneButton", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.forgetpassword:
-                Toast.makeText(this, "forgetpassword", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "forgetpassword", Toast.LENGTH_SHORT).show();
 
                 break;
 

@@ -3,7 +3,11 @@
     android:orientation="vertical"
     android:layout_width="360dp"
     android:layout_gravity="center"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="@drawable/dim"
+    tools:foreground=""
+    android:id="@+id/whole_sv">
 
     <LinearLayout
         android:id="@+id/top_ll"

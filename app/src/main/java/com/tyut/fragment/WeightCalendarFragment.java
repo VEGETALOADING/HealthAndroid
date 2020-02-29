@@ -53,7 +53,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                     showDialog(date);
 
                 }else {
-                    Toast.makeText(getActivity(), "不能记录未来的日期", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "不能记录未来的日期", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -111,7 +111,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                                 util.putInt("userid", serverResponse.getData().getId());
                                 onResume();
                                 Looper.prepare();
-                                Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                 Looper.loop();
 
                             }

@@ -130,7 +130,7 @@ public class WeightCurveFragment extends Fragment {
 
                         }else {
                             Looper.prepare();
-                            Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }

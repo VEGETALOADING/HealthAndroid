@@ -494,7 +494,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
 
                         }else{
                             Looper.prepare();
-                            Toast.makeText(DietAndSportActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(DietAndSportActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }

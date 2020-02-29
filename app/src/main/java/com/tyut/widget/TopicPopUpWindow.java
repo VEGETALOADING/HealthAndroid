@@ -1,13 +1,11 @@
 package com.tyut.widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -15,16 +13,10 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tyut.FollowerDetailActivity;
-import com.tyut.FollowerListActivity;
 import com.tyut.R;
-import com.tyut.adapter.ChooseMentionAdapter;
-import com.tyut.adapter.FollowerListAdapter;
 import com.tyut.adapter.TopicAdapter;
 import com.tyut.utils.RecycleViewDivider;
-import com.tyut.vo.UserVO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

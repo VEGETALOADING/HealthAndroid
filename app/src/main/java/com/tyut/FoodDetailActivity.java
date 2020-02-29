@@ -193,7 +193,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
 
                         }else{
                             Looper.prepare();
-                            Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
 
@@ -244,13 +244,13 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
 
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FoodDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 

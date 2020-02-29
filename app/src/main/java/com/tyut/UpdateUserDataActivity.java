@@ -315,7 +315,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                                 }else{
 
                                     Looper.prepare();
-                                    Toast.makeText(UpdateUserDataActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(UpdateUserDataActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }

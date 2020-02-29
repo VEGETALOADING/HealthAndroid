@@ -220,7 +220,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                             vos = serverResponse.getData();
                         }else{
                             Looper.prepare();
-                            Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -297,7 +297,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                                     recentTopics = serverResponse.getData();
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -373,7 +373,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
                         }
                         Looper.prepare();
-                        Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ShareActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                         Looper.loop();
 
                     }

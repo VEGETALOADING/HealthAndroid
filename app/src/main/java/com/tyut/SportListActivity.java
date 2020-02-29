@@ -108,7 +108,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                         mysportList.add(mysport);
                                         badge.setBadgeNumber(badge.getBadgeNumber() + 1);
                                     }else{
-                                        Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }).showFoodPopWindow();
@@ -160,7 +160,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                         mysportList.add(mysport);
                                         badge.setBadgeNumber(badge.getBadgeNumber() + 1);
                                     }else{
-                                        Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SportListActivity.this, "时间为0，未添加", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }).showFoodPopWindow();
@@ -246,7 +246,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -286,7 +286,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                     mHandler.sendMessage(message);
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -312,7 +312,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                     mHandler.sendMessage(message);
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -351,7 +351,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                         mHandler.sendMessage(message);
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }
@@ -376,7 +376,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                         mHandler.sendMessage(message);
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }
@@ -404,7 +404,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
                                     if(serverResponse.getStatus() != 0){
                                         Looper.prepare();
-                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 
@@ -458,7 +458,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                     }
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(SportListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 

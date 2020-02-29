@@ -176,7 +176,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(ShowSchemaActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ShowSchemaActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }

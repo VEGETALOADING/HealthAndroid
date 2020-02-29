@@ -52,9 +52,8 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
                         @Override
                         public void onClick(int position) {
 
-                            Intent intent = new Intent(FollowerListActivity.this, FollowerDetailActivity.class);
-                            intent.putExtra("followerid", list.get(position).getId());
-                            intent.putExtra("isFollow", list.get(position).getRel());
+                            Intent intent = new Intent(FollowerListActivity.this, ActivityActivity.class);
+                            intent.putExtra("userid", list.get(position).getId());
                             FollowerListActivity.this.startActivity(intent);
 
                         }
@@ -99,7 +98,7 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(FollowerListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(FollowerListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -124,6 +123,8 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
                     intent.putExtra("src", "FollowerListActivity");
                     intent.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
                     FollowerListActivity.this.startActivity(intent);
+                }else {
+                    this.finish();
                 }
         }
     }

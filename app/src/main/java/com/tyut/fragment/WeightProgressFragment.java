@@ -159,7 +159,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -220,7 +220,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
                                                 util.putInt("userid", serverResponse.getData().getId());
                                                 onResume();
                                                 Looper.prepare();
-                                                Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                                 Looper.loop();
 
                                             }

@@ -177,7 +177,7 @@ public class WeightPopUpWindow implements View.OnClickListener {
                                         util.putInt("userid", serverResponse.getData().getId());
                                     }
                                     Looper.prepare();
-                                    Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
                                 }

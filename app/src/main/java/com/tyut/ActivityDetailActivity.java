@@ -1,6 +1,5 @@
 package com.tyut;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +22,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,12 +47,16 @@ import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.SoftKeyBoardListener;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
+import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.CommentVO;
 import com.tyut.vo.Emoji;
+import com.tyut.vo.Reply;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.ChooseMentionPopUpWindow;
+import com.tyut.widget.DeleteActivityPUW;
+import com.tyut.widget.ReplyPUW;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -65,6 +70,7 @@ import java.util.Set;
 public class ActivityDetailActivity extends AppCompatActivity implements View.OnClickListener,
         FaceFragment.OnEmojiClickListener{
 
+    RelativeLayout whole_sv;
     LinearLayout return_ll;
     ImageView more_iv;
     ImageView userPic_iv;
@@ -100,16 +106,18 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
     private Integer objectId;
     private Integer category;
     private UserVO userVO;
+    private Boolean ifFirst;
     private List<UserVO> vos = new ArrayList<>();
 
 
-    private static final int COMMENTVOLIST = 0;
-    private static final int ACTIVITYVO = 1;
+    private static final int COMMENTVOLIST = 1;
+    private static final int ACTIVITYVO = 2;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ifFirst = true;
         setContentView(R.layout.activity_activitydetail);
         return_ll = findViewById(R.id.return_o);
         more_iv = findViewById(R.id.more_iv);
@@ -137,8 +145,13 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         favorite_iv = findViewById(R.id.favorite_iv);
         favorite_tv = findViewById(R.id.favorite_tv);
         comment_tv = findViewById(R.id.comment_tv);
-
         addFace_hide_ll = findViewById(R.id.addFace_hide_ll);
+
+        whole_sv = findViewById(R.id.whole_sv);
+        if (whole_sv.getForeground()!=null){
+            whole_sv.getForeground().setAlpha(0);
+        }
+
         like_ll.setOnClickListener(this);
         comment_ll.setOnClickListener(this);
         favorite_ll.setOnClickListener(this);
@@ -147,6 +160,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         face_commentAc_iv.setOnClickListener(this);
         commentAc_et.setOnClickListener(this);
         send_commentAc_tv.setOnClickListener(this);
+        more_iv.setOnClickListener(this);
 
 
 
@@ -164,6 +178,9 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
 
             switch (msg.what){
                 case 0:
+                    whole_sv.getForeground().setAlpha((int)msg.obj);
+                    break;
+                case 1:
                     final List<CommentVO> commentVOList = (List<CommentVO>) msg.obj;
                     if(commentVOList.size() == 0){
                         commentNotNone_ll.setVisibility(View.GONE);
@@ -173,46 +190,103 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         commentNone_tv.setVisibility(View.GONE);
                         comment_Rv.setLayoutManager(new LinearLayoutManager(ActivityDetailActivity.this, LinearLayoutManager.VERTICAL, false));
                         comment_Rv.addItemDecoration(new DividerItemDecoration(ActivityDetailActivity.this, DividerItemDecoration.VERTICAL));
-                        comment_Rv.setAdapter(new CommentListAdapter(ActivityDetailActivity.this,
+
+                        CommentListAdapter adapter = new CommentListAdapter(ActivityDetailActivity.this,
                                 commentVOList,
                                 new CommentListAdapter.OnItemClickListener() {
-                            @Override
-                            public void onClick(int position) {
-                                //回复
-                                objectId = commentVOList.get(position).getId();
-                                category = 1;
-                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                if(imm.isActive()){
-                                    imm.isActive();
-                                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                                }
+                                    @Override
+                                    public void onClick(int position) {
+                                        //回复
+                                        objectId = commentVOList.get(position).getId();
+                                        category = 1;
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        if(imm.isActive()){
+                                            imm.isActive();
+                                            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                                        }
 
-                                commentAc_ll.setVisibility(View.VISIBLE);
-                                commentAc_et.setFocusable(true);
-                                commentAc_et.setFocusableInTouchMode(true);
-                                commentAc_et.requestFocus();
-                            }
-                        }, new CommentListAdapter.OnUpdateListener(){
+                                        commentAc_ll.setVisibility(View.VISIBLE);
+                                        commentAc_et.setFocusable(true);
+                                        commentAc_et.setFocusableInTouchMode(true);
+                                        commentAc_et.requestFocus();
+                                    }
+                                }, new CommentListAdapter.OnUpdateListener(){
                             @Override
                             public void onUpdate() {
 
                                 ActivityDetailActivity.this.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        /*int commentCount = Integer.parseInt(comment_tv.getText().toString());
-                                        if(commentCount == 1){
-                                            comment_tv.setText("评论");
-                                        }else{
-                                            comment_tv.setText(commentCount - 1);
-                                        }*/
+
                                         onResume();
                                     }
                                 });
                             }
-                        }));
+                        });
+                        adapter.setReplyListener(new CommentListAdapter.OnReplyListener() {
+                            @Override
+                            public void onReply(final Reply reply) {
+                                ViewUtil.changeAlpha(mHandler, 0);
+                                final ReplyPUW replyPUW = new ReplyPUW(ActivityDetailActivity.this, reply);
+                                replyPUW
+                                        .setDelete(new ReplyPUW.IDeleteListener() {
+                                            @Override
+                                            public void onDelete(ReplyPUW puw) {
+                                                OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/delete.do?id="+reply.getId()+"&userid="+userVO.getId()+"&category=1",
+                                                        new OkHttpCallback(){
+                                                            @Override
+                                                            public void onFinish(String status, final String msg) {
+                                                                super.onFinish(status, msg);
+                                                                //解析数据
+                                                                Gson gson=new Gson();
+                                                                final ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                                                if(serverResponse.getStatus() == 0){
+                                                                    (ActivityDetailActivity.this).runOnUiThread(new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            onResume();
+                                                                        }
+                                                                    });
+
+                                                                }
+                                                                Looper.prepare();
+                                                                Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                                Looper.loop();
+
+
+                                                            }
+                                                        }
+                                                );
+                                            }
+                                        }).setReplyListener(new ReplyPUW.IReplyListener() {
+                                    @Override
+                                    public void onReply(ReplyPUW puw) {
+                                        objectId = reply.getId();
+                                        category = 2;
+                                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        if(imm.isActive()){
+                                            imm.isActive();
+                                            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                                        }
+
+                                        commentAc_ll.setVisibility(View.VISIBLE);
+                                        commentAc_et.setFocusable(true);
+                                        commentAc_et.setFocusableInTouchMode(true);
+                                        commentAc_et.requestFocus();
+                                    }
+                                }).showFoodPopWindow();
+                                replyPUW.getPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss() {
+                                        ViewUtil.changeAlpha(mHandler, 1);
+                                    }
+                                });
+                            }
+                        });
+                        comment_Rv.setAdapter(adapter);
                     }
                     break;
-                case 1 :
+                case 2 :
                     activityVO = ((List<ActivityVO>)msg.obj).get(0);
 
                     Glide.with(ActivityDetailActivity.this).load("http://192.168.1.9:8080/userpic/" + activityVO.getUserpic()).into(userPic_iv);
@@ -222,7 +296,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                {
+                    {
                     if (activityVO.getIfFavorite()) {
                         favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
                         favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
@@ -253,7 +327,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         comment_tv.setText("评论");
                     }
                 }
-                {
+                    {
                     String str = activityVO.getContent();
                     SpannableStringBuilder style = new SpannableStringBuilder(str);
                     Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
@@ -289,6 +363,21 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                     }
                     content_tv.setText(style);
                 }
+                    if(getIntent().getIntExtra("action", 0) == 1 && ifFirst == true){
+                        ifFirst = false;
+                        objectId = activityVO.getId();
+                        category = 0;
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if(imm.isActive()){
+                            imm.isActive();
+                            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                        }
+
+                        commentAc_ll.setVisibility(View.VISIBLE);
+                        commentAc_et.setFocusable(true);
+                        commentAc_et.setFocusableInTouchMode(true);
+                        commentAc_et.requestFocus();
+                }
                     break;
 
 
@@ -301,7 +390,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
     protected void onResume() {
         super.onResume();
         onKeyBoardListener();
-        Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         userVO = (UserVO) SharedPreferencesUtil.getInstance(ActivityDetailActivity.this).readObject("user", UserVO.class);
         activityId = (Integer) getIntent().getIntExtra("activityid", 0);
         OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+userVO.getId()+"&id=" + activityId,
@@ -319,7 +408,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
 
@@ -357,19 +446,73 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                             vos = serverResponse.getData();
                         }else{
                             Looper.prepare();
-                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
                 }
         );
 
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.more_iv:
+                ViewUtil.changeAlpha(mHandler, 0);
+                final DeleteActivityPUW deleteActivityPUW = new DeleteActivityPUW(ActivityDetailActivity.this, activityVO);
+                deleteActivityPUW
+                        .setDelete(new DeleteActivityPUW.IDeleteListener() {
+                            @Override
+                            public void onDelete(DeleteActivityPUW puw) {
+                                OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/delete.do?userid="+userVO.getId()+"&id="+activityVO.getId(),
+                                        new OkHttpCallback(){
+                                            @Override
+                                            public void onFinish(String status, final String msg) {
+                                                super.onFinish(status, msg);
+                                                //解析数据
+                                                Gson gson=new Gson();
+                                                final ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                                if(serverResponse.getStatus() == 0){
+                                                    ActivityDetailActivity.this.runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                            ActivityDetailActivity.this.finish();
+                                                        }
+                                                    });
+
+                                                }else {
+                                                    Looper.prepare();
+                                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                    Looper.loop();
+                                                }
+
+                                            }
+                                        }
+                                );
+                            }
+                        })
+                        /*.setTOP(new DeleteActivityPUW.ITopListener() {
+                            @Override
+                            public void onTop(DeleteActivityPUW deleteActivityPUW) {
+
+                            }
+                        })
+                        .setShare(new DeleteActivityPUW.IShareListener() {
+                            @Override
+                            public void onShare(DeleteActivityPUW deleteActivityPUW) {
+
+                            }
+                        })*/
+                        .showFoodPopWindow();
+                deleteActivityPUW.getPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        ViewUtil.changeAlpha(mHandler, 1);
+                    }
+                });
+                break;
             case R.id.return_o:
                 this.finish();
                 break;
@@ -396,7 +539,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                             }
                                         });
                                         Looper.prepare();
-                                        Toast.makeText(ActivityDetailActivity.this, "已点赞", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ActivityDetailActivity.this, "已点赞", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
 
 
@@ -412,12 +555,12 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                         });
 
                                         Looper.prepare();
-                                        Toast.makeText(ActivityDetailActivity.this, "已取消", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ActivityDetailActivity.this, "已取消", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -446,7 +589,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                             }
                                         });
                                         Looper.prepare();
-                                        Toast.makeText( ActivityDetailActivity.this, "收藏成功", Toast.LENGTH_LONG).show();
+                                        Toast.makeText( ActivityDetailActivity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
 
 
@@ -462,12 +605,12 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                         });
 
                                         Looper.prepare();
-                                        Toast.makeText( ActivityDetailActivity.this, "取消收藏", Toast.LENGTH_LONG).show();
+                                        Toast.makeText( ActivityDetailActivity.this, "取消收藏", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText( ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText( ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 
@@ -553,7 +696,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                     });
                                 }
                                     Looper.prepare();
-                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
                             }

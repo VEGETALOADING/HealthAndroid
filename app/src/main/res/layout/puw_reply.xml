@@ -11,14 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/btn_white">
+
         <TextView
             android:layout_marginVertical="10dp"
-            android:id="@+id/top_tv"
+            android:id="@+id/reply_tv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="在我的动态里置顶"
             android:textColor="#3333FF"
             android:textSize="30sp"
+            android:text="回复"
             android:gravity="center"
             android:layout_weight="1"></TextView>
         <View
@@ -27,26 +28,23 @@
             android:background="@color/line_grey"></View>
         <TextView
             android:layout_marginVertical="10dp"
-            android:id="@+id/sharetoweibo_tv"
+            android:id="@+id/deleteReply_tv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textColor="#3333FF"
-            android:textSize="30sp"
-            android:text="分享"
-            android:gravity="center"
-            android:layout_weight="1"></TextView>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/line_grey"></View>
-        <TextView
-            android:layout_marginVertical="10dp"
-            android:id="@+id/deleteactivity_tv"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:textColor="@color/red_light"
             android:textSize="30sp"
             android:text="删除"
+            android:gravity="center"
+            android:layout_weight="1"></TextView>
+        <TextView
+            android:visibility="gone"
+            android:layout_marginVertical="10dp"
+            android:id="@+id/reportReply_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="#3333FF"
+            android:textSize="30sp"
+            android:text="举报"
             android:gravity="center"
             android:layout_weight="1"></TextView>
     </LinearLayout>

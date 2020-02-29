@@ -364,7 +364,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                                         }
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 
@@ -427,7 +427,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                                     }
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 

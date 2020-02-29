@@ -146,7 +146,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                             }
                         }else{
                             Looper.prepare();
-                            Toast.makeText(RecordActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(RecordActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -167,7 +167,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(RecordActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(RecordActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }

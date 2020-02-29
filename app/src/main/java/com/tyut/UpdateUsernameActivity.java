@@ -79,12 +79,12 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
                                     finish();
                                     /*Intent intent = new Intent(UpdateUsernameActivity.this, UpdateUserInfoActivity.class);
                                     UpdateUsernameActivity.this.startActivity(intent);*/
-                                    Toast.makeText(UpdateUsernameActivity.this, "修改成功", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(UpdateUsernameActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(UpdateUsernameActivity.this, "修改失败", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(UpdateUsernameActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 

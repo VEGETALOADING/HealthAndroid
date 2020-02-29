@@ -41,6 +41,7 @@ import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.CommentVO;
 import com.tyut.vo.FollowerVO;
+import com.tyut.vo.Reply;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
@@ -56,6 +57,12 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     private Context mContext;
     private OnItemClickListener mListener;
     private OnUpdateListener updateListener;
+    private OnReplyListener replyListener;
+
+    public CommentListAdapter setReplyListener(OnReplyListener replyListener) {
+        this.replyListener = replyListener;
+        return this;
+    }
 
 
     private List<CommentVO> mList;
@@ -108,7 +115,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                                 //添加"Yes"按钮
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                     OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId(),
+                                     OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId()+"&category=0",
                                              new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, final String msg) {
@@ -120,7 +127,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                                         updateListener.onUpdate();
                                     }
                                     Looper.prepare();
-                                    Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
 
@@ -224,7 +231,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                                                 }
                                             });
                                             Looper.prepare();
-                                            Toast.makeText(mContext, "已点赞", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(mContext, "已点赞", Toast.LENGTH_SHORT).show();
                                             Looper.loop();
 
 
@@ -245,12 +252,12 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                                             });
 
                                             Looper.prepare();
-                                            Toast.makeText(mContext, "已取消", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(mContext, "已取消", Toast.LENGTH_SHORT).show();
                                             Looper.loop();
                                         }
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 
@@ -269,12 +276,17 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             if(mList.get(position).getReplyList().size() != 0) {
                 holder.replyRv.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
                 //holder.replyRv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-                holder.replyRv.setAdapter(new ReplyListAdapter(mContext, mList.get(position).getReplyList(), new ReplyListAdapter.OnItemClickListener() {
+                ReplyListAdapter replyListAdapter = new ReplyListAdapter(mContext, mList.get(position).getReplyList(), new ReplyListAdapter.OnItemClickListener() {
                     @Override
-                    public void onClick(int position) {
-                        Toast.makeText(mContext, "评论评论", Toast.LENGTH_LONG).show();
+                    public void onClick(Reply reply) {
+                        //弹框询问
+                        if(replyListener != null){
+                            replyListener.onReply(reply);
+                        }
                     }
-                }));
+                });
+
+                holder.replyRv.setAdapter(replyListAdapter);
             }else{
                 holder.replyRv.setVisibility(View.GONE);
             }
@@ -337,5 +349,9 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     public interface OnUpdateListener{
         void onUpdate();
     }
+    public interface OnReplyListener{
+        void onReply(Reply reply);
+    }
+
 
 }

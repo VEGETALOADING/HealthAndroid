@@ -49,6 +49,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     RelativeLayout menu1_1;
     RelativeLayout menu1_2;
 
+    private UserVO userVO;
     private static final int FOLLOWERCOUNT = 0;
     private static final int FOLLOWINGCOUNT = 1;
     private static final int ACTIVITYCOUNT = 2;
@@ -109,7 +110,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         if(isLogin == true){
 
             //获取用户信息
-            UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
+            userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
 
 
 
@@ -194,7 +195,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                                     getActivity().startActivity(intent);
                                 }
                                 Looper.prepare();
-                                Toast.makeText(getActivity(),serverResponse.getMsg(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(),serverResponse.getMsg(),Toast.LENGTH_SHORT).show();
                                 Looper.loop();
                             }
                         }
@@ -204,6 +205,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 Intent intent4 = new Intent(getActivity(), ActivityActivity.class);
                 intent4.putExtra("src", "HOMEACTIVITY");
                 intent4.putExtra("homeFragment", 1);
+                intent4.putExtra("userid", userVO.getId());
                 getActivity().startActivity(intent4);
                 break;
 

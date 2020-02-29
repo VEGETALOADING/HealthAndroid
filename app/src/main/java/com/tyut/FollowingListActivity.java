@@ -53,10 +53,10 @@ public class FollowingListActivity extends AppCompatActivity implements View.OnC
                         @Override
                         public void onClick(int position) {
 
-                            Intent intent = new Intent(FollowingListActivity.this, FollowingDetailActivity.class);
-                            intent.putExtra("followingid", list.get(position).getId());
+                            Intent intent = new Intent(FollowingListActivity.this, ActivityActivity.class);
+                            intent.putExtra("userid", list.get(position).getId());
                             FollowingListActivity.this.startActivity(intent);
-                            //Toast.makeText(FollowingListActivity.this, list.get(position).getId()+"", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(FollowingListActivity.this, list.get(position).getId()+"", Toast.LENGTH_SHORT).show();
                         }
                     }));
                     break;
@@ -99,7 +99,7 @@ public class FollowingListActivity extends AppCompatActivity implements View.OnC
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(FollowingListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(FollowingListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -122,6 +122,8 @@ public class FollowingListActivity extends AppCompatActivity implements View.OnC
                     intent.putExtra("src", "FollowerListActivity");
                     intent.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
                     FollowingListActivity.this.startActivity(intent);
+                }else{
+                    this.finish();
                 }
                 break;
         }

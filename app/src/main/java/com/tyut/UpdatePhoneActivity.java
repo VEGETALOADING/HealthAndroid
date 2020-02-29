@@ -80,7 +80,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                 generateValcode = ValcodeUtil.generateValcode();
                 phoneNum = phoneNum_et.getText().toString();
                 if(phoneNum.length() != 11){
-                    Toast.makeText(UpdatePhoneActivity.this, "手机格式不正确", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UpdatePhoneActivity.this, "手机格式不正确", Toast.LENGTH_SHORT).show();
                 }else{
                     OkHttpUtils.get("http://192.168.1.9:8080/portal/user/isbound.do?phone="+phoneNum,
                             new OkHttpCallback(){
@@ -92,7 +92,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                                     ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
                                     if(serverResponse.getStatus() != 0){
                                         Looper.prepare();
-                                        Toast.makeText(UpdatePhoneActivity.this, "手机号已绑定", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(UpdatePhoneActivity.this, "手机号已绑定", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
 
                                     }else{
@@ -106,7 +106,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                                                         ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
                                                         if(serverResponse.getStatus() != 0){
                                                             Looper.prepare();
-                                                            Toast.makeText(UpdatePhoneActivity.this, "验证码发送失败", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(UpdatePhoneActivity.this, "验证码发送失败", Toast.LENGTH_SHORT).show();
                                                             Looper.loop();
                                                         }
                                                     }
@@ -142,12 +142,12 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                                         util.putString("user", gson.toJson(serverResponse.getData()));
                                         Looper.prepare();
                                         finish();
-                                        Toast.makeText(UpdatePhoneActivity.this, "绑定成功", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(UpdatePhoneActivity.this, "绑定成功", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
 
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(UpdatePhoneActivity.this, "绑定失败", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(UpdatePhoneActivity.this, "绑定失败", Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 

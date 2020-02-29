@@ -116,7 +116,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         myfoodList.add(myfood);
                                         badge.setBadgeNumber(badge.getBadgeNumber() + 1);
                                     }else{
-                                        Toast.makeText(FoodListActivity.this, "数量为0，未添加", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodListActivity.this, "数量为0，未添加", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }).showFoodPopWindow();
@@ -168,7 +168,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         myfoodList.add(myfood);
                                         badge.setBadgeNumber(badge.getBadgeNumber() + 1);
                                     }else{
-                                        Toast.makeText(FoodListActivity.this, "数量为0，未添加", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodListActivity.this, "数量为0，未添加", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }).showFoodPopWindow();
@@ -263,7 +263,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                             mHandler.sendMessage(message);
                         }else{
                             Looper.prepare();
-                            Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         }
                     }
@@ -303,7 +303,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                     mHandler.sendMessage(message);
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -330,7 +330,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                     mHandler.sendMessage(message);
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -357,7 +357,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                     mHandler.sendMessage(message);
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
@@ -397,7 +397,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         mHandler.sendMessage(message);
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }
@@ -422,7 +422,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         mHandler.sendMessage(message);
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }
@@ -447,7 +447,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         mHandler.sendMessage(message);
                                     }else{
                                         Looper.prepare();
-                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
                                 }
@@ -475,7 +475,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
                                     if(serverResponse.getStatus() != 0){
                                         Looper.prepare();
-                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                         Looper.loop();
                                     }
 
@@ -529,7 +529,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                     }
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FoodListActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 

@@ -63,6 +63,17 @@
                     android:text="default"
                     android:textColor="@color/black"
                     android:textSize="20sp"></TextView>
+
+                <TextView
+                    android:id="@+id/follow_tv"
+                    android:layout_width="60dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="35dp"
+                    android:layout_height="30dp"
+                    android:textSize="18sp"
+                    android:background="@drawable/btn_green"
+                    android:textColor="#ffffff"
+                    android:text="关注"></TextView>
             </LinearLayout>
 
             <LinearLayout
@@ -169,7 +180,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/activityTime_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="128dp"
                 android:layout_height="wrap_content"
                 android:text="我的全部动态"
                 android:textSize="20sp"
@@ -178,7 +189,7 @@
             <ImageView
                 android:id="@+id/calendar_iv"
                 android:layout_width="15dp"
-                android:layout_marginLeft="230dp"
+                android:layout_marginLeft="205dp"
                 android:layout_gravity="center_vertical"
                 android:layout_height="15dp"
                 android:src="@mipmap/icon_calendar_unselected"></ImageView>
@@ -192,5 +203,6 @@
             android:layout_width="350dp"
             android:layout_height="wrap_content">
         </androidx.recyclerview.widget.RecyclerView>
+
     </RelativeLayout>
 </ScrollView>
