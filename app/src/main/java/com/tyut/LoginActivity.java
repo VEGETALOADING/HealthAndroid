@@ -20,6 +20,9 @@ import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText username_et;
@@ -59,6 +62,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 //获取数据
                 String username = username_et.getText().toString();
+                try {
+                    username =  URLEncoder.encode(username, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 String password = password_et.getText().toString();
 
                 //请求接口 -> okHttp在子线程中执行

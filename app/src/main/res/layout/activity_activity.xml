@@ -195,6 +195,18 @@
                 android:src="@mipmap/icon_calendar_unselected"></ImageView>
         </LinearLayout>
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/userNotExist_tv"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_below="@id/two_ll"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
+            android:text="用户不存在"></TextView>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="15dp"
             android:layout_below="@id/two_ll"

@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_weight="8"
             android:layout_height="wrap_content"
-            android:text="健康档案"
+            android:text="发动态"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:layout_gravity="center"

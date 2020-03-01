@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -297,72 +298,88 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         e.printStackTrace();
                     }
                     {
-                    if (activityVO.getIfFavorite()) {
-                        favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
-                        favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
-                    } else {
-                        favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
-                        favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.nav_text_default));
+                        if (activityVO.getIfFavorite()) {
+                            favorite_iv.setImageResource(R.mipmap.icon_favorite_selected);
+                            favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
+                        } else {
+                            favorite_iv.setImageResource(R.mipmap.icon_favorite_unselected);
+                            favorite_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.nav_text_default));
+                        }
+                        if (activityVO.getFavoriteCount() > 0) {
+                            favorite_tv.setText(activityVO.getFavoriteCount() + "");
+                        } else {
+                            favorite_tv.setText("收藏");
+                        }
+                        if (activityVO.getIfLike()) {
+                            like_iv.setImageResource(R.mipmap.icon_like_selected);
+                            like_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
+                        } else {
+                            like_iv.setImageResource(R.mipmap.icon_like_unselected);
+                            like_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.nav_text_default));
+                        }
+                        if (activityVO.getLikeCount() > 0) {
+                            like_tv.setText(activityVO.getLikeCount() + "");
+                        } else {
+                            like_tv.setText("赞");
+                        }
+                        if (activityVO.getCommentCount() > 0) {
+                            comment_tv.setText(activityVO.getCommentCount() + "");
+                        } else {
+                            comment_tv.setText("评论");
+                        }
                     }
-                    if (activityVO.getFavoriteCount() > 0) {
-                        favorite_tv.setText(activityVO.getFavoriteCount() + "");
-                    } else {
-                        favorite_tv.setText("收藏");
-                    }
-                    if (activityVO.getIfLike()) {
-                        like_iv.setImageResource(R.mipmap.icon_like_selected);
-                        like_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.green_light));
-                    } else {
-                        like_iv.setImageResource(R.mipmap.icon_like_unselected);
-                        like_tv.setTextColor(ActivityDetailActivity.this.getResources().getColor(R.color.nav_text_default));
-                    }
-                    if (activityVO.getLikeCount() > 0) {
-                        like_tv.setText(activityVO.getLikeCount() + "");
-                    } else {
-                        like_tv.setText("赞");
-                    }
-                    if (activityVO.getCommentCount() > 0) {
-                        comment_tv.setText(activityVO.getCommentCount() + "");
-                    } else {
-                        comment_tv.setText("评论");
-                    }
-                }
                     {
-                    String str = activityVO.getContent();
-                    SpannableStringBuilder style = new SpannableStringBuilder(str);
-                    Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
-                    Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
-                    Set<Integer> mentionKeys = mentionMap.keySet();
-                    Set<Integer> topicKeys = topicsMap.keySet();
-                    //设置部分文字点击事件
-                    content_tv.setMovementMethod(LinkMovementMethod.getInstance());
-                    ClickableSpan mentionClickableSpan = new ClickableSpan() {
-                        @Override
-                        public void onClick(View widget) {
-                            Toast.makeText(ActivityDetailActivity.this, "mentionClickableSpan!", Toast.LENGTH_SHORT).show();
-                        }
-                    };
-                    ClickableSpan topicsClickableSpan = new ClickableSpan() {
-                        @Override
-                        public void onClick(View widget) {
-                            Toast.makeText(ActivityDetailActivity.this, "topicsClickableSpan!", Toast.LENGTH_SHORT).show();
-                        }
-                    };
-                    for (Integer key : mentionKeys) {
+                        final String str = activityVO.getContent();
+                        SpannableStringBuilder style=new SpannableStringBuilder(str);
+                        final Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
+                        final Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+                        Set<Integer> mentionKeys = mentionMap.keySet();
+                        Set<Integer> topicKeys = topicsMap.keySet();
+                        for (final Integer key : mentionKeys) {
 
-                        style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)), key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        style.setSpan(mentionClickableSpan, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            style.setSpan(new ClickableSpan() {
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                    ds.setUnderlineText(false);//去掉下划线
+                                }
+                                @Override
+                                public void onClick(View widget) {
+                                    //跳转用户动态
+                                    Intent intent = new Intent(ActivityDetailActivity.this, ActivityActivity.class);
+                                    String sub = str.substring(key, mentionMap.get(key));
+                                    intent.putExtra("username", sub.substring(1));
+                                    ActivityDetailActivity.this.startActivity(intent);
+
+                                }
+                            }, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)),key,mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        }
+                        for (final Integer key : topicKeys) {
+
+                            style.setSpan(new ClickableSpan() {
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    super.updateDrawState(ds);
+                                    //ds.setColor(Color.parseColor("#FF0090FF"));//设置颜色
+                                    ds.setUnderlineText(false);//去掉下划线
+                                }
+                                @Override
+                                public void onClick(View widget) {
+                                    //跳转话题页面
+                                    Intent intent = new Intent(ActivityDetailActivity.this, TopicActivity.class);
+                                    intent.putExtra("topicname", str.substring(key, topicsMap.get(key)));
+                                    ActivityDetailActivity.this.startActivity(intent);
+                                }
+                            }, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)),key,topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        }
+                        content_tv.setText(style);
+                        content_tv.setMovementMethod(LinkMovementMethod.getInstance());
 
                     }
-
-                    for (Integer key : topicKeys) {
-
-                        style.setSpan(new ForegroundColorSpan(ActivityDetailActivity.this.getResources().getColor(R.color.green_light)), key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        style.setSpan(topicsClickableSpan, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-                    }
-                    content_tv.setText(style);
-                }
                     if(getIntent().getIntExtra("action", 0) == 1 && ifFirst == true){
                         ifFirst = false;
                         objectId = activityVO.getId();
@@ -502,6 +519,12 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         .setShare(new DeleteActivityPUW.IShareListener() {
                             @Override
                             public void onShare(DeleteActivityPUW deleteActivityPUW) {
+
+                            }
+                        })
+                        .setRepot(new DeleteActivityPUW.IReportListener() {
+                            @Override
+                            public void onReport(DeleteActivityPUW deleteActivityPUW) {
 
                             }
                         })*/

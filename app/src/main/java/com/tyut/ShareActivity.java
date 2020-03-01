@@ -88,6 +88,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout fromAlbum_ll;
     private LinearLayout takePhoto_ll;
     private TextView commit_tv;
+    private TextView cancelShare_tv;
 
     private LinearLayout photoList_ll;
     private List<Integer> photoList;
@@ -99,7 +100,6 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout addPhoto_hide_ll;
     private LinearLayout addFace_hide_ll;
 
-    private TextView test;
 
     private LayoutInflater mInflater;
     private File tempFile;
@@ -157,8 +157,8 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         fromAlbum_ll = findViewById(R.id.fromAlbum);
         takePhoto_ll = findViewById(R.id.takePhoto_ll);
         commit_tv = findViewById(R.id.commit_share);
+        cancelShare_tv = findViewById(R.id.cancel_share);
 
-        test = findViewById(R.id.test);
 
         addFace_hide_ll = findViewById(R.id.addFace_hide_ll);
         addPhoto_hide_ll = findViewById(R.id.addPhoto_hide_ll);
@@ -170,7 +170,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
 
         onKeyBoardListener();
-        //ViewUtil.showSoftInputFromWindow(ShareActivity.this, content_et);
+        ViewUtil.showSoftInputFromWindow(ShareActivity.this, content_et);
 
         initBadge();
 
@@ -198,7 +198,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         takePhoto_ll.setOnClickListener(this);
         commit_tv.setOnClickListener(this);
         topic_rl.setOnClickListener(this);
-        test.setOnClickListener(this);
+        cancelShare_tv.setOnClickListener(this);
 
     }
 
@@ -207,7 +207,11 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
         mInflater = LayoutInflater.from(this);
         userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        if("TOPICACTIVITY".equals(getIntent().getStringExtra("src"))){
 
+            content_et.setText(getIntent().getStringExtra("topicname")+" ");
+            content_et.setSelection((getIntent().getStringExtra("topicname")+" ").length());
+        }
         OkHttpUtils.get("http://192.168.1.9:8080/portal/friend/find.do?id=" + userVO.getId(),
                 new OkHttpCallback(){
                     @Override
@@ -232,6 +236,9 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         switch (v.getId()){
+            case R.id.cancel_share:
+                this.finish();
+                break;
             case R.id.face_rl:
                 if(imm.isActive(content_et)){
                     imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -367,7 +374,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                                 intent1 = new Intent(ShareActivity.this, HomeActivity.class);
                                 intent1.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
                             }else{
-
+                                ShareActivity.this.finish();
                             }
                             ShareActivity.this.startActivity(intent1);
 
@@ -454,7 +461,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
             public void keyBoardShow(int height) {
                 //Log.e("软键盘", "键盘显示 高度" + height);
                 ViewGroup.LayoutParams  lp = content_et.getLayoutParams();
-                lp.height = 800;
+                lp.height = 950;
                 content_et.setLayoutParams(lp);
 
             }

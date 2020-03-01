@@ -7,10 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tyut.R;
+import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.view.ScrollPickView;
 import com.tyut.vo.ActivityVO;
 
@@ -19,10 +21,14 @@ import java.util.List;
 
 public class DeleteActivityPUW implements View.OnClickListener {
 
+
+    private LinearLayout shareOrDelete_ll;
+    private LinearLayout report_ll;
     private TextView top_tv;
     private TextView share_tv;
     private TextView delete_tv;
     private TextView cancel_tv;
+    private TextView report_tv;
     private ActivityVO activityVO;
 
 
@@ -37,6 +43,7 @@ public class DeleteActivityPUW implements View.OnClickListener {
     private DeleteActivityPUW.ITopListener topListener;
     private DeleteActivityPUW.IDeleteListener deleteListener;
     private DeleteActivityPUW.IShareListener shareListener;
+    private DeleteActivityPUW.IReportListener reportListener;
 
 
     public PopupWindow getPopupWindow() {
@@ -62,6 +69,10 @@ public class DeleteActivityPUW implements View.OnClickListener {
 
     public DeleteActivityPUW setDelete(DeleteActivityPUW.IDeleteListener deleteListener) {
         this.deleteListener = deleteListener;
+        return this;
+    }
+    public DeleteActivityPUW setReport(DeleteActivityPUW.IReportListener reportListener) {
+        this.reportListener = reportListener;
         return this;
     }
 
@@ -124,6 +135,12 @@ public class DeleteActivityPUW implements View.OnClickListener {
                 }
                 popupWindow.dismiss();
                 break;
+            case R.id.reportactivity_tv:
+                if(reportListener != null){
+                    reportListener.onReport(this);
+                }
+                popupWindow.dismiss();
+                break;
         }
     }
 
@@ -136,6 +153,9 @@ public class DeleteActivityPUW implements View.OnClickListener {
     public interface ITopListener{
         void onTop(DeleteActivityPUW deleteActivityPUW);
     }
+    public interface IReportListener{
+        void onReport(DeleteActivityPUW deleteActivityPUW);
+    }
 
 
     private void initView(){
@@ -145,10 +165,23 @@ public class DeleteActivityPUW implements View.OnClickListener {
         share_tv = contentView.findViewById(R.id.sharetoweibo_tv);
         delete_tv = contentView.findViewById(R.id.deleteactivity_tv);
 
+        shareOrDelete_ll = contentView.findViewById(R.id.shareordelete_ll);
+        report_ll = contentView.findViewById(R.id.report_ll);
+        report_tv = contentView.findViewById(R.id.reportactivity_tv);
+
+        if(activityVO.getUserid() == SharedPreferencesUtil.getInstance(context).readInt("userid")){
+            shareOrDelete_ll.setVisibility(View.VISIBLE);
+            report_ll.setVisibility(View.GONE);
+        }else{
+            shareOrDelete_ll.setVisibility(View.GONE);
+            report_ll.setVisibility(View.VISIBLE);
+        }
+
         cancel_tv.setOnClickListener(this);
         top_tv.setOnClickListener(this);
         share_tv.setOnClickListener(this);
         delete_tv.setOnClickListener(this);
+        report_tv.setOnClickListener(this);
     }
 
 }

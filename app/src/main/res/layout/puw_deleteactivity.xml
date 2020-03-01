@@ -7,6 +7,7 @@
     android:gravity="center"
     android:layout_height="wrap_content">
     <LinearLayout
+        android:id="@+id/shareordelete_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -50,6 +51,26 @@
             android:gravity="center"
             android:layout_weight="1"></TextView>
     </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/report_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/btn_white">
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:id="@+id/reportactivity_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="举报"
+            android:textColor="@color/red_light"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_weight="1"></TextView>
+
+    </LinearLayout>
+
 
 
 

@@ -311,7 +311,8 @@ public class StringUtil {
 
     public static void main(String[] args) {
 
-        System.out.println(getLastDay("2020-02-14"));
+        Map<Integer, Integer> mention = getTopics("测试@user2 @user3 #平安喜乐# 嘻嘻[爱你]");
+        System.out.println(mention);
     }
 
 

@@ -67,6 +67,7 @@
         <activity android:name=".ShowSchemaActivity" />
         <activity android:name=".RecordActivity" />
         <activity android:name=".DietAndSportActivity" />
+        <activity android:name=".TopicActivity" />
         <activity android:name=".FoodDetailActivity">
 
         </activity>

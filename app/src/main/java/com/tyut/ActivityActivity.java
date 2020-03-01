@@ -43,6 +43,8 @@ import com.tyut.widget.DatePUW;
 import com.tyut.widget.SearchActivityPUW;
 import com.tyut.widget.TopicPopUpWindow;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 public class ActivityActivity extends AppCompatActivity implements View.OnClickListener {
@@ -60,6 +62,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
     ImageView calendar_iv;
     ImageView return_iv;
     TextView activityTime_tv;
+    TextView userNotExist_tv;
     TextView follow_tv;
 
     private UserVO userVO;
@@ -129,10 +132,18 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     }
                     break;
                 case 7 :
-                    userVO = (UserVO) msg.obj;
-                    userName.setText(userVO.getUsername());
-                    Glide.with(ActivityActivity.this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
+                    List<UserVO> voList = (List<UserVO>) msg.obj;
+                    if(voList.size() == 0){
+                        mRecyclerView.setVisibility(View.GONE);
+                        userNotExist_tv.setVisibility(View.VISIBLE);
+                    }else{
+                        userVO = voList.get(0);
+                        userId = userVO.getId();
+                        initView();
+                    }
                     break;
+                case 8:
+
             }
         }
     };
@@ -156,17 +167,16 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
         follow_tv = findViewById(R.id.follow_tv);
 
         mRecyclerView = findViewById(R.id.activity_Rv);
+        userNotExist_tv = findViewById(R.id.userNotExist_tv);
+
         whole_sv = findViewById(R.id.whole_sv);
         if (whole_sv.getForeground()!=null){
             whole_sv.getForeground().setAlpha(0);
         }
 
-        follow_tv.setOnClickListener(this);
-        following_ll.setOnClickListener(this);
-        follower_ll.setOnClickListener(this);
+
         return_iv.setOnClickListener(this);
-        search_tv.setOnClickListener(this);
-        calendar_iv.setOnClickListener(this);
+
 
 
     }
@@ -177,124 +187,70 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
         //获取用户信息
         currentUserVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
         userId = getIntent().getIntExtra("userid", 0);
-        if(userId == SharedPreferencesUtil.getInstance(this).readInt("userid")) {
+        if(currentUserVO.getUsername().equals(getIntent().getStringExtra("username")) || userId == currentUserVO.getId()){
             userVO = currentUserVO;
             follow_tv.setVisibility(View.GONE);
             search_tv.setText("搜索我的动态");
             activityTime_tv.setText("我的全部动态");
-            userName.setText(userVO.getUsername());
-            Glide.with(ActivityActivity.this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
-        }else{
+            initView();
+        }else {
             follow_tv.setVisibility(View.VISIBLE);
             search_tv.setText("搜索TA的动态");
             activityTime_tv.setText("TA的全部动态");
-            OkHttpUtils.get("http://192.168.1.9:8080/portal/user/search.do?id="+userId,
-                    new OkHttpCallback(){
-                        @Override
-                        public void onFinish(String status, String msg) {
-                            super.onFinish(status, msg);
-                            //解析数据
-                            Gson gson=new Gson();
-                            ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
-                            Message message = new Message();
-                            message.what= USERINFO;
-                            message.obj = serverResponse.getData();
-                            mHandler.sendMessage(message);
 
+            if (getIntent().getStringExtra("username") != null) {
+                String userName = null;
+
+                try {
+                    userName =  URLEncoder.encode(getIntent().getStringExtra("username"), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/search.do?username=" + userName,
+                        new OkHttpCallback() {
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson = new Gson();
+                                ServerResponse<List<UserVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<UserVO>>>() {
+                                }.getType());
+                                Message message = new Message();
+                                message.what = USERINFO;
+                                message.obj = serverResponse.getData();
+                                mHandler.sendMessage(message);
+
+                            }
                         }
-                    }
-            );
-            OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/ifFollow.do?id="+getIntent().getIntExtra("userid", 0)+"&followerid="+SharedPreferencesUtil.getInstance(this).readInt("userid"),
-                    new OkHttpCallback(){
-                        @Override
-                        public void onFinish(String status, String msg) {
-                            super.onFinish(status, msg);
-                            //解析数据
-                            Gson gson=new Gson();
-                            ServerResponse<Boolean> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<Boolean>>(){}.getType());
+                );
+            } else {
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/search.do?id=" + userId,
+                        new OkHttpCallback() {
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson = new Gson();
+                                ServerResponse<List<UserVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<UserVO>>>() {
+                                }.getType());
+                                if (serverResponse.getStatus() == 0) {
+                                    Message message = new Message();
+                                    message.what = USERINFO;
+                                    message.obj = serverResponse.getData();
+                                    mHandler.sendMessage(message);
 
-                            Message message = new Message();
-                            message.what= UPDATEFOLLOW;
-                            message.obj = serverResponse.getData();
-                            mHandler.sendMessage(message);
+                                } else {
 
 
+                                }
+
+
+                            }
                         }
-                    }
-            );
+                );
+            }
         }
 
-
-        int x =currentUserVO.getId();
-        int y =userId;
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId,
-                new OkHttpCallback(){
-                    @Override
-                    public void onFinish(String status, String msg) {
-                        super.onFinish(status, msg);
-                        //解析数据
-                        Gson gson=new Gson();
-                        ServerResponse<List<ActivityVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<ActivityVO>>>(){}.getType());
-                        Message message = new Message();
-                        message.what= ACTIVITYVOLIST;
-                        message.obj = serverResponse.getData();
-                        mHandler.sendMessage(message);
-
-                    }
-                }
-        );
-
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowercount.do?id=" + userId,
-                new OkHttpCallback(){
-                    @Override
-                    public void onFinish(String status, String msg) {
-                        super.onFinish(status, msg);
-                        //解析数据
-                        Gson gson=new Gson();
-                        ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
-
-                        Message message = new Message();
-                        message.what= FOLLOWERCOUNT;
-                        message.obj = serverResponse.getData();
-                        mHandler.sendMessage(message);
-
-                    }
-                }
-        );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowingcount.do?followerid=" + userId,
-                new OkHttpCallback(){
-                    @Override
-                    public void onFinish(String status, String msg) {
-                        super.onFinish(status, msg);
-                        //解析数据
-                        Gson gson=new Gson();
-                        ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
-
-                        Message message = new Message();
-                        message.what= FOLLOWINGCOUNT;
-                        message.obj = serverResponse.getData();
-                        mHandler.sendMessage(message);
-
-                    }
-                }
-        );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findactivitycount.do?userid=" + userId,
-                new OkHttpCallback(){
-                    @Override
-                    public void onFinish(String status, String msg) {
-                        super.onFinish(status, msg);
-                        //解析数据
-                        Gson gson=new Gson();
-                        ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
-
-                        Message message = new Message();
-                        message.what= ACTIVITYCOUNT;
-                        message.obj = serverResponse.getData();
-                        mHandler.sendMessage(message);
-
-                    }
-                }
-        );
 
     }
 
@@ -448,4 +404,106 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
         }
 
     }
+
+    private void initView(){
+        userName.setText(userVO.getUsername());
+        Glide.with(ActivityActivity.this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        userNotExist_tv.setVisibility(View.GONE);
+        search_tv.setOnClickListener(ActivityActivity.this);
+        calendar_iv.setOnClickListener(ActivityActivity.this);
+        follow_tv.setOnClickListener(ActivityActivity.this);
+        following_ll.setOnClickListener(ActivityActivity.this);
+        follower_ll.setOnClickListener(ActivityActivity.this);
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/ifFollow.do?id="+userId+"&followerid="+currentUserVO.getId(),
+                new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        super.onFinish(status, msg);
+                        //解析数据
+                        Gson gson=new Gson();
+                        ServerResponse<Boolean> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<Boolean>>(){}.getType());
+
+                        Message message = new Message();
+                        message.what= UPDATEFOLLOW;
+                        message.obj = serverResponse.getData();
+                        mHandler.sendMessage(message);
+
+
+                    }
+                }
+        );
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId,
+                new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        super.onFinish(status, msg);
+                        //解析数据
+                        Gson gson=new Gson();
+                        ServerResponse<List<ActivityVO>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<ActivityVO>>>(){}.getType());
+                        Message message = new Message();
+                        message.what= ACTIVITYVOLIST;
+                        message.obj = serverResponse.getData();
+                        mHandler.sendMessage(message);
+
+                    }
+                }
+        );
+
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowercount.do?id=" + userId,
+                new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        super.onFinish(status, msg);
+                        //解析数据
+                        Gson gson=new Gson();
+                        ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+
+                        Message message = new Message();
+                        message.what= FOLLOWERCOUNT;
+                        message.obj = serverResponse.getData();
+                        mHandler.sendMessage(message);
+
+                    }
+                }
+        );
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowingcount.do?followerid=" + userId,
+                new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        super.onFinish(status, msg);
+                        //解析数据
+                        Gson gson=new Gson();
+                        ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+
+                        Message message = new Message();
+                        message.what= FOLLOWINGCOUNT;
+                        message.obj = serverResponse.getData();
+                        mHandler.sendMessage(message);
+
+                    }
+                }
+        );
+        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findactivitycount.do?userid=" + userId,
+                new OkHttpCallback(){
+                    @Override
+                    public void onFinish(String status, String msg) {
+                        super.onFinish(status, msg);
+                        //解析数据
+                        Gson gson=new Gson();
+                        ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+
+                        Message message = new Message();
+                        message.what= ACTIVITYCOUNT;
+                        message.obj = serverResponse.getData();
+                        mHandler.sendMessage(message);
+
+                    }
+                }
+        );
+        userName.setText(userVO.getUsername());
+        Glide.with(ActivityActivity.this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
+
+    }
 }
+

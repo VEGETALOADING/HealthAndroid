@@ -6,13 +6,12 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,27 +22,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.tyut.ActivityActivity;
 import com.tyut.ActivityDetailActivity;
-import com.tyut.FoodDetailActivity;
-import com.tyut.MainActivity;
+import com.tyut.FollowerListActivity;
 import com.tyut.R;
-import com.tyut.UpdateUserDataActivity;
+import com.tyut.TopicActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
-import com.tyut.utils.ViewUtil;
 import com.tyut.view.NinePhotoView;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
-import com.tyut.widget.ChooseOnePopUpWindow;
 import com.tyut.widget.DeleteActivityPUW;
 
 import java.text.ParseException;
@@ -119,42 +114,67 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
         if(position < mList.size()) {
             holder.userName_tv.setText(mList.get(position).getUsername() + "");
             //holder.content_tv.setText(mList.get(position).getContent());
-            String str = mList.get(position).getContent();
+            final String str = mList.get(position).getContent();
+
             SpannableStringBuilder style=new SpannableStringBuilder(str);
-            Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
-            Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+            final Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
+            final Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
             Set<Integer> mentionKeys = mentionMap.keySet();
             Set<Integer> topicKeys = topicsMap.keySet();
 
             //设置部分文字点击事件
-            holder.content_tv.setMovementMethod(LinkMovementMethod.getInstance());
-            ClickableSpan mentionClickableSpan = new ClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    Toast.makeText(context, "mentionClickableSpan!", Toast.LENGTH_SHORT).show();
-                }
-            };
-            ClickableSpan topicsClickableSpan = new ClickableSpan() {
-                @Override
-                public void onClick(View widget) {
-                    Toast.makeText(context, "topicsClickableSpan!", Toast.LENGTH_SHORT).show();
-                }
-            };
-            for (Integer key : mentionKeys) {
+            {
 
-                style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.green_light)),key,mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                style.setSpan(mentionClickableSpan, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                for (final Integer key : mentionKeys) {
+
+                    style.setSpan(new ClickableSpan() {
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            //ds.setColor(Color.parseColor("#FF0090FF"));//设置颜色
+                            ds.setUnderlineText(false);//去掉下划线
+                        }
+                        @Override
+                        public void onClick(View widget) {
+                            //跳转用户动态
+                            Intent intent = new Intent(context, ActivityActivity.class);
+                            String sub = str.substring(key, mentionMap.get(key));
+                            intent.putExtra("username", sub.substring(1));
+                            context.startActivity(intent);
+
+                        }
+                    }, key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.green_light)),key,mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                }
+
+                for (final Integer key : topicKeys) {
+
+                    style.setSpan(new ClickableSpan() {
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            //ds.setColor(Color.parseColor("#FF0090FF"));//设置颜色
+                            ds.setUnderlineText(false);//去掉下划线
+                        }
+                        @Override
+                        public void onClick(View widget) {
+                            //跳转话题页面
+                            Intent intent = new Intent(context, TopicActivity.class);
+                            intent.putExtra("topicname", str.substring(key, topicsMap.get(key)));
+                            context.startActivity(intent);
+                        }
+                    }, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.green_light)),key,topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                }
 
             }
 
-            for (Integer key : topicKeys) {
-
-                style.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.green_light)),key,topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                style.setSpan(topicsClickableSpan, key, topicsMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            }
 
             holder.content_tv.setText(style);
+            holder.content_tv.setMovementMethod(LinkMovementMethod.getInstance());
+
 
             Glide.with(context).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userPic_iv);
 
