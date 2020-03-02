@@ -1,13 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="@drawable/dim"
+    tools:foreground=""
+    android:id="@+id/whole_ll">
 
-  <TextView
+  <LinearLayout
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/search_tv"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:background="@drawable/btn_grey"
+        android:gravity="center"
+        android:hint="搜索动态、话题、用户"
+       ></TextView>
+
+    <ImageView
+        android:id="@+id/message_iv"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_weight="1"
+        android:src="@mipmap/icon_email"></ImageView>
+  </LinearLayout>
+
+  <ScrollView
+      android:id="@+id/main_Sv"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:text="friendFragment"
-      android:gravity="center">
+      android:layout_marginTop="15dp">
+    <RelativeLayout
+        android:id="@+id/main_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-  </TextView>
-</RelativeLayout>
+      <RelativeLayout
+          android:id="@+id/topic_rl"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="热门话题"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/black"></TextView>
+
+      </RelativeLayout>
+      <HorizontalScrollView
+          android:layout_below="@+id/topic_rl"
+          android:id="@+id/topic_hsv"
+          android:layout_width="match_parent"
+          android:layout_margin="10dp"
+          android:layout_height="90dp"
+          android:layout_gravity="center_vertical"
+          android:scrollbars="none" >
+        <LinearLayout
+            android:id="@+id/topic_list_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal" >
+        </LinearLayout>
+      </HorizontalScrollView>
+      <RelativeLayout
+          android:id="@+id/moreFriend_rl"
+          android:layout_below="@id/topic_hsv"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="好友动态"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+            android:textColor="@color/black"></TextView>
+        <LinearLayout
+            android:id="@+id/moreFriend_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textSize="15dp"
+              android:text="发现好友"
+              android:gravity="center"></TextView>
+          <ImageView
+              android:layout_gravity="center_vertical"
+              android:layout_width="15dp"
+              android:layout_height="15dp"
+              android:src="@mipmap/right"></ImageView>
+        </LinearLayout>
+      </RelativeLayout>
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_marginTop="15dp"
+          android:id="@+id/activity_Rv"
+          android:layout_below="@+id/moreFriend_rl"
+          android:layout_centerHorizontal="true"
+          android:layout_width="350dp"
+          android:layout_height="wrap_content">
+      </androidx.recyclerview.widget.RecyclerView>
+    </RelativeLayout>
+
+
+  </ScrollView>
+
+
+
+</LinearLayout>

@@ -93,7 +93,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                 case 2:
                     activity_Sv.setVisibility(View.VISIBLE);
                     notExist_tv.setVisibility(View.GONE);
-                    topic = (Topic) msg.obj;
+                    topic = ((List<Topic>) msg.obj).get(0);
                     mention_tv.setOnClickListener(TopicActivity.this);
 
                     OkHttpUtils.get("http://192.168.1.9:8080/portal/like/find.do?objectid="
@@ -200,7 +200,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                         super.onFinish(status, msg);
                         //解析数据
                         Gson gson = new Gson();
-                        ServerResponse<Topic> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<Topic>>() {}.getType());
+                        ServerResponse<List<Topic>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<Topic>>>() {}.getType());
 
                         if(serverResponse.getStatus() == 0){
                             Message message = new Message();

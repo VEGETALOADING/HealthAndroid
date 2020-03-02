@@ -13,6 +13,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -64,9 +65,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.tyut.utils.EmojiUtil.decodeSampledBitmapFromResource;
 
 public class ActivityDetailActivity extends AppCompatActivity implements View.OnClickListener,
         FaceFragment.OnEmojiClickListener{
@@ -333,8 +337,26 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         SpannableStringBuilder style=new SpannableStringBuilder(str);
                         final Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
                         final Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+                        final Map<Integer, Integer> emojiMap = StringUtil.getEmoji(str);
                         Set<Integer> mentionKeys = mentionMap.keySet();
                         Set<Integer> topicKeys = topicsMap.keySet();
+                        Set<Integer> emojiKeys = emojiMap.keySet();
+                        Iterator<Emoji> iterator = EmojiUtil.getEmojiList().iterator();
+
+                        for (final Integer key : emojiKeys) {
+                            Emoji emoji = null;
+                            String tempText = str.substring(key, emojiMap.get(key));
+                            while (iterator.hasNext()) {
+                                emoji = iterator.next();
+                                if (tempText.equals(emoji.getContent())) {
+                                    //转换为Span并设置Span的大小
+                                    style.setSpan(new ImageSpan(ActivityDetailActivity.this, decodeSampledBitmapFromResource(ActivityDetailActivity.this.getResources(), emoji.getImageUri()
+                                            , EmojiUtil.dip2px(ActivityDetailActivity.this, 18), EmojiUtil.dip2px(ActivityDetailActivity.this, 18))),
+                                            key, emojiMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    break;
+                                }
+                            }
+                        }
                         for (final Integer key : mentionKeys) {
 
                             style.setSpan(new ClickableSpan() {
@@ -776,7 +798,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
 
     private void displayTextView() {
         try {
-            EmojiUtil.handlerEmojiText(commentAc_et, commentAc_et.getText().toString(), this);
+            EmojiUtil.handlerEmojiText(commentAc_et, null, commentAc_et.getText().toString(), this);
         } catch (IOException e) {
             e.printStackTrace();
         }

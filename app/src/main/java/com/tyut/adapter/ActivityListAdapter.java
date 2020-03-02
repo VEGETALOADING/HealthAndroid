@@ -12,6 +12,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,21 +32,27 @@ import com.tyut.ActivityDetailActivity;
 import com.tyut.FollowerListActivity;
 import com.tyut.R;
 import com.tyut.TopicActivity;
+import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.NinePhotoView;
 import com.tyut.vo.ActivityVO;
+import com.tyut.vo.Emoji;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.DeleteActivityPUW;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.tyut.utils.EmojiUtil.decodeSampledBitmapFromResource;
 
 /**
  * Created by Idtk on 2017/3/9.
@@ -119,11 +126,29 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
             SpannableStringBuilder style=new SpannableStringBuilder(str);
             final Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
             final Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+            final Map<Integer, Integer> emojiMap = StringUtil.getEmoji(str);
             Set<Integer> mentionKeys = mentionMap.keySet();
             Set<Integer> topicKeys = topicsMap.keySet();
+            Set<Integer> emojiKeys = emojiMap.keySet();
 
             //设置部分文字点击事件
             {
+                Iterator<Emoji> iterator = EmojiUtil.getEmojiList().iterator();
+
+                for (final Integer key : emojiKeys) {
+                    Emoji emoji = null;
+                    String tempText = str.substring(key, emojiMap.get(key));
+                    while (iterator.hasNext()) {
+                        emoji = iterator.next();
+                        if (tempText.equals(emoji.getContent())) {
+                            //转换为Span并设置Span的大小
+                            style.setSpan(new ImageSpan(context, decodeSampledBitmapFromResource(context.getResources(), emoji.getImageUri()
+                                    , EmojiUtil.dip2px(context, 18), EmojiUtil.dip2px(context, 18))),
+                                    key, emojiMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        }
+                    }
+                }
 
                 for (final Integer key : mentionKeys) {
 
@@ -174,6 +199,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
             holder.content_tv.setText(style);
             holder.content_tv.setMovementMethod(LinkMovementMethod.getInstance());
+
 
 
             Glide.with(context).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userPic_iv);
@@ -476,4 +502,5 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
         }
     }
+
 }

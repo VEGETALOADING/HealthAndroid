@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/top_ll"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/cancel_tv"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="20sp"
+            android:textColor="@color/green_light">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:text="发现好友"
+            android:textSize="20sp"
+            android:textStyle="bold"></TextView>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/user_Rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_ll"
+        android:layout_above="@id/bottom_ll">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/followAll_btn"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_green"
+            android:textColor="@color/white"
+            android:text="全部关注"
+            android:textSize="20sp"
+            android:gravity="center"></Button>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

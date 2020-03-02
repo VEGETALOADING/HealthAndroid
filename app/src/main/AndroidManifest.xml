@@ -29,7 +29,8 @@
 
         </activity>
         <activity android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"><!-- 键盘不将导航栏顶起-->
+            android:windowSoftInputMode="adjustPan"><!-- 键盘不将导航栏顶起-->
+                                                     <!-- +puw消失自动隐藏软键盘-->
 
         </activity>
         <activity android:name=".LoginActivity">

@@ -422,7 +422,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
     private void displayTextView() {
         try {
-            EmojiUtil.handlerEmojiText(content_et, content_et.getText().toString(), this);
+            EmojiUtil.handlerEmojiText(content_et, null, content_et.getText().toString(), this);
         } catch (IOException e) {
             e.printStackTrace();
         }

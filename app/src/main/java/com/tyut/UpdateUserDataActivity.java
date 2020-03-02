@@ -171,19 +171,6 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                         ViewUtil.changeAlpha(mHandler, 1);
                     }
                 });
-               /* final ChooseOneDialog dialog1 = new ChooseOneDialog(UpdateUserDataActivity.this, genders);
-                dialog1.setCancel(new ChooseOneDialog.IOnCancelListener() {
-                    @Override
-                    public void onCancel(ChooseOneDialog dialog) {
-
-                    }
-                })
-                        .setConfirm(new ChooseOneDialog.IOnConfirmListener() {
-                            @Override
-                            public void onConfirm(ChooseOneDialog dialog) {
-                                gender_tv.setText(dialog1.getDataChosen());
-                            }
-                        }).show();*/
                 break;
             case R.id.goal_ll:
                 List<String> goals = new ArrayList<>();

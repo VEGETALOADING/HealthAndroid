@@ -294,7 +294,7 @@ public class EmojiUtil {
         return (int) (dipValue * scale + 0.5f);
     }
 
-    public static void handlerEmojiText(EditText comment, String content, Context context) throws IOException {
+    public static void handlerEmojiText(EditText editText, TextView textView, String content, Context context) throws IOException {
         SpannableStringBuilder sb = new SpannableStringBuilder(content);
         String regex = "\\[(\\S+?)\\]";
         Pattern p = Pattern.compile(regex);
@@ -315,8 +315,12 @@ public class EmojiUtil {
                 }
             }
         }
-        comment.setText(sb);
-        comment.setSelection(comment.getText().length());
+        if(editText != null) {
+            editText.setText(sb);
+            editText.setSelection(editText.getText().length());
+        }else{
+            textView.setText(sb);
+        }
 
     }
 }

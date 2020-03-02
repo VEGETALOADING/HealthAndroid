@@ -14,6 +14,7 @@ import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +36,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.ActivityDetailActivity;
 import com.tyut.R;
+import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.CommentVO;
+import com.tyut.vo.Emoji;
 import com.tyut.vo.FollowerVO;
 import com.tyut.vo.Reply;
 import com.tyut.vo.ServerResponse;
@@ -48,9 +51,12 @@ import com.tyut.vo.UserVO;
 import org.w3c.dom.Text;
 
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static com.tyut.utils.EmojiUtil.decodeSampledBitmapFromResource;
 
 public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.LinearViewHolder> {
 
@@ -173,8 +179,10 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                 SpannableStringBuilder style = new SpannableStringBuilder(str);
                 Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
                 Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
+                Map<Integer, Integer> emojiMap = StringUtil.getEmoji(str);
                 Set<Integer> mentionKeys = mentionMap.keySet();
                 Set<Integer> topicKeys = topicsMap.keySet();
+                Set<Integer> emojiKeys = emojiMap.keySet();
                 //设置部分文字点击事件
                 holder.content_tv.setMovementMethod(LinkMovementMethod.getInstance());
                 ClickableSpan mentionClickableSpan = new ClickableSpan() {
@@ -189,6 +197,22 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                         Toast.makeText(mContext, "topicsClickableSpan!", Toast.LENGTH_SHORT).show();
                     }
                 };
+                Iterator<Emoji> iterator = EmojiUtil.getEmojiList().iterator();
+
+                for (final Integer key : emojiKeys) {
+                    Emoji emoji = null;
+                    String tempText = str.substring(key, emojiMap.get(key));
+                    while (iterator.hasNext()) {
+                        emoji = iterator.next();
+                        if (tempText.equals(emoji.getContent())) {
+                            //转换为Span并设置Span的大小
+                            style.setSpan(new ImageSpan(mContext, decodeSampledBitmapFromResource(mContext.getResources(), emoji.getImageUri()
+                                    , EmojiUtil.dip2px(mContext, 18), EmojiUtil.dip2px(mContext, 18))),
+                                    key, emojiMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            break;
+                        }
+                    }
+                }
                 for (Integer key : mentionKeys) {
 
                     style.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.green_light)), key, mentionMap.get(key), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

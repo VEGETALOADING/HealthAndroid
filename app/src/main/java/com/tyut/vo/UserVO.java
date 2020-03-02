@@ -101,6 +101,16 @@ public class UserVO {
 
     private String initialweight;
 
+    private Boolean ifFollow;
+
+    public Boolean getIfFollow() {
+        return ifFollow;
+    }
+
+    public void setIfFollow(Boolean ifFollow) {
+        this.ifFollow = ifFollow;
+    }
+
     public String getInitialweight() {
         return initialweight;
     }

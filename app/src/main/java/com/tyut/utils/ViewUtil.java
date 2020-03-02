@@ -72,6 +72,20 @@ public class ViewUtil {
     }
 
 
+    //弹出键盘可用！！
+    public static void showSoft(final EditText editText){
+        Handler handle=new Handler();
+        handle.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                InputMethodManager inputMethodManager=(InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.showSoftInput(editText, 0);
+            }
+        }, 0);
+    }
+
+
 
 
     public static File bitmap2File(Bitmap bm, File file){
