@@ -272,6 +272,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HomeActivity.this.startActivity(intent3);
                 break;
             case R.id.punchin_ll:
+                Intent intent4 = new Intent(HomeActivity.this, PunchinActivity.class);
+                intent4.putExtra("homeFragment", currentFragment);
+                intent4.putExtra("src", "HOMEACTIVITY");
+                HomeActivity.this.startActivity(intent4);
+
                 break;
             case R.id.girth_ll:
                 mPop.dismiss();

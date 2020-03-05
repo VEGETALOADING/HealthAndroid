@@ -49,7 +49,7 @@ public class FollowingListActivity extends AppCompatActivity implements View.OnC
                     //rvMain.addItemDecoration(new RecycleViewDivider(FollowingListActivity.this,  LinearLayoutManager.VERTICAL, R.drawable.divider));
                     //rvMain.addItemDecoration(new RecycleViewDivider(FollowingListActivity.this,  LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.nav_text_selected)));
 
-                    rvMain.setAdapter(new FollowingListAdapter(FollowingListActivity.this, list, new FollowingListAdapter.OnItemClickListener() {
+                    rvMain.setAdapter(new FollowingListAdapter(FollowingListActivity.this, list, null, new FollowingListAdapter.OnItemClickListener() {
                         @Override
                         public void onClick(int position) {
 

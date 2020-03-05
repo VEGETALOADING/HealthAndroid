@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/userpic_iv"
-        android:layout_marginLeft="20dp"
-        android:layout_width="50dp"
+        android:layout_width="42dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
         android:src="@mipmap/home_selected"></ImageView>
     <TextView
         android:layout_width="200dp"

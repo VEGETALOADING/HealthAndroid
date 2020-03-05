@@ -51,6 +51,48 @@
         <attr name="mcb_line_width" format="float|dimension|reference" />
     </declare-styleable>
 
+    <string-array name="titles">
+        <item>Android</item>
+        <item>IOS</item>
+        <item>JAVA</item>
+        <item>C++</item>
+        <item>Ruby</item>
+        <item>WEB</item>
+        <item>HTML</item>
+        <item>PERL</item>
+        <item>C</item>
+        <item>SWIFT</item>
+        <item>Python</item>
+        <item>C</item>
+        <item>C#</item>
+        <item>JS</item>
+    </string-array>
+
+    <string-array name="items">
+        <item>Normal List</item>
+        <item>Normal Grid</item>
+        <item>Normal Staggered</item>
+        <item>Multiple List</item>
+        <item>Multiple Grid</item>
+        <item>Header Bottom List</item>
+        <item>Header Bottom Grid</item>
+        <item>Anim List</item>
+        <item>Anim Grid</item>
+        <item>Expended List</item>
+        <item>Expended Grid</item>
+        <item>Single Select</item>
+        <item>Multiple Select</item>
+    </string-array>
+
+    <style name="weekIndicatorStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 
 
 

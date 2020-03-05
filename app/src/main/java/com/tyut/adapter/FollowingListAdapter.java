@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.tyut.R;
 import com.tyut.vo.FollowerVO;
+import com.tyut.vo.Topic;
 
 import java.util.List;
 
@@ -21,11 +22,13 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
     private Context mContext;
     private OnItemClickListener mListener;
 
-    private List<FollowerVO> mList;
-    public FollowingListAdapter(Context context, List<FollowerVO> list, OnItemClickListener listener){
+    private List<FollowerVO> followerList;
+    private List<Topic> topicList;
+    public FollowingListAdapter(Context context, List<FollowerVO> followerList, List<Topic> topicList,  OnItemClickListener listener){
         this.mContext = context;
         this.mListener = listener;
-        this.mList = list;
+        this.followerList = followerList;
+        this.topicList = topicList;
     }
     @NonNull
     @Override
@@ -38,23 +41,32 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
     @Override
     public void onBindViewHolder(@NonNull FollowingListAdapter.LinearViewHolder holder, final int position) {
 
-        if(mList.size() > position){
-            holder.username_tv.setText(mList.get(position).getUsername());
-            Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userpic_iv);
+        if(followerList != null) {
+            if (followerList.size() > position) {
+                holder.username_tv.setText(followerList.get(position).getUsername());
+                Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + followerList.get(position).getUserpic()).into(holder.userpic_iv);
 
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //toast
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onClick(position);
+                    }
+                });
+
             }
-        });*/
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onClick(position);
-                }
-            });
+        }else {
+            if (topicList.size() > position) {
+                holder.username_tv.setText(topicList.get(position).getName());
+                Glide.with(mContext).load("http://192.168.1.9:8080/topicpic/" + (topicList.get(position).getPic() == null ? "default.jpg" : topicList.get(position).getPic())).into(holder.userpic_iv);
 
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onClick(position);
+                    }
+                });
+
+            }
         }
 
 
@@ -63,7 +75,11 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
 
     @Override
     public int getItemCount() {
-       return mList.size();
+        if(topicList!=null) {
+            return topicList.size();
+        }else{
+            return followerList.size();
+        }
     }
 
     class LinearViewHolder extends RecyclerView.ViewHolder{

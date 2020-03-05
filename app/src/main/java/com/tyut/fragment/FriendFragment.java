@@ -46,6 +46,7 @@ import com.tyut.R;
 import com.tyut.RecordActivity;
 import com.tyut.ShareActivity;
 import com.tyut.TopicActivity;
+import com.tyut.TopicListActivity;
 import com.tyut.UpdateUserDataActivity;
 import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.adapter.CommentListAdapter;
@@ -137,8 +138,8 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                     topicName_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //待实现
-                            Toast.makeText(getActivity(), "跳转热门话题Activity", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getActivity(), "跳转热门话题Activity", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getActivity(), TopicListActivity.class));
                         }
                     });
                     topicList_ll.addView(view);
@@ -213,6 +214,9 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
 
                         if(serverResponse.getStatus() == 0){
                             Message message = new Message();
+                          /*  Bundle bundle = new Bundle();
+                            bundle.putString("ket", "value");
+                            message.setData(bundle);*/
                             message.what = TOPICS;
                             message.obj = serverResponse.getData();
                             mHandler.sendMessage(message);

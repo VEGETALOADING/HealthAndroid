@@ -325,6 +325,11 @@ public class StringUtil {
         return map;
     }
 
+    public static String getPrettyNumber(String number) {
+        return BigDecimal.valueOf(Double.parseDouble(number))
+                .stripTrailingZeros().toPlainString();
+    }
+
 
     public static void main(String[] args) {
 
