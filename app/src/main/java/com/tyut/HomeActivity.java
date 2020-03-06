@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,18 +26,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.gson.Gson;
 import com.tyut.adapter.RecordFoodListAdapter;
 import com.tyut.adapter.RecordSportListAdapter;
 import com.tyut.fragment.ActivityFragment;
 import com.tyut.fragment.FriendFragment;
 import com.tyut.fragment.HomeFragment;
 import com.tyut.fragment.MyFragment;
+import com.tyut.utils.OkHttpCallback;
+import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.HotVO;
 import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.MysportVO;
+import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.FoodPopUpWindow;
 import com.tyut.widget.GirthPopUpWindow;
@@ -66,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     Integer currentFragment;
 
-    //private static int alpha;
+    private UserVO userVO;
     //private static final int CHANGEALPHA = 0;
     private static final String HOMEFRAGMENT_TAG="HOME";
     private static final String FRIENDFRAGMENT_TAG="FRIEND";
@@ -130,8 +136,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
 
-
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -248,7 +258,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.weight_ll:
                 mPop.dismiss();
-                UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
                 ViewUtil.changeAlpha(mHandler, 0);
                 final WeightPopUpWindow weightPopUpWindow = new WeightPopUpWindow(HomeActivity.this, Float.parseFloat(userVO.getWeight()), null, true);
                 weightPopUpWindow.setCancel(new WeightPopUpWindow.IOnCancelListener() {
@@ -272,10 +281,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 HomeActivity.this.startActivity(intent3);
                 break;
             case R.id.punchin_ll:
-                Intent intent4 = new Intent(HomeActivity.this, PunchinActivity.class);
-                intent4.putExtra("homeFragment", currentFragment);
-                intent4.putExtra("src", "HOMEACTIVITY");
-                HomeActivity.this.startActivity(intent4);
+                mPop.dismiss();
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                        new OkHttpCallback(){
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson=new Gson();
+                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                if(serverResponse.getStatus() == 65) {
+                                    Intent intent4 = new Intent(HomeActivity.this, PunchinActivity.class);
+                                    intent4.putExtra("homeFragment", currentFragment);
+                                    intent4.putExtra("src", "HOMEACTIVITY");
+                                    HomeActivity.this.startActivity(intent4);
+                                }else {
+                                    Looper.prepare();
+                                    Toast.makeText(HomeActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+
+
+                            }
+                        }
+                );
+
 
                 break;
             case R.id.girth_ll:
@@ -330,46 +360,4 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /*private void changeAlpha(int x){
-        if(x == 0){//背景变暗
-            alpha = 0;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (alpha < 127) {
-                        try {
-                            Thread.sleep(4);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = CHANGEALPHA;
-                        alpha += 1; //每次加1，逐渐变暗
-                        msg.obj = alpha;
-                        mHandler.sendMessage(msg);
-                    }
-                }
-            }).start();
-        }else if(x == 1){
-            alpha = 127;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (alpha > 0) {
-                        try {
-                            Thread.sleep(4);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = CHANGEALPHA;
-                        alpha -= 1; //每次加1，逐渐变暗
-                        msg.obj = alpha;
-                        mHandler.sendMessage(msg);
-                    }
-                }
-            }).start();
-
-        }
-    }*/
 }

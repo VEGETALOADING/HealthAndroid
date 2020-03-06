@@ -3,10 +3,16 @@ package com.tyut;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -14,9 +20,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tyut.utils.MD5Utils;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.utils.StringUtil;
+import com.tyut.utils.ValcodeUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
@@ -25,28 +34,60 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText username_et;
-    EditText password_et;
-    Button login_btn;
-    Button loginByPhone_btn;
-    Button forgetPassword_btn;
-    public static final int LOGINACTIVITY = 0;
+    LinearLayout loginByPw_ll;
+    EditText userName_et;
+    EditText pw_et;
+    TextView jumpValcode_tv;
+    TextView forgetPw_tv;
+    Button loginByPw_btn;
+
+    LinearLayout loginByValcode_ll;
+    EditText phone_et;
+    EditText valcode_et;
+    TextView jumpPw_tv;
+    Button sendValcode_btn;
+    Button loginByValcode_btn;
+
+    private TimeCount timeCount;
+
+    private String generateValcode;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //获取控件
-        username_et = findViewById(R.id.username);
-        password_et = findViewById(R.id.password);
-        login_btn = findViewById(R.id.login);
-        loginByPhone_btn = findViewById(R.id.loginbyphone);
-        forgetPassword_btn = findViewById(R.id.forgetpassword);
+        loginByPw_ll = findViewById(R.id.loginByPw_ll);
+        userName_et = findViewById(R.id.username_et);
+        pw_et = findViewById(R.id.password_et);
+        jumpValcode_tv = findViewById(R.id.jumpValcode_tv);
+        forgetPw_tv = findViewById(R.id.forgetPw_tv);
+        loginByPw_btn = findViewById(R.id.loginByPw_btn);
+
+        loginByValcode_ll = findViewById(R.id.loginByValcode_ll);
+        phone_et = findViewById(R.id.phone_et);
+        valcode_et = findViewById(R.id.valcode_et);
+        jumpPw_tv = findViewById(R.id.jumpPw_tv);
+        sendValcode_btn = findViewById(R.id.getvalcode_btn);
+        loginByValcode_btn = findViewById(R.id.loginByValcode_btn);
+
+        timeCount = new TimeCount(60000, 1000);
+
 
         //注册点击事件
-        login_btn.setOnClickListener(this);
-        loginByPhone_btn.setOnClickListener(this);
-        forgetPassword_btn.setOnClickListener(this);
+        jumpValcode_tv.setOnClickListener(this);
+        forgetPw_tv.setOnClickListener(this);
+        loginByPw_btn.setOnClickListener(this);
+        userName_et.addTextChangedListener(new Watch());
+        pw_et.addTextChangedListener(new Watch());
+        valcode_et.addTextChangedListener(new valCodeWatch());
+        pw_et.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        jumpPw_tv.setOnClickListener(this);
+        sendValcode_btn.setOnClickListener(this);
+        loginByValcode_btn.setOnClickListener(this);
+
 
 
 
@@ -57,17 +98,58 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (v.getId()){
 
-            case R.id.login:
-                //Toast.makeText(this, "loginButton", Toast.LENGTH_SHORT).show();
+            case R.id.forgetPw_tv:
+                LoginActivity.this.startActivity(new Intent(LoginActivity.this, ForgetPwActivity.class));
+                break;
+
+            case R.id.jumpPw_tv:
+                loginByValcode_ll.setVisibility(View.GONE);
+                loginByPw_ll.setVisibility(View.VISIBLE);
+                phone_et.setText(null);
+                valcode_et.setText(null);
+                break;
+            case R.id.jumpValcode_tv:
+                loginByPw_ll.setVisibility(View.GONE);
+                loginByValcode_ll.setVisibility(View.VISIBLE);
+                userName_et.setText(null);
+                pw_et.setText(null);
+                break;
+            case R.id.getvalcode_btn:
+                if(!StringUtil.checkPhoneNum(phone_et.getText().toString())){
+                    Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
+                }else{
+                    generateValcode = ValcodeUtil.generateValcode();
+                    OkHttpUtils.get("http://192.168.1.9:8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
+                            new OkHttpCallback(){
+                                @Override
+                                public void onFinish(String status, String msg) {
+                                    super.onFinish(status, msg);
+                                    //解析数据
+                                    Gson gson=new Gson();
+                                    ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                    if(serverResponse.getStatus() == 0){
+                                        timeCount.start();
+                                    }else{
+                                        Looper.prepare();
+                                        Toast.makeText(LoginActivity.this, "验证码发送失败", Toast.LENGTH_SHORT).show();
+                                        Looper.loop();
+                                    }
+                                }
+                            }
+                    );
+                }
+                break;
+
+            case R.id.loginByPw_btn:
 
                 //获取数据
-                String username = username_et.getText().toString();
+                String username = userName_et.getText().toString();
                 try {
                     username =  URLEncoder.encode(username, "UTF-8");
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                String password = password_et.getText().toString();
+                String password = MD5Utils.getMD5Code(pw_et.getText().toString());
 
                 //请求接口 -> okHttp在子线程中执行
                 OkHttpUtils.get("http://192.168.1.9:8080/portal/user/login.do?username="+username+"&password="+password,
@@ -97,14 +179,48 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     util.putBoolean("isLogin", true);
                                     util.putString("user", gson.toJson(serverResponse.getData()));
                                     util.putInt("userid", serverResponse.getData().getId());
+
+                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    LoginActivity.this.finish();
+
+                                    Looper.prepare();
+                                    Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+
+                                }else{
+
+                                    Looper.prepare();
+                                    Toast.makeText(LoginActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }
+                        });
+                break;
+            case R.id.loginByValcode_btn:
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/login.do?phone="
+                                +phone_et.getText().toString()
+                                +"&valcode="+valcode_et.getText().toString(),
+                        new OkHttpCallback(){
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+
+                                Gson gson = new Gson();
+                                ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
+                                if(serverResponse.getStatus() == 0){
+
+                                    SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(LoginActivity.this);
+                                    util.delete("user");
+                                    util.delete("isLogin");
+                                    util.delete("userid");
+                                    util.putBoolean("isLogin", true);
+                                    util.putString("user", gson.toJson(serverResponse.getData()));
+                                    util.putInt("userid", serverResponse.getData().getId());
                                     Boolean isLogin = util.readBoolean("isLogin");
 
-
                                     //Activity跳转(要在Toast之前？？？？)
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    intent.putExtra("src", LOGINACTIVITY);
-                                    LoginActivity.this.startActivity(intent);
-
+                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                                    LoginActivity.this.finish();
                                     Looper.prepare();
                                     Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
@@ -122,18 +238,85 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
 
-
-            case R.id.loginbyphone:
-                Toast.makeText(this, "loginbyphoneButton", Toast.LENGTH_SHORT).show();
-
-                break;
-            case R.id.forgetpassword:
-                Toast.makeText(this, "forgetpassword", Toast.LENGTH_SHORT).show();
-
-                break;
-
         }
 
 
+    }
+
+    class Watch implements TextWatcher{
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(userName_et.getText().toString().length() > 0 && pw_et.getText().toString().length() > 5){
+                loginByPw_btn.setBackground(getResources().getDrawable(R.drawable.btn_green));
+                loginByPw_btn.setClickable(true);
+            }else{
+                loginByPw_btn.setBackground(getResources().getDrawable(R.drawable.btn_grey));
+                loginByPw_btn.setClickable(false);
+            }
+        }
+    }
+    class valCodeWatch implements TextWatcher{
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            if(valcode_et.getText().toString().length() != 0){
+                loginByValcode_btn.setBackground(getResources().getDrawable(R.drawable.btn_green));
+                loginByValcode_btn.setClickable(true);
+            }else{
+                loginByValcode_btn.setBackground(getResources().getDrawable(R.drawable.btn_grey));
+                loginByValcode_btn.setClickable(false);
+            }
+        }
+    }
+
+    class TimeCount extends CountDownTimer{
+
+        /**
+         * @param millisInFuture    The number of millis in the future from the call
+         *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                          is called.
+         * @param countDownInterval The interval along the way to receive
+         *                          {@link #onTick(long)} callbacks.
+         */
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            sendValcode_btn.setBackground(getResources().getDrawable(R.drawable.btn_greyframe));
+            sendValcode_btn.setTextColor(getResources().getColor(R.color.nav_text_default));
+            sendValcode_btn.setClickable(false);
+            sendValcode_btn.setText(millisUntilFinished / 1000 + "秒");
+        }
+
+        @Override
+        public void onFinish() {
+            sendValcode_btn.setBackground(getResources().getDrawable(R.drawable.btn_greenframe));
+            sendValcode_btn.setTextColor(getResources().getColor(R.color.green_light));
+            sendValcode_btn.setClickable(true);
+            sendValcode_btn.setText("获取验证码");
+        }
     }
 }

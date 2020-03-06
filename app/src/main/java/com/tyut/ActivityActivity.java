@@ -142,7 +142,6 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                         initView();
                     }
                     break;
-                case 8:
 
             }
         }

@@ -307,6 +307,7 @@ public class StringUtil {
         return map;
     }
 
+
     public static Map<Integer, Integer> getMention(String str){
         String reg = "@([^\\s|\\/|:|@]+)";//定义正则表达式
         //Pattern patten = Pattern.compile(reg);//编译正则表达式
@@ -330,11 +331,21 @@ public class StringUtil {
                 .stripTrailingZeros().toPlainString();
     }
 
+    public static boolean checkPhoneNum(String phoneNum){
 
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(phoneNum);
+        return m.matches();
+    }
+    public static boolean checkPw(String password){
+
+        Pattern p = Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$");
+        Matcher m = p.matcher(password);
+        return m.matches();
+    }
     public static void main(String[] args) {
 
-        Map<Integer, Integer> mention = getEmoji("[测试]@user2 [@user3] #平安喜乐# 嘻嘻[爱你]");
-        System.out.println(mention);
+        System.out.println(checkPw("122"));
     }
 
 

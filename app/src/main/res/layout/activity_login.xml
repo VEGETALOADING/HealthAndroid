@@ -1,83 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="360dp"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
   <LinearLayout
+      android:id="@+id/loginByPw_ll"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
+      android:layout_height="match_parent"
+      android:orientation="vertical">
     <TextView
-        android:id="@+id/username_info"
+        android:id="@+id/jumpValcode_tv"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="280dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="用户名:"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:gravity="left"
-        android:layout_gravity="left">
-    </TextView>
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
+        android:text="免密登录"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"></TextView>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:hint="请输入用户名"></EditText>
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+      <TextView
+          android:layout_marginTop="50dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="25sp"
+          android:textColor="@color/black"
+          android:textStyle="bold"
+          android:text="密码登录"></TextView>
+      <TextView
+          android:layout_marginVertical="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="适合你的饮食方案,一站建立健康档案"
+          android:textSize="15sp"></TextView>
+      <EditText
+          android:layout_marginTop="10dp"
+          android:id="@+id/username_et"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:hint="用户名"
+          android:background="@null"></EditText>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/line_grey"></View>
+      <EditText
+          android:layout_marginTop="10dp"
+          android:id="@+id/password_et"
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:hint="密码"
+          android:gravity="center_vertical"
+          android:background="@null"></EditText>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/line_grey"></View>
+      <TextView
+          android:id="@+id/forgetPw_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="忘记密码"
+          android:textSize="18sp"
+          android:textColor="@color/green_light"
+          android:layout_marginTop="10dp"
+          android:layout_marginLeft="250dp"></TextView>
+
+      <Button
+          android:layout_marginTop="87dp"
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:id="@+id/loginByPw_btn"
+          android:text="登录"
+          android:clickable="false"
+          android:textSize="22sp"
+          android:textColor="@color/white"
+          android:background="@drawable/btn_grey"></Button>
+    </LinearLayout>
+
 
   </LinearLayout>
-
-
   <LinearLayout
+      android:visibility="gone"
+      android:id="@+id/loginByValcode_ll"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
-
+      android:layout_height="match_parent"
+      android:orientation="vertical">
     <TextView
-        android:id="@+id/password_info"
+        android:id="@+id/jumpPw_tv"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="280dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="密     码:"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:gravity="left"
-        android:layout_gravity="left">
-    </TextView>
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
+        android:text="密码登录"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"></TextView>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:hint="请输入密码"></EditText>
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+      <TextView
+          android:layout_marginTop="50dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="25sp"
+          android:textColor="@color/black"
+          android:textStyle="bold"
+          android:text="欢迎回来"></TextView>
+      <TextView
+          android:layout_marginVertical="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="适合你的饮食方案,一站建立健康档案"
+          android:textSize="15sp"></TextView>
+      <EditText
+          android:layout_marginTop="10dp"
+          android:id="@+id/phone_et"
+          android:layout_width="match_parent"
+          android:gravity="center_vertical"
+          android:layout_height="40dp"
+          android:hint="手机号码"
+          android:background="@null"></EditText>
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/line_grey"></View>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="40dp"
+          android:orientation="horizontal">
+        <EditText
+            android:id="@+id/valcode_et"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:hint="请输入验证码"
+            android:background="@null"></EditText>
+        <Button
+            android:id="@+id/getvalcode_btn"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/btn_greenframe"
+            android:text="获取验证码"
+            android:textSize="18sp"
+            android:textColor="@color/green_light"></Button>
+      </LinearLayout>
+
+
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/line_grey"></View>
+      <TextView
+          android:layout_marginTop="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="未注册的手机号验证后自动创建新账户"
+          android:textSize="15sp"></TextView>
+
+
+
+      <Button
+          android:layout_marginTop="100dp"
+          android:layout_width="match_parent"
+          android:layout_height="45dp"
+          android:id="@+id/loginByValcode_btn"
+          android:text="登录"
+          android:clickable="false"
+          android:textSize="22sp"
+          android:textColor="@color/white"
+          android:background="@drawable/btn_grey"></Button>
+    </LinearLayout>
+
 
   </LinearLayout>
 
-  <Button
-      android:id="@+id/login"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="登录"></Button>
 
-  <LinearLayout
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="right"
-      android:layout_marginTop="20dp"
-      android:layout_marginRight="10dp">
-
-
-    <Button
-        android:id="@+id/loginbyphone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="手机验证码登录"></Button>
-    <Button
-        android:id="@+id/forgetpassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="忘记密码"></Button>
-  </LinearLayout>
 
 </LinearLayout>

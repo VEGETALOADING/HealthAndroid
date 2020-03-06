@@ -24,6 +24,7 @@ import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+import com.tyut.view.MyCheckBox;
 import com.tyut.view.calendar.CustomDayView;
 import com.tyut.view.calendar.Utils;
 import com.tyut.view.calendar.component.CalendarAttr;
@@ -54,12 +55,15 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
     TextView nextMonthBtn;
     TextView lastMonthBtn;
     Button punchIn_btn;
+    MyCheckBox autoPunchin;
+    MyCheckBox reminedPunchin;
 
     LinearLayout return_ll;
     TextView continueCount_tv;
     TextView totalCount_tv;
     private UserVO userVO;
     private static final Integer PUNCHINDATA = 1;
+    private static final Integer PUNCHINSUCCESS = 2;
     private String dateChosen;
     private List<String> datePunched = new ArrayList<>();
 
@@ -89,6 +93,9 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
                         );
                     }
                     break;
+                case 2:
+                    onResume();
+                    break;
             }
         }
     };
@@ -111,10 +118,39 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
         continueCount_tv = findViewById(R.id.continueCount_tv);
         punchIn_btn = findViewById(R.id.punchin_btn);
 
+        reminedPunchin = findViewById(R.id.punchinRemined_checkbox);
+        autoPunchin = findViewById(R.id.autoPunchin_checkbox);
+
+        reminedPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
+            @Override
+            public void onCheckChange(boolean isCheck) {
+                String msg;
+                if (isCheck) {
+                    msg = "提醒开启待实现";
+                } else {
+                    msg = "提醒关闭待实现";
+                }
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+        autoPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
+            @Override
+            public void onCheckChange(boolean isCheck) {
+                String msg;
+                if (isCheck) {
+                    msg = "自动开启待实现";
+                } else {
+                    msg = "自动关闭待实现";
+                }
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         initCurrentDate();
         initCalendarView();
         initToolbarClickListener();
+        return_ll.setOnClickListener(this);
         punchIn_btn.setOnClickListener(this);
     }
 
@@ -334,8 +370,31 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
 
         switch (v.getId()){
             case R.id.punchin_btn:
-                //待实现
-                Toast.makeText(context, "可以补打卡", Toast.LENGTH_SHORT).show();
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+dateChosen,
+                        new OkHttpCallback(){
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson=new Gson();
+                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                if(serverResponse.getStatus() == 0) {
+                                    Message message = new Message();
+                                    message.what = PUNCHINSUCCESS;
+                                    message.obj = serverResponse.getData();
+                                    mHandler.sendMessage(message);
+                                }
+                                Looper.prepare();
+                                Toast.makeText(PunchinActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+
+                            }
+                        }
+                );
+
+                break;
+            case R.id.return_ll:
+                this.finish();
                 break;
         }
 

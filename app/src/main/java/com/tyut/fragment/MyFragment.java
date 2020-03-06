@@ -191,8 +191,10 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                                 if(serverResponse.getStatus() == 0){
                                     SharedPreferencesUtil.getInstance(getActivity()).clear();
                                     //Activity跳转(要在Toast之前？？？？)
-                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                    getActivity().startActivity(intent);
+
+                                    getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
+
+                                    getActivity().finish();
                                 }
                                 Looper.prepare();
                                 Toast.makeText(getActivity(),serverResponse.getMsg(),Toast.LENGTH_SHORT).show();
