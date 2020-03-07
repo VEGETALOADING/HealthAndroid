@@ -32,6 +32,7 @@ import com.tyut.LoginActivity;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyProgressView;
@@ -109,7 +110,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        UserVO userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
         float bmi = StringUtil.getBMI(userVO.getWeight(), userVO.getHeight());
         bmi_tv.setText(bmi+"");

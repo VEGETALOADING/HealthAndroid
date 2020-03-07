@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
@@ -300,7 +301,7 @@ public class SportPopUpWindow implements View.OnClickListener {
 
 
     private void initView(){
-        userId = SharedPreferencesUtil.getInstance(context).readInt("userid");
+        userId = SPSingleton.get(context, SPSingleton.USERINFO).readInt("userid");
         close_iv = contentView.findViewById(R.id.st_dl_close);
         sport_pic = contentView.findViewById(R.id.sport_pic_dl);
         sport_name = contentView.findViewById(R.id.sport_name_dl);

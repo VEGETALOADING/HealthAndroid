@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.FollowerVO;
 import com.tyut.vo.ServerResponse;
@@ -91,7 +92,7 @@ public class FollowerListAdapter extends RecyclerView.Adapter<FollowerListAdapte
             holder.follow_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(mContext).readObject("user", UserVO.class);
+                    UserVO userVO = (UserVO)SPSingleton.get(mContext, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
                     OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/followornot.do?id=" + mList.get(position).getId() + "&followerid=" + userVO.getId(),
                             new OkHttpCallback(){

@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyCheckBox;
@@ -36,6 +37,7 @@ import com.tyut.view.calendar.view.MonthPager;
 import com.tyut.vo.Punchin;
 import com.tyut.vo.PunchinVO;
 import com.tyut.vo.ServerResponse;
+import com.tyut.vo.SettingData;
 import com.tyut.vo.UserVO;
 
 import java.text.SimpleDateFormat;
@@ -62,6 +64,8 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
     TextView continueCount_tv;
     TextView totalCount_tv;
     private UserVO userVO;
+    private Gson gson;
+
     private static final Integer PUNCHINDATA = 1;
     private static final Integer PUNCHINSUCCESS = 2;
     private String dateChosen;
@@ -117,36 +121,14 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
         totalCount_tv = findViewById(R.id.totalCount_tv);
         continueCount_tv = findViewById(R.id.continueCount_tv);
         punchIn_btn = findViewById(R.id.punchin_btn);
+        return_ll = findViewById(R.id.return_ll);
 
         reminedPunchin = findViewById(R.id.punchinRemined_checkbox);
         autoPunchin = findViewById(R.id.autoPunchin_checkbox);
 
-        reminedPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
-            @Override
-            public void onCheckChange(boolean isCheck) {
-                String msg;
-                if (isCheck) {
-                    msg = "提醒开启待实现";
-                } else {
-                    msg = "提醒关闭待实现";
-                }
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-        autoPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
-            @Override
-            public void onCheckChange(boolean isCheck) {
-                String msg;
-                if (isCheck) {
-                    msg = "自动开启待实现";
-                } else {
-                    msg = "自动关闭待实现";
-                }
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
+        userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
-
+        initSettingData();
         initCurrentDate();
         initCalendarView();
         initToolbarClickListener();
@@ -176,9 +158,6 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
-        //OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/select.do?&userid="+userVO.getId(),
 
         OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/select.do?&userid="+userVO.getId(),
                 new OkHttpCallback(){
@@ -229,6 +208,46 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
     }
+
+    private void initSettingData(){
+        gson = new Gson();
+        final SPSingleton settingDataSP = SPSingleton.get(PunchinActivity.this, "settingdata");
+        reminedPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
+            @Override
+            public void onCheckChange(boolean isCheck) {
+                if((settingDataSP.readObject(userVO.getId()+"", SettingData.class)) != null) {
+                    SettingData settingData = (SettingData) settingDataSP.readObject(userVO.getId()+"", SettingData.class);
+                    settingDataSP.delete(userVO.getId()+"");
+                    settingData.setReminedPunchin(isCheck);
+                    settingDataSP.putString(userVO.getId()+"", gson.toJson(settingData));
+                }else{
+                    settingDataSP.putString(userVO.getId()+"", gson.toJson( new SettingData(false, isCheck)));
+                }
+
+            }
+        });
+        autoPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
+            @Override
+            public void onCheckChange(boolean isCheck) {
+                if((settingDataSP.readObject(userVO.getId()+"", SettingData.class)) != null) {
+                    SettingData settingData = (SettingData) settingDataSP.readObject(userVO.getId()+"", SettingData.class);
+                    settingDataSP.delete(userVO.getId()+"");
+                    settingData.setAutoPunchin(isCheck);
+                    settingDataSP.putString(userVO.getId()+"", gson.toJson(settingData));
+                }else{
+                    settingDataSP.putString(userVO.getId()+"", gson.toJson( new SettingData(isCheck, false)));
+                }
+            }
+        });
+        if((settingDataSP.readObject(userVO.getId()+"", SettingData.class)) != null) {
+            reminedPunchin.setCheck(((SettingData) settingDataSP.readObject(userVO.getId()+"", SettingData.class)).getReminedPunchin());
+            autoPunchin.setCheck(((SettingData) settingDataSP.readObject(userVO.getId()+"", SettingData.class)).getAutoPunchin());
+        }else{
+            reminedPunchin.setCheck(false);
+            autoPunchin.setCheck(false);
+        }
+    }
+
 
     /**
      * 初始化currentDate

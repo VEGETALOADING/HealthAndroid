@@ -24,6 +24,7 @@ import com.tyut.R;
 import com.tyut.UpdateUserDataActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.ServerResponse;
@@ -142,7 +143,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
         super.onResume();
         Log.d("tag", "onResume");
         //查数据
-        userId = SharedPreferencesUtil.getInstance(getActivity()).readInt("userid");
+        userId =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
 
         OkHttpUtils.get("http://192.168.1.9:8080/portal/weight/list.do?userid="+userId,
                 new OkHttpCallback(){
@@ -213,7 +214,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
                                                 //解析数据
                                                 Gson gson=new Gson();
                                                 ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
-                                                SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(getActivity());
+                                                SPSingleton util =  SPSingleton.get(getActivity(), SPSingleton.USERINFO);
                                                 util.clear();
                                                 util.putBoolean("isLogin", true);
                                                 util.putString("user", gson.toJson(serverResponse.getData()));

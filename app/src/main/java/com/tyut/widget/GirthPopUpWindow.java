@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.GirthRulerView;
@@ -276,7 +277,7 @@ public class GirthPopUpWindow implements View.OnClickListener {
     }
     private void initView(){
 
-        userId = SharedPreferencesUtil.getInstance(context).readInt("userid");
+        userId = SPSingleton.get(context, SPSingleton.USERINFO).readInt("userid");
         cancel = contentView.findViewById(R.id.cancel_recordgirth_tv);
         confirm_girth = contentView.findViewById(R.id.confirm_recordgirth_tv);
         confirm_date = contentView.findViewById(R.id.confirm_date_tv);

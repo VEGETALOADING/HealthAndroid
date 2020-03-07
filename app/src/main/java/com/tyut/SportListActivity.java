@@ -30,6 +30,7 @@ import com.tyut.adapter.SportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 
 import com.tyut.utils.StringUtil;
@@ -103,7 +104,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                         mysport.setTime(Integer.parseInt(dialog.getTime()));
                                         mysport.setCal(Integer.parseInt(dialog.getCal()));
                                         mysport.setSportid(list.get(position).getId());
-                                        mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
+                                        mysport.setUserid(SPSingleton.get(SportListActivity.this, SPSingleton.USERINFO).readInt("userid"));
                                         mysport.setCreateTime(dialog.getCreateTime());
                                         mysportList.add(mysport);
                                         badge.setBadgeNumber(badge.getBadgeNumber() + 1);
@@ -155,7 +156,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                                         mysport.setTime(Integer.parseInt(dialog.getTime()));
                                         mysport.setCal(Integer.parseInt(dialog.getCal()));
                                         mysport.setSportid(list2.get(position).getId());
-                                        mysport.setUserid(SharedPreferencesUtil.getInstance(SportListActivity.this).readInt("userid"));
+                                        mysport.setUserid(SPSingleton.get(SportListActivity.this, SPSingleton.USERINFO).readInt("userid"));
                                         mysport.setCreateTime(dialog.getCreateTime());
                                         mysportList.add(mysport);
                                         badge.setBadgeNumber(badge.getBadgeNumber() + 1);
@@ -270,7 +271,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 current_category = 2;
                 my_sport.setTextColor(v.getResources().getColor(R.color.black));
                 common_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
-                Integer userid = SharedPreferencesUtil.getInstance(this).readInt("userid");
+                Integer userid = SPSingleton.get(this, SPSingleton.USERINFO).readInt("userid");
                 OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid="+userid,
                         new OkHttpCallback(){
                             @Override
@@ -360,7 +361,7 @@ public class SportListActivity extends AppCompatActivity implements View.OnClick
                 }else{
                     my_sport.setTextColor(v.getResources().getColor(R.color.black));
                     common_sport.setTextColor(v.getResources().getColor(R.color.nav_text_default));
-                    Integer userid1 = SharedPreferencesUtil.getInstance(this).readInt("userid");
+                    Integer userid1 = SPSingleton.get(this, SPSingleton.USERINFO).readInt("userid");
                     OkHttpUtils.get("http://192.168.1.9:8080//portal/sport/list.do?userid="+userid1,
                             new OkHttpCallback(){
                                 @Override

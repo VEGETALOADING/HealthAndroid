@@ -19,6 +19,7 @@ import com.tyut.R;
 import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
@@ -443,7 +444,7 @@ public class FoodPopUpWindow implements View.OnClickListener {
     }
 
     private void initView(){
-        userId = SharedPreferencesUtil.getInstance(context).readInt("userid");
+        userId =  SPSingleton.get(context, SPSingleton.USERINFO).readInt("userid");
 
         chooseDate_ll = contentView.findViewById(R.id.choosedate_ll);
         date_tv = contentView.findViewById(R.id.date_tv);

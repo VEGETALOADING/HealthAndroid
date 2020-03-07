@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
@@ -44,10 +45,10 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
     protected void onResume() {
         super.onResume();
 
-        boolean isLogin = SharedPreferencesUtil.getInstance(this).readBoolean("isLogin");
+        boolean isLogin =  SPSingleton.get(this, SPSingleton.USERINFO).readBoolean("isLogin");
         if(isLogin == true){
             //获取用户信息
-            UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+            UserVO userVO = (UserVO)  SPSingleton.get(this,SPSingleton.USERINFO).readObject("user", UserVO.class);
             username_et.setText(userVO.getUsername());
         }
 
@@ -60,7 +61,7 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
                 finish();
                 break;
             case R.id.finish_tv:
-                UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+                UserVO userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
                 String username = username_et.getText().toString();
                 OkHttpUtils.get("http://ChooseMentionAdapter4:8080/portal/user/update.do?id="+userVO.getId()+"&username="+username,
@@ -72,7 +73,7 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
                                 Gson gson=new Gson();
                                 ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
                                 if(serverResponse.getStatus() == 0){
-                                    SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(UpdateUsernameActivity.this);
+                                    SPSingleton util =  SPSingleton.get(UpdateUsernameActivity.this,SPSingleton.USERINFO);
                                     util.delete("user");
                                     util.putString("user", gson.toJson(serverResponse.getData()));
                                     Looper.prepare();

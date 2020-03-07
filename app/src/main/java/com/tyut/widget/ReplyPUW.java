@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tyut.R;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.CommentVO;
@@ -129,7 +130,7 @@ public class ReplyPUW implements View.OnClickListener {
         reply_tv = contentView.findViewById(R.id.reply_tv);
         delete_tv = contentView.findViewById(R.id.deleteReply_tv);
         report_tv = contentView.findViewById(R.id.reportReply_tv);
-        Integer userid = SharedPreferencesUtil.getInstance(context).readInt("userid");
+        Integer userid = SPSingleton.get(context, SPSingleton.USERINFO).readInt("userid");
 
         if(reply.getUserid() == userid){
             delete_tv.setVisibility(View.VISIBLE);

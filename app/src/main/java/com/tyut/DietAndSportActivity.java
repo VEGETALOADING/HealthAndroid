@@ -29,6 +29,7 @@ import com.tyut.adapter.RecordSportListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.CircleProgressBar;
@@ -344,7 +345,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         Log.d("tag", "onResume");
         super.onResume();
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         if(getIntent().getStringExtra("date")!=null){
             currentShowDate = getIntent().getStringExtra("date");
             day.setText(currentShowDate.substring(5, 7)+"月"+currentShowDate.substring(8)+"日");

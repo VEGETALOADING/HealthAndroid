@@ -39,6 +39,7 @@ import com.tyut.R;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.CommentVO;
@@ -104,7 +105,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final CommentListAdapter.LinearViewHolder holder, final int position) {
-        final UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(mContext).readObject("user", UserVO.class);
+        final UserVO userVO = (UserVO) SPSingleton.get(mContext, SPSingleton.USERINFO).readObject("user", UserVO.class);
         if(mList.size() > position){
 
             if(userVO.getId() == mList.get(position).getUserid()){

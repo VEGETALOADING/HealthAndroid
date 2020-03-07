@@ -48,6 +48,7 @@ import com.tyut.fragment.FaceFragment;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.SoftKeyBoardListener;
 import com.tyut.utils.StringUtil;
@@ -206,7 +207,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         mInflater = LayoutInflater.from(this);
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         if("TOPICACTIVITY".equals(getIntent().getStringExtra("src"))){
 
             content_et.setText(getIntent().getStringExtra("topicname")+" ");

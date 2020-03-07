@@ -31,6 +31,7 @@ import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
@@ -109,7 +110,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         Myfood myfood= new Myfood();
                                         myfood.setCal(Integer.parseInt(dialog.getCal()));
                                         myfood.setFoodid(list.get(position).getId());
-                                        myfood.setUserid(SharedPreferencesUtil.getInstance(FoodListActivity.this).readInt("userid"));
+                                        myfood.setUserid( SPSingleton.get(FoodListActivity.this, SPSingleton.USERINFO).readInt("userid"));
                                         myfood.setCreateTime(dialog.getCreateTime());
                                         myfood.setQuantity(Integer.parseInt(dialog.getQuantity()));
                                         myfood.setType(JudgeUtil.getDietTime(dialog.getTime()));
@@ -161,7 +162,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                         Myfood myfood= new Myfood();
                                         myfood.setCal(Integer.parseInt(dialog.getCal()));
                                         myfood.setFoodid(list2.get(position).getId());
-                                        myfood.setUserid(SharedPreferencesUtil.getInstance(FoodListActivity.this).readInt("userid"));
+                                        myfood.setUserid( SPSingleton.get(FoodListActivity.this, SPSingleton.USERINFO).readInt("userid"));
                                         myfood.setCreateTime(dialog.getCreateTime());
                                         myfood.setQuantity(Integer.parseInt(dialog.getQuantity()));
                                         myfood.setType(JudgeUtil.getDietTime(dialog.getTime()));
@@ -233,7 +234,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-        userid = SharedPreferencesUtil.getInstance(this).readInt("userid");
+        userid = SPSingleton.get(this, SPSingleton.USERINFO).readInt("userid");
 
         if (getIntent().getStringExtra("createtime") != null){
             currentShowDate = getIntent().getStringExtra("createtime");

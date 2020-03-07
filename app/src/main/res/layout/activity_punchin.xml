@@ -7,12 +7,12 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:background="@color/white"
         android:id="@+id/top_ll"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center">
+        android:layout_width="353dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/return_ll"
@@ -21,8 +21,8 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
                 android:src="@mipmap/ic_return"></ImageView>
         </LinearLayout>
 

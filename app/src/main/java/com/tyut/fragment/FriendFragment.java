@@ -53,6 +53,7 @@ import com.tyut.adapter.CommentListAdapter;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
@@ -201,7 +202,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
+        userVO = (UserVO)  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
         mInflater = LayoutInflater.from(getActivity());
         OkHttpUtils.get("http://192.168.1.9:8080/portal/topic/find.do",
                 new OkHttpCallback() {

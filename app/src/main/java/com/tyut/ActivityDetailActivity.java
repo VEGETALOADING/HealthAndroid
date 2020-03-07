@@ -45,6 +45,7 @@ import com.tyut.fragment.FaceFragment;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.SoftKeyBoardListener;
 import com.tyut.utils.StringUtil;
@@ -430,7 +431,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         super.onResume();
         onKeyBoardListener();
         //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(ActivityDetailActivity.this).readObject("user", UserVO.class);
+        userVO = (UserVO) SPSingleton.get(ActivityDetailActivity.this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         activityId = (Integer) getIntent().getIntExtra("activityid", 0);
         OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+userVO.getId()+"&id=" + activityId,
                 new OkHttpCallback(){

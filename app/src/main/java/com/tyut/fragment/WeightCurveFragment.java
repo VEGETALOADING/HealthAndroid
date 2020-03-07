@@ -30,6 +30,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.Weight;
@@ -104,7 +105,7 @@ public class WeightCurveFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Integer userid = SharedPreferencesUtil.getInstance(getActivity()).readInt("userid");
+        Integer userid =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
 
         OkHttpUtils.get("http://192.168.1.9:8080/portal/weight/list.do?userid="+userid,
                 new OkHttpCallback(){

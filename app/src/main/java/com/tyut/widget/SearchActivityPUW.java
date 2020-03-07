@@ -35,6 +35,7 @@ import com.tyut.adapter.TopicAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.ActivityVO;
@@ -131,7 +132,7 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
                 InputMethodManager inputMethodManager =(InputMethodManager)context.getApplicationContext().
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(search_et.getWindowToken(), 0); //隐藏
-                UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(context).readObject("user", UserVO.class);
+                UserVO userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
                 String content = String.valueOf(search_et.getText());
                 OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="

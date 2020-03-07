@@ -24,6 +24,7 @@ import com.tyut.utils.GetConfigReq;
 import com.tyut.utils.JudgeUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.ViewUtil;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
@@ -117,13 +118,13 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
     @Override
     protected void onResume() {
         super.onResume();
-        boolean isLogin = SharedPreferencesUtil.getInstance(this).readBoolean("isLogin");
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        boolean isLogin = SPSingleton.get(this, SPSingleton.USERINFO).readBoolean("isLogin");
+        userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
         if(isLogin == true){
 
             //获取用户信息
-            UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+            UserVO userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
             gender_tv.setText(userVO.getGender() == 0 ? "女" : "男");
             birthday_tv.setText(userVO.getBirthday().substring(0, 10));
@@ -284,7 +285,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                                 if(serverResponse.getStatus() == 0){
 
 
-                                    SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(UpdateUserDataActivity.this);
+                                    SPSingleton util = SPSingleton.get(UpdateUserDataActivity.this, SPSingleton.USERINFO);
                                     /*util.delete("user");
                                     util.delete("isLogin");
                                     util.delete("userid");*/

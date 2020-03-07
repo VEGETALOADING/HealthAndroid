@@ -23,6 +23,7 @@ import com.tyut.adapter.FollowingListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyProgressView;
@@ -118,7 +119,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
     protected void onResume() {
         super.onResume();
         //初始化页面
-        UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        UserVO userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
         userName.setText(userVO.getUsername());
         latestWeight .setText(userVO.getWeight());

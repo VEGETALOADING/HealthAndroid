@@ -31,6 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
@@ -184,7 +185,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
     protected void onResume() {
         super.onResume();
         //获取用户信息
-        currentUserVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        currentUserVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).getObject("user", UserVO.class);
         userId = getIntent().getIntExtra("userid", 0);
         if(currentUserVO.getUsername().equals(getIntent().getStringExtra("username")) || userId == currentUserVO.getId()){
             userVO = currentUserVO;

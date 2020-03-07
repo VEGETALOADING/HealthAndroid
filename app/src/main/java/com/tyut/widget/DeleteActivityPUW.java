@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tyut.R;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.view.ScrollPickView;
 import com.tyut.vo.ActivityVO;
@@ -169,7 +170,7 @@ public class DeleteActivityPUW implements View.OnClickListener {
         report_ll = contentView.findViewById(R.id.report_ll);
         report_tv = contentView.findViewById(R.id.reportactivity_tv);
 
-        if(activityVO.getUserid() == SharedPreferencesUtil.getInstance(context).readInt("userid")){
+        if(activityVO.getUserid() == SPSingleton.get(context ,SPSingleton.USERINFO).readInt("userid")){
             shareOrDelete_ll.setVisibility(View.VISIBLE);
             report_ll.setVisibility(View.GONE);
         }else{

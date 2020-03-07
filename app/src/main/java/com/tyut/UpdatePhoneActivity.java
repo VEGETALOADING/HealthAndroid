@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ValcodeUtil;
 import com.tyut.vo.ServerResponse;
@@ -126,7 +127,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
             case R.id.bount_btn:
                 String inputValcode = valcode_et.getText().toString();
                 if(inputValcode.equals(generateValcode)){
-                    UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+                    UserVO userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
                     //验证码正确，绑定手机号
                     OkHttpUtils.get("http://192.168.1.9:8080/portal/user/update.do?id="+userVO.getId()+"&phone="+phoneNum,
                             new OkHttpCallback(){
@@ -137,7 +138,7 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                                     Gson gson=new Gson();
                                     ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
                                     if(serverResponse.getStatus() == 0){
-                                        SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(UpdatePhoneActivity.this);
+                                        SPSingleton util = SPSingleton.get(UpdatePhoneActivity.this, SPSingleton.USERINFO);
                                         util.delete("user");
                                         util.putString("user", gson.toJson(serverResponse.getData()));
                                         Looper.prepare();
@@ -167,12 +168,12 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
         //判断用户是否登录    fragment中获取view：getActivity
-        boolean isLogin = SharedPreferencesUtil.getInstance(this).readBoolean("isLogin");
+        boolean isLogin = SPSingleton.get(this, SPSingleton.USERINFO).readBoolean("isLogin");
 
         if(isLogin == true){
 
             //获取用户信息
-            UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+            UserVO userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
             if(userVO.getPhone() != null && !"".equals(userVO.getPhone())){
                 bound_ll.setVisibility(View.VISIBLE);

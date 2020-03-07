@@ -25,6 +25,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.ActivityVO;
@@ -187,7 +188,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
 
         topicName = getIntent().getStringExtra("topicname");
         topicName_tv.setText(topicName);
-        currentUserVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        currentUserVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         try {
             temp = URLEncoder.encode(topicName, "UTF-8");
         } catch (UnsupportedEncodingException e) {

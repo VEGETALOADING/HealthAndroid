@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.MyHorizontalScrollView;
@@ -169,7 +170,7 @@ public class WeightPopUpWindow implements View.OnClickListener {
                                     Gson gson = new Gson();
                                     ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>() {
                                     }.getType());
-                                    SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(context);
+                                    SPSingleton util =  SPSingleton.get(context, SPSingleton.USERINFO);
                                     if (date.equals(StringUtil.getCurrentDate("yyyy-MM-dd"))) {
                                         util.clear();
                                         util.putBoolean("isLogin", true);
@@ -235,7 +236,7 @@ public class WeightPopUpWindow implements View.OnClickListener {
 
     private void initView(){
 
-        userId = SharedPreferencesUtil.getInstance(context).readInt("userid");
+        userId = SPSingleton.get(context, SPSingleton.USERINFO).readInt("userid");
         close_iv = contentView.findViewById(R.id.weight_dl_close);
         confirm_tv = contentView.findViewById(R.id.confirm_recordweight_tv);
         date_tv = contentView.findViewById(R.id.recordweight_date_tv);

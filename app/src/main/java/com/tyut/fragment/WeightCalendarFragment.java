@@ -19,6 +19,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.ServerResponse;
@@ -75,7 +76,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
     }
 
     private void showDialog(final String date){
-        final UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
+        final UserVO userVO = (UserVO)  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
         final RecordWeightDialog dialog = new RecordWeightDialog(getActivity());
         dialog.setDate(date);
         dialog.setDefaultWeight(Float.parseFloat(userVO.getWeight()));
@@ -104,7 +105,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                                 Gson gson = new Gson();
                                 ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>() {
                                 }.getType());
-                                SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(getActivity());
+                                SPSingleton util = SPSingleton.get(getActivity(), SPSingleton.USERINFO);
                                 util.clear();
                                 util.putBoolean("isLogin", true);
                                 util.putString("user", gson.toJson(serverResponse.getData()));

@@ -35,6 +35,7 @@ import com.tyut.adapter.FollowerListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.ActivityVO;
@@ -186,7 +187,7 @@ public class FindFriendPUW implements View.OnClickListener {
     }
 
     private void initRecycleView(){
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(context).readObject("user", UserVO.class);
+        userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
         OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findnewfriend.do?currentUserId=" + userVO.getId(),
                 new OkHttpCallback() {

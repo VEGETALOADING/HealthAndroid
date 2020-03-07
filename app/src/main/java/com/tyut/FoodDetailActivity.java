@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
@@ -137,7 +138,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        userid = SharedPreferencesUtil.getInstance(FoodDetailActivity.this).readInt("userid");
+        userid =  SPSingleton.get(FoodDetailActivity.this, SPSingleton.USERINFO).readInt("userid");
         foodVO = (FoodVO) getIntent().getSerializableExtra("foodvo");
 
         foodId = foodVO.getId();

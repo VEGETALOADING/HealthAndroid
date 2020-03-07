@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.utils.MD5Utils;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ValcodeUtil;
@@ -91,6 +92,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+         if(((UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class))!=null){
+             LoginActivity.this.startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+             LoginActivity.this.finish();
+         }
     }
 
     @Override
@@ -172,7 +182,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if(serverResponse.getStatus() == 0){
 
 
-                                    SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(LoginActivity.this);
+                                    SPSingleton util = SPSingleton.get(LoginActivity.this, SPSingleton.USERINFO);
                                     util.delete("user");
                                     util.delete("isLogin");
                                     util.delete("userid");
@@ -209,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
                                 if(serverResponse.getStatus() == 0){
 
-                                    SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(LoginActivity.this);
+                                    SPSingleton util = SPSingleton.get(LoginActivity.this, SPSingleton.USERINFO);
                                     util.delete("user");
                                     util.delete("isLogin");
                                     util.delete("userid");

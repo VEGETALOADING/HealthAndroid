@@ -35,6 +35,7 @@ import com.tyut.TopicActivity;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.NinePhotoView;
@@ -116,7 +117,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
     @Override
     public void onBindViewHolder(final RVHolder holder, final int position) {
-        final UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(context).readObject("user", UserVO.class);
+        final UserVO userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
         if(position < mList.size()) {
             holder.userName_tv.setText(mList.get(position).getUsername() + "");

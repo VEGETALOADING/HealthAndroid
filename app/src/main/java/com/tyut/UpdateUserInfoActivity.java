@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.GirthVO;
@@ -125,12 +126,12 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
     protected void onResume() {
         super.onResume();
         //判断用户是否登录    fragment中获取view：getActivity
-        boolean isLogin = SharedPreferencesUtil.getInstance(this).readBoolean("isLogin");
+        boolean isLogin =  SPSingleton.get(this, SPSingleton.USERINFO).readBoolean("isLogin");
 
         if(isLogin == true){
 
             //获取用户信息
-            UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+            UserVO userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
 
             user_name.setText(userVO.getUsername());
@@ -190,7 +191,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
                 bm = data.getParcelableExtra("data");
                 File file = ViewUtil.bitmap2File(bm, tempFile);
                 Map<String, String> userId = new HashMap<>();
-                userId.put("id", SharedPreferencesUtil.getInstance(UpdateUserInfoActivity.this).readInt("userid")+"");
+                userId.put("id",  SPSingleton.get(UpdateUserInfoActivity.this, SPSingleton.USERINFO).readInt("userid")+"");
                 OkHttpUtils.upload("http://192.168.1.9:8080/portal/user/uploadpic.do", file.getAbsolutePath(), userId, new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -198,7 +199,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
                         ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
                         if(serverResponse.getStatus() == 0){
 
-                            SharedPreferencesUtil util = SharedPreferencesUtil.getInstance(UpdateUserInfoActivity.this);
+                            SPSingleton util =  SPSingleton.get(UpdateUserInfoActivity.this, SPSingleton.USERINFO);
 
                             util.clear();
                             util.putBoolean("isLogin", true);

@@ -39,6 +39,7 @@ import com.tyut.adapter.FoodListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.FoodVO;
@@ -200,12 +201,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     public void onResume() {
         super.onResume();
         //判断用户是否登录    fragment中获取view：getActivity
-        boolean isLogin = SharedPreferencesUtil.getInstance(getActivity()).readBoolean("isLogin");
+        boolean isLogin = SPSingleton.get(getActivity(), SPSingleton.USERINFO).readBoolean("isLogin");
 
         if(isLogin == true){
 
             //获取用户信息
-            UserVO userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
+            UserVO userVO = (UserVO) SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
 
             username.setText(userVO.getUsername());
             Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userpic);

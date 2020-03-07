@@ -30,6 +30,7 @@ import com.tyut.UpdateUserDataActivity;
 import com.tyut.UpdateUserInfoActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
@@ -105,12 +106,12 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         super.onResume();
 
         //判断用户是否登录    fragment中获取view：getActivity
-        boolean isLogin = SharedPreferencesUtil.getInstance(getActivity()).readBoolean("isLogin");
+        boolean isLogin =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readBoolean("isLogin");
 
         if(isLogin == true){
 
             //获取用户信息
-            userVO = (UserVO) SharedPreferencesUtil.getInstance(getActivity()).readObject("user", UserVO.class);
+            userVO = (UserVO)  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
 
 
 
@@ -177,8 +178,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.logout_btn:
                 //退出登录
-
-                System.out.println("exit");
                 OkHttpUtils.get("http://192.168.1.9:8080/portal/user/logout.do",
                         new OkHttpCallback(){
                             @Override
@@ -189,7 +188,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                                 ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
 
                                 if(serverResponse.getStatus() == 0){
-                                    SharedPreferencesUtil.getInstance(getActivity()).clear();
+                                    SPSingleton.get(getActivity(), SPSingleton.USERINFO).clear();
                                     //Activity跳转(要在Toast之前？？？？)
 
                                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));

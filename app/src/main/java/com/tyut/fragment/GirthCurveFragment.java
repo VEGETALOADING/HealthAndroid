@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.view.CurveView;
 import com.tyut.vo.GirthListVO;
@@ -229,7 +230,7 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
     public void onResume() {
         super.onResume();
 
-        Integer userid = SharedPreferencesUtil.getInstance(getActivity()).readInt("userid");
+        Integer userid =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
 
         OkHttpUtils.get("http://192.168.1.9:8080/portal/girth/list.do?userid="+userid,
                 new OkHttpCallback(){

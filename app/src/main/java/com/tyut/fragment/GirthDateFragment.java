@@ -21,6 +21,7 @@ import com.tyut.R;
 import com.tyut.adapter.GirthOutAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.GirthVO;
 import com.tyut.vo.ServerResponse;
@@ -73,7 +74,7 @@ public class GirthDateFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Integer userid = SharedPreferencesUtil.getInstance(getActivity()).readInt("userid");
+        Integer userid =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
 
         OkHttpUtils.get("http://192.168.1.9:8080/portal/girth/date.do?userid="+userid,
                 new OkHttpCallback(){

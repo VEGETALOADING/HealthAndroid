@@ -22,6 +22,7 @@ import com.tyut.adapter.FollowingListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.vo.FollowerVO;
 import com.tyut.vo.FoodVO;
@@ -104,7 +105,7 @@ public class TopicListActivity extends AppCompatActivity implements View.OnClick
         hotTopic_tv.setTextColor(this.getResources().getColor(R.color.black));
         myTopic_tv.setTextColor(this.getResources().getColor(R.color.nav_text_default));
         //查数据
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(this).readObject("user", UserVO.class);
+        userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
         findHotTopic();
 

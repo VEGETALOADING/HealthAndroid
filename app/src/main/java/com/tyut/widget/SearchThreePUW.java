@@ -39,6 +39,7 @@ import com.tyut.adapter.TopicAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
+import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.ActivityVO;
@@ -189,7 +190,7 @@ public class SearchThreePUW implements View.OnClickListener, TextView.OnEditorAc
 
     public SearchThreePUW(Context context) {
 
-        userVO = (UserVO) SharedPreferencesUtil.getInstance(context).readObject("user", UserVO.class);
+        userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
         this.context = context;
 
         contentView = LayoutInflater.from(context).inflate(
