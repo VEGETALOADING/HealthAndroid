@@ -27,6 +27,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.RecordFoodListAdapter;
 import com.tyut.adapter.RecordSportListAdapter;
 import com.tyut.fragment.ActivityFragment;
@@ -44,6 +45,7 @@ import com.tyut.vo.HotVO;
 import com.tyut.vo.MyfoodVO;
 import com.tyut.vo.MysportVO;
 import com.tyut.vo.ServerResponse;
+import com.tyut.vo.SettingData;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.FoodPopUpWindow;
 import com.tyut.widget.GirthPopUpWindow;
@@ -74,7 +76,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     Integer currentFragment;
 
     private UserVO userVO;
-    //private static final int CHANGEALPHA = 0;
     private static final String HOMEFRAGMENT_TAG="HOME";
     private static final String FRIENDFRAGMENT_TAG="FRIEND";
     private static final String ACTIVITYFRAGMENT_TAG="ACTIVITY";
@@ -88,6 +89,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 case 0:
                     whole_rl.getForeground().setAlpha((int)msg.obj);
                     break;
+
+                case 1:
+
+                    break;
             }
         }
     };
@@ -98,20 +103,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_home);
 
         //预加载主页
-        fragment_content = (RelativeLayout)findViewById(R.id.content);
-        home_LinearLayout = (LinearLayout)findViewById(R.id.home);
-        friend_LinearLayout = (LinearLayout)findViewById(R.id.friend);
-        activity_LinearLayout = (LinearLayout)findViewById(R.id.activity);
-        add_LinearLayout = (LinearLayout)findViewById(R.id.add);
-        my_LinearLayout = (LinearLayout)findViewById(R.id.my);
-        img_home = (ImageView)findViewById(R.id.img_home);
-        img_friend = (ImageView)findViewById(R.id.img_friend);
-        img_activity = (ImageView)findViewById(R.id.img_activity);
-        img_my = (ImageView)findViewById(R.id.img_my);
-        tv_home = (TextView)findViewById(R.id.tv_home);
-        tv_friend = (TextView)findViewById(R.id.tv_friend);
-        tv_activity = (TextView)findViewById(R.id.tv_activity);
-        tv_my = (TextView)findViewById(R.id.tv_my);
+        fragment_content = findViewById(R.id.content);
+        home_LinearLayout = findViewById(R.id.home);
+        friend_LinearLayout = findViewById(R.id.friend);
+        activity_LinearLayout = findViewById(R.id.activity);
+        add_LinearLayout = findViewById(R.id.add);
+        my_LinearLayout = findViewById(R.id.my);
+        img_home = findViewById(R.id.img_home);
+        img_friend = findViewById(R.id.img_friend);
+        img_activity = findViewById(R.id.img_activity);
+        img_my = findViewById(R.id.img_my);
+        tv_home = findViewById(R.id.tv_home);
+        tv_friend = findViewById(R.id.tv_friend);
+        tv_activity = findViewById(R.id.tv_activity);
+        tv_my = findViewById(R.id.tv_my);
         whole_rl = findViewById(R.id.whole_rl);
 
         if (whole_rl.getForeground()!=null){
@@ -141,6 +146,33 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
+        SPSingleton spSingleton = SPSingleton.get(HomeActivity.this, "settingdata");
+        SettingData settingData = (SettingData)spSingleton.readObject(userVO.getId()+"", SettingData.class);
+
+        if(settingData != null){
+            if(settingData.getAutoPunchin() && !settingData.getToday()){
+                OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                        new OkHttpCallback(){
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson=new Gson();
+                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                if(serverResponse.getStatus() != 65) {
+                                    Looper.prepare();
+                                    Toast.makeText(HomeActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+
+
+                            }
+                        }
+                );
+            }
+        }
+
+
 
     }
 

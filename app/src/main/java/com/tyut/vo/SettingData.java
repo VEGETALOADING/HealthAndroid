@@ -6,9 +6,24 @@ public class SettingData implements Serializable {
 
     private Boolean autoPunchin = false;
     private Boolean reminedPunchin = false;
+    private Boolean today = false;
 
 
     public SettingData() {
+    }
+
+    public SettingData(Boolean autoPunchin, Boolean reminedPunchin, Boolean today) {
+        this.autoPunchin = autoPunchin;
+        this.reminedPunchin = reminedPunchin;
+        this.today = today;
+    }
+
+    public Boolean getToday() {
+        return today;
+    }
+
+    public void setToday(Boolean today) {
+        this.today = today;
     }
 
     public SettingData(Boolean autoPunchin, Boolean reminedPunchin) {

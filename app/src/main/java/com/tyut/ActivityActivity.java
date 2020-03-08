@@ -185,7 +185,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
     protected void onResume() {
         super.onResume();
         //获取用户信息
-        currentUserVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).getObject("user", UserVO.class);
+        currentUserVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         userId = getIntent().getIntExtra("userid", 0);
         if(currentUserVO.getUsername().equals(getIntent().getStringExtra("username")) || userId == currentUserVO.getId()){
             userVO = currentUserVO;
