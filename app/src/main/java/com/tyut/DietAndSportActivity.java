@@ -469,7 +469,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
         fatNeed.setText(nutritionVO.getFat()+"");
         hotNeed = nutritionVO.getHot();
         needHot_tv.setText(hotNeed+"");
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/hot/select.do?userId="+userVO.getId()+"&date="+ currentShowDate,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/hot/select.do?userId="+userVO.getId()+"&date="+ currentShowDate,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

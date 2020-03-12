@@ -161,7 +161,7 @@ public class WeightPopUpWindow implements View.OnClickListener {
                 break;
             case R.id.confirm_recordweight_tv:
                 if(ifUpdate) {
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/weight/add.do?userid=" + userId + "&weight=" + weight + "&createTime=" + date,
+                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/weight/add.do?userid=" + userId + "&weight=" + weight + "&createTime=" + date,
                             new OkHttpCallback() {
                                 @Override
                                 public void onFinish(String status, String msg) {

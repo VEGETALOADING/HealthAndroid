@@ -35,6 +35,8 @@ import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
+
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.ServerResponse;
@@ -50,6 +52,7 @@ import java.util.List;
 
 public class ActivityActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //点击查看大图待实现
     ScrollView whole_sv;
     RecyclerView mRecyclerView;
     ImageView userPic;
@@ -206,7 +209,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/search.do?username=" + userName,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/search.do?username=" + userName,
                         new OkHttpCallback() {
                             @Override
                             public void onFinish(String status, String msg) {
@@ -224,7 +227,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                         }
                 );
             } else {
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/search.do?id=" + userId,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/search.do?id=" + userId,
                         new OkHttpCallback() {
                             @Override
                             public void onFinish(String status, String msg) {
@@ -265,7 +268,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                 datePopUpWindow.setConfirm(new DatePUW.IOnConfirmListener() {
                     @Override
                     public void onConfirm(final DatePUW datePUW) {
-                        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId+"&createTime=" + datePUW.getDate(),
+                        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId+"&createTime=" + datePUW.getDate(),
                                 new OkHttpCallback(){
                                     @Override
                                     public void onFinish(String status, String msg) {
@@ -293,7 +296,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onReset(DatePUW datePUW) {
                         //重置查询所有
-                        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId,
+                        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId,
                                 new OkHttpCallback(){
                                     @Override
                                     public void onFinish(String status, String msg) {
@@ -368,7 +371,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                 });
                 break;
             case R.id.follow_tv:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/followornot.do?id=" + userId + "&followerid=" + currentUserVO.getId(),
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/followornot.do?id=" + userId + "&followerid=" + currentUserVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -407,7 +410,10 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
 
     private void initView(){
         userName.setText(userVO.getUsername());
-        Glide.with(ActivityActivity.this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
+        Glide.with(ActivityActivity.this)
+                .load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic())
+                .transform(new GlideRoundTransform(ActivityActivity.this, 25))
+                .into(userPic);
         mRecyclerView.setVisibility(View.VISIBLE);
         userNotExist_tv.setVisibility(View.GONE);
         search_tv.setOnClickListener(ActivityActivity.this);
@@ -415,7 +421,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
         follow_tv.setOnClickListener(ActivityActivity.this);
         following_ll.setOnClickListener(ActivityActivity.this);
         follower_ll.setOnClickListener(ActivityActivity.this);
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/ifFollow.do?id="+userId+"&followerid="+currentUserVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/ifFollow.do?id="+userId+"&followerid="+currentUserVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -433,7 +439,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
         );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&userid=" + userId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -450,7 +456,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                 }
         );
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowercount.do?id=" + userId,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/findfollowercount.do?id=" + userId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -467,7 +473,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
         );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowingcount.do?followerid=" + userId,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/findfollowingcount.do?followerid=" + userId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -484,7 +490,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                     }
                 }
         );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findactivitycount.do?userid=" + userId,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/findactivitycount.do?userid=" + userId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -502,7 +508,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                 }
         );
         userName.setText(userVO.getUsername());
-        Glide.with(ActivityActivity.this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
+        Glide.with(ActivityActivity.this).load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic()).into(userPic);
 
     }
 }

@@ -274,7 +274,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                 String weight = weight_tv.getText().toString();
                 int goal = JudgeUtil.getGoalData(goal_tv.getText().toString());
 
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/update.do?gender="+gender+"&height="+height+"&weight="+weight+"&id="+userVO.getId()+"&goal="+goal,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/update.do?gender="+gender+"&height="+height+"&weight="+weight+"&id="+userVO.getId()+"&goal="+goal,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

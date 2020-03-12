@@ -42,6 +42,8 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.CommentVO;
 import com.tyut.vo.Emoji;
 import com.tyut.vo.FollowerVO;
@@ -122,7 +124,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                                 //添加"Yes"按钮
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                     OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId()+"&category=0",
+                                     OkHttpUtils.get("http://"+mContext.getString(R.string.url)+":8080/portal/comment/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId()+"&category=0",
                                              new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, final String msg) {
@@ -156,7 +158,10 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             });
             CommentVO vo = mList.get(position);
             holder.username_tv.setText(vo.getUserName());
-            Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + vo.getUserpic()).into(holder.userpic_iv);
+            Glide.with(mContext)
+                    .load("http://"+mContext.getString(R.string.url)+":8080/userpic/" + vo.getUserpic())
+                    .transform(new GlideRoundTransform(mContext, 25))
+                    .into(holder.userpic_iv);
             if(vo.getIfLike()){
                 holder.like_iv.setImageResource(R.mipmap.icon_like_selected);
                 holder.likeCount_tv.setTextColor(mContext.getResources().getColor(R.color.green_light));
@@ -233,7 +238,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             holder.like_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+mList.get(position).getId()+"&category=1",
+                    OkHttpUtils.get("http://"+mContext.getString(R.string.url)+":8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+mList.get(position).getId()+"&category=1",
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, final String msg) {

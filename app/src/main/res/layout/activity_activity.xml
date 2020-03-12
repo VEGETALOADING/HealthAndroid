@@ -3,6 +3,7 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:foreground="@drawable/dim"
     tools:foreground=""
     android:id="@+id/whole_sv">
@@ -46,6 +47,7 @@
                 android:layout_marginTop="10dp">
 
                 <ImageView
+
                     android:id="@+id/userpic_activity"
                     android:layout_width="40dp"
                     android:layout_height="40dp"

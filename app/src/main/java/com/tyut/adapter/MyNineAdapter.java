@@ -44,7 +44,7 @@ public class MyNineAdapter extends NinePhotoViewAdapter<MyNineAdapter.MyHolder> 
     public void displayView(final MyHolder holder, final int position) {
         Glide
                 .with(mContext)
-                .load("http://192.168.1.9:8080/activitypic/" + mList.get(position))
+                .load("http://"+mContext.getString(R.string.url)+":8080/activitypic/" + mList.get(position))
                 .placeholder(R.mipmap.my_unselected)
                 .into(holder.mImageView);
 

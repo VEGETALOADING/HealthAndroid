@@ -84,7 +84,7 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
         //查数据
         UserVO userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollower.do?id=" + userVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/findfollower.do?id=" + userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

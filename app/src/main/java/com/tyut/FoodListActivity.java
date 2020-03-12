@@ -249,7 +249,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
 
 
         //查数据
-        OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid=0",
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid=0",
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -289,7 +289,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                 favorite_food.setTextColor(v.getResources().getColor(R.color.black));
                 common_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 diy_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
-                OkHttpUtils.get("http://192.168.1.9:8080//portal//favorite/find.do?userid="+userid+"&category=0",
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal//favorite/find.do?userid="+userid+"&category=0",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -316,7 +316,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                 favorite_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 diy_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 common_food.setTextColor(v.getResources().getColor(R.color.black));
-                OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid=0",
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid=0",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -343,7 +343,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                 favorite_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                 diy_food.setTextColor(v.getResources().getColor(R.color.black));
                 common_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
-                OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid="+userid,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid="+userid,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -383,7 +383,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                     favorite_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     diy_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     common_food.setTextColor(v.getResources().getColor(R.color.black));
-                    OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid=0",
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid=0",
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -408,7 +408,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                     favorite_food.setTextColor(v.getResources().getColor(R.color.black));
                     common_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     diy_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
-                    OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid="+userid,
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid="+userid,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -433,7 +433,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                     favorite_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     common_food.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     diy_food.setTextColor(v.getResources().getColor(R.color.black));
-                    OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid="+userid,
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid="+userid,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -466,7 +466,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }*/
-                    OkHttpUtils.post("http://192.168.1.9:8080//portal/myfood/addbatch.do/",list_json,
+                    OkHttpUtils.post("http://"+getString(R.string.url)+":8080//portal/myfood/addbatch.do/",list_json,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -509,7 +509,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                 inputMethodManager.hideSoftInputFromWindow(search_et.getWindowToken(), 0); //隐藏
 
                 String name = String.valueOf(search_et.getText());
-                OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?userid=0&name="+name,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?userid=0&name="+name,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

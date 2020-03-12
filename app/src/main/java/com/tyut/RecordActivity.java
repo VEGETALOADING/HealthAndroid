@@ -26,7 +26,9 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.view.MyProgressView;
+
 import com.tyut.vo.FollowerVO;
 import com.tyut.vo.GirthVO;
 import com.tyut.vo.HotVO;
@@ -120,13 +122,16 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
         super.onResume();
         //初始化页面
         UserVO userVO = (UserVO) SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
-        Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userPic);
+        Glide.with(this)
+                .load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic())
+                .transform(new GlideRoundTransform(this, 25))
+                .into(userPic);
         userName.setText(userVO.getUsername());
         latestWeight .setText(userVO.getWeight());
         needHot = StringUtil.getNutritionData(userVO).getHot();
 
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/girth/select.do?userid="+userVO.getId()+"&type=0",
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/girth/select.do?userid="+userVO.getId()+"&type=0",
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -153,7 +158,7 @@ public class RecordActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 }
         );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/hot/select.do?userId="+userVO.getId()+"&date="+StringUtil.getCurrentDate("yyyy-MM-dd"),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/hot/select.do?userId="+userVO.getId()+"&date="+StringUtil.getCurrentDate("yyyy-MM-dd"),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

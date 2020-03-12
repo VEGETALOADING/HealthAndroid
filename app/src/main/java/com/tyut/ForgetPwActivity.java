@@ -64,7 +64,7 @@ public class ForgetPwActivity extends AppCompatActivity implements View.OnClickL
 
             switch (msg.what){
                 case 0:
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -129,7 +129,7 @@ public class ForgetPwActivity extends AppCompatActivity implements View.OnClickL
                 }else{
                     generateValcode = ValcodeUtil.generateValcode();
 
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/user/isbound.do?phone="+phone_et.getText().toString(),
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/isbound.do?phone="+phone_et.getText().toString(),
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -160,7 +160,7 @@ public class ForgetPwActivity extends AppCompatActivity implements View.OnClickL
                 }else if(valcode_et.getText().toString().length() == 0){
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
                 }else{
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/user/resetpw.do?phone="
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/resetpw.do?phone="
                                     +phone_et.getText().toString()
                                     +"&password="+ MD5Utils.getMD5Code(newPw_et.getText().toString())
                                     +"&valcode="+valcode_et.getText().toString(),

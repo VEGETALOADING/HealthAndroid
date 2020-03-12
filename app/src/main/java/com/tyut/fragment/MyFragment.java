@@ -31,7 +31,7 @@ import com.tyut.UpdateUserInfoActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
@@ -116,10 +116,13 @@ public class MyFragment extends Fragment implements View.OnClickListener {
 
 
             user_name.setText(userVO.getUsername());
-            Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(user_photo);
+            Glide.with(this)
+                    .load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic())
+                    .transform(new GlideRoundTransform(getContext(), 50))
+                    .into(user_photo);
 
 
-            OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowercount.do?id=" + userVO.getId(),
+            OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/findfollowercount.do?id=" + userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -136,7 +139,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         }
                     }
             );
-            OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findfollowingcount.do?followerid=" + userVO.getId(),
+            OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/follow/findfollowingcount.do?followerid=" + userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -153,7 +156,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                         }
                     }
             );
-            OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findactivitycount.do?userid=" + userVO.getId(),
+            OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/findactivitycount.do?userid=" + userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -178,7 +181,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.logout_btn:
                 //退出登录
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/logout.do",
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/logout.do",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -192,7 +195,6 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                                     //Activity跳转(要在Toast之前？？？？)
 
                                     getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-
                                     getActivity().finish();
                                 }
                                 Looper.prepare();

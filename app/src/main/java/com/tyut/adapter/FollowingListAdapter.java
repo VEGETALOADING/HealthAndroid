@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tyut.R;
+
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.FollowerVO;
 import com.tyut.vo.Topic;
 
@@ -44,7 +46,10 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
         if(followerList != null) {
             if (followerList.size() > position) {
                 holder.username_tv.setText(followerList.get(position).getUsername());
-                Glide.with(mContext).load("http://192.168.1.9:8080/userpic/" + followerList.get(position).getUserpic()).into(holder.userpic_iv);
+                Glide.with(mContext)
+                        .load("http://"+mContext.getString(R.string.url)+":8080/userpic/" + followerList.get(position).getUserpic())
+                        .transform(new GlideRoundTransform(mContext, 25))
+                        .into(holder.userpic_iv);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -57,7 +62,7 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
         }else {
             if (topicList.size() > position) {
                 holder.username_tv.setText(topicList.get(position).getName());
-                Glide.with(mContext).load("http://192.168.1.9:8080/topicpic/" + (topicList.get(position).getPic() == null ? "default.jpg" : topicList.get(position).getPic())).into(holder.userpic_iv);
+                Glide.with(mContext).load("http://"+mContext.getString(R.string.url)+":8080/topicpic/" + ((topicList.get(position).getPic() == null || "".equals(topicList.get(position).getPic())) ? "default.jpg" : topicList.get(position).getPic())).into(holder.userpic_iv);
 
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override

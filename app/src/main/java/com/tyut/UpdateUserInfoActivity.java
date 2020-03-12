@@ -28,6 +28,7 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.GirthVO;
 import com.tyut.vo.HotVO;
 import com.tyut.vo.ServerResponse;
@@ -63,7 +64,10 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
 
             switch (msg.what){
                 case 0:
-                    Glide.with(UpdateUserInfoActivity.this).load("http://192.168.1.9:8080/userpic/" + (String) msg.obj).into(user_pic);
+                    Glide.with(UpdateUserInfoActivity.this)
+                            .load("http://"+getString(R.string.url)+":8080/userpic/" + (String) msg.obj)
+                            .transform(new GlideRoundTransform(UpdateUserInfoActivity.this, 25))
+                            .into(user_pic);
 
                     break;
 
@@ -140,7 +144,10 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
             }else{
                 phone_status.setText("已验证");
             }
-            Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(user_pic);
+            Glide.with(this)
+                    .load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic())
+                    .transform(new GlideRoundTransform(this, 25))
+                    .into(user_pic);
 
         }
     }
@@ -192,7 +199,7 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
                 File file = ViewUtil.bitmap2File(bm, tempFile);
                 Map<String, String> userId = new HashMap<>();
                 userId.put("id",  SPSingleton.get(UpdateUserInfoActivity.this, SPSingleton.USERINFO).readInt("userid")+"");
-                OkHttpUtils.upload("http://192.168.1.9:8080/portal/user/uploadpic.do", file.getAbsolutePath(), userId, new OkHttpCallback(){
+                OkHttpUtils.upload("http://"+getString(R.string.url)+":8080/portal/user/uploadpic.do", file.getAbsolutePath(), userId, new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
                         Gson gson = new Gson();

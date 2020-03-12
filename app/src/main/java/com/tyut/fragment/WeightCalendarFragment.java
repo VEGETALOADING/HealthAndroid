@@ -54,6 +54,8 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                     showDialog(date);
 
                 }else {
+
+                    //上一个月也不能记录待实现
                     Toast.makeText(getActivity(), "不能记录未来的日期", Toast.LENGTH_SHORT).show();
                 }
 
@@ -96,7 +98,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                     createTime = date;
                 }
                 String weight = dialog.getWeight();
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/weight/add.do?userid=" + userVO.getId() + "&weight=" + weight + "&createTime=" + createTime,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/weight/add.do?userid=" + userVO.getId() + "&weight=" + weight + "&createTime=" + createTime,
                         new OkHttpCallback() {
                             @Override
                             public void onFinish(String status, String msg) {

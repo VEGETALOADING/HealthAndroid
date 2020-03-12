@@ -57,6 +57,7 @@ import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.CommentVO;
 import com.tyut.vo.Emoji;
@@ -117,7 +118,13 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                             final View view = mInflater.inflate(R.layout.item_hottopic,
                                     topicList_ll, false);
                             final TextView topicName_tv = view.findViewById(R.id.topicname_tv);
+                            final ImageView topicPic_iv = view.findViewById(R.id.topicPic_iv);
                             topicName_tv.setText(topic.getName());
+                            Glide.with(getActivity())
+                                    .load("http://"+getString(R.string.url)+":8080/topicpic/"
+                                            + ( (topic.getPic() == null || topic.getPic().equals("")) ? "default.jpg" : topic.getPic()))
+                                    .transform(new GlideRoundTransform(getActivity(), 25))
+                                    .into(topicPic_iv);
                             topicName_tv.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -133,8 +140,9 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                     final View view = mInflater.inflate(R.layout.item_hottopic,
                             topicList_ll, false);
                     final TextView topicName_tv = view.findViewById(R.id.topicname_tv);
+                    final ImageView topicPic_iv = view.findViewById(R.id.topicPic_iv);
+                    topicPic_iv.setBackground(getResources().getDrawable(R.drawable.btn_green));
                     topicName_tv.setText("更多");
-                    topicName_tv.setBackground(getActivity().getDrawable(R.drawable.btn_green));
 
                     topicName_tv.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -204,7 +212,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         userVO = (UserVO)  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
         mInflater = LayoutInflater.from(getActivity());
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/topic/find.do",
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/topic/find.do?type=1",
                 new OkHttpCallback() {
                     @Override
                     public void onFinish(String status, String msg) {
@@ -231,7 +239,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                     }
                 }
         );
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/friend.do?currentUserId="+userVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/friend.do?currentUserId="+userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

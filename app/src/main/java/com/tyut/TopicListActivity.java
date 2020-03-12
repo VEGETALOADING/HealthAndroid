@@ -133,7 +133,7 @@ public class TopicListActivity extends AppCompatActivity implements View.OnClick
                     currentType = 0;
                     hotTopic_tv.setTextColor(v.getResources().getColor(R.color.nav_text_default));
                     myTopic_tv.setTextColor(v.getResources().getColor(R.color.black));
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/findtopic.do?category=2&userid=" + userVO.getId(),
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/like/findtopic.do?category=2&userid=" + userVO.getId(),
                             new OkHttpCallback() {
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -160,7 +160,7 @@ public class TopicListActivity extends AppCompatActivity implements View.OnClick
         }
     }
     private void findHotTopic(){
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/topic/find.do?type=1",
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/topic/find.do?type=1",
                 new OkHttpCallback() {
                     @Override
                     public void onFinish(String status, String msg) {

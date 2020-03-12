@@ -38,6 +38,8 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.view.NinePhotoView;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.Emoji;
@@ -203,7 +205,10 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
 
 
 
-            Glide.with(context).load("http://192.168.1.9:8080/userpic/" + mList.get(position).getUserpic()).into(holder.userPic_iv);
+            Glide.with(context)
+                    .load("http://"+context.getString(R.string.url)+":8080/userpic/" + mList.get(position).getUserpic())
+                    .transform(new GlideRoundTransform(context, 25))
+                    .into(holder.userPic_iv);
 
             try {
                 holder.shareTime_tv.setText(StringUtil.convertSharetime(mList.get(position).getCreateTime()));
@@ -252,7 +257,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 @Override
                 public void onClick(View v) {
 
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/favorite/addorcancel.do?userid="+userVO.getId()+"&category=1&objectid="+mList.get(position).getId(),
+                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/favorite/addorcancel.do?userid="+userVO.getId()+"&category=1&objectid="+mList.get(position).getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, final String msg) {
@@ -314,7 +319,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                 @Override
                 public void onClick(View v) {
 
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+mList.get(position).getId()+"&category=0",
+                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+mList.get(position).getId()+"&category=0",
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, final String msg) {
@@ -377,7 +382,7 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                             .setDelete(new DeleteActivityPUW.IDeleteListener() {
                                 @Override
                                 public void onDelete(DeleteActivityPUW puw) {
-                                    OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId(),
+                                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/activity/delete.do?userid="+userVO.getId()+"&id="+mList.get(position).getId(),
                                             new OkHttpCallback(){
                                                 @Override
                                                 public void onFinish(String status, final String msg) {

@@ -97,7 +97,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                     topic = ((List<Topic>) msg.obj).get(0);
                     mention_tv.setOnClickListener(TopicActivity.this);
 
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/like/find.do?objectid="
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/like/find.do?objectid="
                                     +topic.getId()+
                                     "&userid=" + currentUserVO.getId() +
                                     "&category=2",
@@ -119,7 +119,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                             }
                     );
 
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&content=" + temp,
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="+currentUserVO.getId()+"&content=" + temp,
                             new OkHttpCallback() {
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -194,7 +194,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/topic/find.do?name="+temp,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/topic/find.do?name="+temp,
                 new OkHttpCallback() {
                     @Override
                     public void onFinish(String status, String msg) {
@@ -238,7 +238,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.mentionTopic_tv:
 
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+currentUserVO.getId()+"&objectid="+topic.getId()+"&category=2",
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/like/addorcancel.do?userid="+currentUserVO.getId()+"&objectid="+topic.getId()+"&category=2",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, final String msg) {

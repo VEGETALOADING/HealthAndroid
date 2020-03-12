@@ -43,7 +43,7 @@ public class RecordSportListAdapter extends RecyclerView.Adapter<RecordSportList
             holder.recordHot_tv.setText(mList.get(position).getCal()+"");
             holder.recordQuantity_tv.setText(mList.get(position).getTime()+"");
             holder.recordUnit_tv.setText(mList.get(position).getUnit());
-            Glide.with(mContext).load("http://192.168.1.9:8080/sportpic/" + mList.get(position).getPic()).into(holder.recordPic_iv);
+            Glide.with(mContext).load("http://"+mContext.getString(R.string.url)+":8080/sportpic/" + mList.get(position).getPic()).into(holder.recordPic_iv);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -159,7 +159,7 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
     protected void onResume() {
         super.onResume();
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/select.do?&userid="+userVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/punchin/select.do?&userid="+userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -389,7 +389,7 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
 
         switch (v.getId()){
             case R.id.punchin_btn:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+dateChosen,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+dateChosen,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

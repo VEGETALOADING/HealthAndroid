@@ -305,7 +305,7 @@ public class SearchThreePUW implements View.OnClickListener, TextView.OnEditorAc
         }
         switch (type){
             case 1:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?content="+name+"&currentUserId="+userVO.getId(),
+                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?content="+name+"&currentUserId="+userVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -333,7 +333,7 @@ public class SearchThreePUW implements View.OnClickListener, TextView.OnEditorAc
                 );
                 break;
             case 2:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/topic/fuzzy.do?name="+name,
+                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/topic/fuzzy.do?name="+name,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -360,7 +360,7 @@ public class SearchThreePUW implements View.OnClickListener, TextView.OnEditorAc
                 );
                 break;
             case 3:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/fuzzy.do?userName="+name+"&currentUserId="+userVO.getId(),
+                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/user/fuzzy.do?userName="+name+"&currentUserId="+userVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

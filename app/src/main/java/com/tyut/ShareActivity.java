@@ -213,7 +213,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
             content_et.setText(getIntent().getStringExtra("topicname")+" ");
             content_et.setSelection((getIntent().getStringExtra("topicname")+" ").length());
         }
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/friend/find.do?id=" + userVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/friend/find.do?id=" + userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -293,7 +293,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.topic_rl:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/findtopic.do?userid=" + userVO.getId(),
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/findtopic.do?userid=" + userVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -363,7 +363,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 map.put("content", content);
                 map.put("createTime", createTime);
                 map.put("userid", userVO.getId()+"");
-                OkHttpUtils.uploadMultipy("http://192.168.1.9:8080/portal/activity/share.do", "pic", photos,  map, new OkHttpCallback() {
+                OkHttpUtils.uploadMultipy("http://"+getString(R.string.url)+":8080/portal/activity/share.do", "pic", photos,  map, new OkHttpCallback() {
                     @Override
                     public void onFinish(String status, String msg) {
 

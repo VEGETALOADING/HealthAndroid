@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tyut.R;
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.FoodVO;
 
 import java.util.List;
@@ -43,7 +44,10 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListAdapter.Linear
             holder.foodcalories_tv.setText(mList.get(position).getCalories()+"");
             holder.foodquantity_tv.setText(mList.get(position).getQuantity()+"");
             holder.foodunit_tv.setText(mList.get(position).getUnit());
-            Glide.with(mContext).load("http://192.168.1.9:8080/foodpic/" + mList.get(position).getPic()).into(holder.food_pic);
+            Glide.with(mContext)
+                    .load("http://"+mContext.getString(R.string.url)+":8080/foodpic/" + mList.get(position).getPic())
+                    .transform(new GlideRoundTransform(mContext, 25))
+                    .into(holder.food_pic);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

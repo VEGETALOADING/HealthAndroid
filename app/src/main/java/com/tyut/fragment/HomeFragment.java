@@ -2,6 +2,7 @@ package com.tyut.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -42,6 +43,8 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.FoodVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
@@ -208,8 +211,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             //获取用户信息
             UserVO userVO = (UserVO) SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
 
+            //体重身高空数据报错待实现（注册填入数据）
             username.setText(userVO.getUsername());
-            Glide.with(this).load("http://192.168.1.9:8080/userpic/" + userVO.getUserpic()).into(userpic);
+            Glide.with(this)
+                    .load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic())
+                    .transform(new GlideRoundTransform(getContext(), 25))
+                    .into(userpic);
             weight.setText(Double.parseDouble(userVO.getWeight())+"");
 
             float BMI = StringUtil.getBMI(userVO.getWeight(), userVO.getHeight());
@@ -344,7 +351,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             case R.id.confirm_searchfoodpop:
                 if(changeConfirmTv()){
                     mPop.dismiss();
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/food/condition.do?name="+ search.getText().toString() +"&order="+condition2+"&orderby="+condition1,
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/food/condition.do?name="+ search.getText().toString() +"&order="+condition2+"&orderby="+condition1,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -407,7 +414,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                 inputMethodManager.hideSoftInputFromWindow(search.getWindowToken(), 0); //隐藏
 
                 String name = String.valueOf(search.getText());
-                OkHttpUtils.get("http://192.168.1.9:8080//portal/food/list.do?name="+name,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/food/list.do?name="+name,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

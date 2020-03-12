@@ -135,7 +135,7 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
                 UserVO userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
                 String content = String.valueOf(search_et.getText());
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="
+                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="
                                 +userVO.getId()
                                 +"&userid="+userVO.getId()
                                 +"&content=" + content,

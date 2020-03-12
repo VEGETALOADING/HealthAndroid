@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
   <LinearLayout
@@ -68,8 +69,9 @@
 
           <ImageView
               android:id="@+id/userpic_home"
-              android:layout_width="30dp"
-              android:layout_height="30dp"
+              android:layout_width="40dp"
+
+              android:layout_height="40dp"
               android:layout_gravity="center_vertical"
               android:layout_marginLeft="10dp"
               android:src="@drawable/ic_launcher_background"></ImageView>
@@ -212,7 +214,7 @@
 
         <LinearLayout
             android:id="@+id/schema_ll"
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp">
@@ -230,7 +232,7 @@
               android:layout_width="10dp"
               android:layout_height="10dp"
               android:layout_gravity="center"
-              android:layout_marginLeft="220dp"
+              android:layout_marginLeft="240dp"
               android:src="@mipmap/right"></ImageView>
         </LinearLayout>
 

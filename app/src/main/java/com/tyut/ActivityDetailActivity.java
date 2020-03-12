@@ -50,6 +50,8 @@ import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.SoftKeyBoardListener;
 import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
+
+import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.CommentVO;
@@ -238,7 +240,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                         .setDelete(new ReplyPUW.IDeleteListener() {
                                             @Override
                                             public void onDelete(ReplyPUW puw) {
-                                                OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/delete.do?id="+reply.getId()+"&userid="+userVO.getId()+"&category=1",
+                                                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/comment/delete.do?id="+reply.getId()+"&userid="+userVO.getId()+"&category=1",
                                                         new OkHttpCallback(){
                                                             @Override
                                                             public void onFinish(String status, final String msg) {
@@ -295,7 +297,10 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                 case 2 :
                     activityVO = ((List<ActivityVO>)msg.obj).get(0);
 
-                    Glide.with(ActivityDetailActivity.this).load("http://192.168.1.9:8080/userpic/" + activityVO.getUserpic()).into(userPic_iv);
+                    Glide.with(ActivityDetailActivity.this)
+                            .load("http://"+getString(R.string.url)+":8080/userpic/" + activityVO.getUserpic())
+                            .transform(new GlideRoundTransform(ActivityDetailActivity.this, 25))
+                            .into(userPic_iv);
                     userName_tv.setText(activityVO.getUsername());
                     try {
                         shareTime_tv.setText(StringUtil.convertSharetime(activityVO.getCreateTime()));
@@ -433,7 +438,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         //Toast.makeText(this, "onResume", Toast.LENGTH_SHORT).show();
         userVO = (UserVO) SPSingleton.get(ActivityDetailActivity.this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         activityId = (Integer) getIntent().getIntExtra("activityid", 0);
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/find.do?currentUserId="+userVO.getId()+"&id=" + activityId,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="+userVO.getId()+"&id=" + activityId,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -457,7 +462,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         );
 
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/find.do?objectid="+activityId+"&category=0&currentUserId="+userVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/comment/find.do?objectid="+activityId+"&category=0&currentUserId="+userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -474,7 +479,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                 }
         );
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/friend/find.do?id=" + userVO.getId(),
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/friend/find.do?id=" + userVO.getId(),
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {
@@ -505,7 +510,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                         .setDelete(new DeleteActivityPUW.IDeleteListener() {
                             @Override
                             public void onDelete(DeleteActivityPUW puw) {
-                                OkHttpUtils.get("http://192.168.1.9:8080/portal/activity/delete.do?userid="+userVO.getId()+"&id="+activityVO.getId(),
+                                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/delete.do?userid="+userVO.getId()+"&id="+activityVO.getId(),
                                         new OkHttpCallback(){
                                             @Override
                                             public void onFinish(String status, final String msg) {
@@ -563,7 +568,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                 this.finish();
                 break;
             case R.id.like_ll_detail:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+activityVO.getId()+"&category=0",
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/like/addorcancel.do?userid="+userVO.getId()+"&objectid="+activityVO.getId()+"&category=0",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, final String msg) {
@@ -614,7 +619,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                 );
                 break;
             case R.id.favorite_ll_detail:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/favorite/addorcancel.do?userid="+userVO.getId()+"&category=1&objectid="+activityVO.getId(),
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/favorite/addorcancel.do?userid="+userVO.getId()+"&category=1&objectid="+activityVO.getId(),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, final String msg) {
@@ -717,7 +722,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/comment/add.do?userid="
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/comment/add.do?userid="
                                 + userVO.getId()
                                 +"&objectid="+objectId
                                 +"&content="+content

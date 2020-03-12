@@ -107,7 +107,7 @@ public class WeightCurveFragment extends Fragment {
 
         Integer userid =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/weight/list.do?userid="+userid,
+        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/weight/list.do?userid="+userid,
                 new OkHttpCallback(){
                     @Override
                     public void onFinish(String status, String msg) {

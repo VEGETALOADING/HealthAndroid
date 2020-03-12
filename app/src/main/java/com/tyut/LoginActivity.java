@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             switch (msg.what){
                 case 0:
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/select.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/punchin/select.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
         if(userVO != null){
-            OkHttpUtils.get("http://192.168.1.9:8080/portal/user/autologin.do?userid="+userVO.getId(),
+            OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/autologin.do?userid="+userVO.getId(),
                     new OkHttpCallback(){
                         @Override
                         public void onFinish(String status, String msg) {
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }else{
                     generateValcode = ValcodeUtil.generateValcode();
-                    OkHttpUtils.get("http://192.168.1.9:8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
+                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = MD5Utils.getMD5Code(pw_et.getText().toString());
 
                 //请求接口 -> okHttp在子线程中执行
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/login.do?username="+username+"&password="+password,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/login.do?username="+username+"&password="+password,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -284,6 +284,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     util.putString("user", gson.toJson(serverResponse.getData()));
                                     util.putInt("userid", serverResponse.getData().getId());
 
+                                    userVO = serverResponse.getData();
+
                                     Message message = new Message();
                                     message.what= INITPUNCHIN;
                                     mHandler.sendMessage(message);
@@ -305,7 +307,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         });
                 break;
             case R.id.loginByValcode_btn:
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/user/login.do?phone="
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/login.do?phone="
                                 +phone_et.getText().toString()
                                 +"&valcode="+valcode_et.getText().toString(),
                         new OkHttpCallback(){
@@ -324,6 +326,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     util.putBoolean("isLogin", true);
                                     util.putString("user", gson.toJson(serverResponse.getData()));
                                     util.putInt("userid", serverResponse.getData().getId());
+
+                                    userVO = serverResponse.getData();
 
                                     Message message = new Message();
                                     message.what= INITPUNCHIN;

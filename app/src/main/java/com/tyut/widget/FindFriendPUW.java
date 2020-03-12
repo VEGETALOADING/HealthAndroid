@@ -151,7 +151,7 @@ public class FindFriendPUW implements View.OnClickListener {
                 }
                 String list_json = gson.toJson(list);
 
-                OkHttpUtils.post("http://192.168.1.9:8080/portal/follow/addbatch.do/",list_json,
+                OkHttpUtils.post("http://"+context.getString(R.string.url)+":8080/portal/follow/addbatch.do/",list_json,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -189,7 +189,7 @@ public class FindFriendPUW implements View.OnClickListener {
     private void initRecycleView(){
         userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
-        OkHttpUtils.get("http://192.168.1.9:8080/portal/follow/findnewfriend.do?currentUserId=" + userVO.getId(),
+        OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/follow/findnewfriend.do?currentUserId=" + userVO.getId(),
                 new OkHttpCallback() {
                     @Override
                     public void onFinish(String status, String msg) {

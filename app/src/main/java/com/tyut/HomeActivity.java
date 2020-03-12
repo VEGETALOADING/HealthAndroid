@@ -151,7 +151,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         if(settingData != null){
             if(settingData.getAutoPunchin() && !settingData.getToday()){
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -315,7 +315,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.punchin_ll:
                 mPop.dismiss();
-                OkHttpUtils.get("http://192.168.1.9:8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/punchin/add.do?userid="+userVO.getId()+"&createtime="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
