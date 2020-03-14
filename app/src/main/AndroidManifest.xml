@@ -26,6 +26,7 @@
         <activity android:name=".FoodListActivity"></activity>
         <activity android:name=".ActivityActivity"></activity>
         <activity android:name=".TopicListActivity"></activity>
+        <activity android:name=".view.ninegrid.preview.ImagePreviewActivity"></activity>
         <activity android:name=".MainActivity">
 
         </activity>
@@ -40,6 +41,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".BigPicActivity">
+
         </activity>
 
         <activity android:name=".ForgetPwActivity">

@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.adapter.CommentListAdapter;
+import com.tyut.adapter.MyNineAdapter;
 import com.tyut.fragment.FaceFragment;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
@@ -52,6 +53,7 @@ import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
 
 import com.tyut.view.GlideRoundTransform;
+import com.tyut.view.NinePhotoView;
 import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.CommentVO;
@@ -68,6 +70,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -92,6 +95,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
     LinearLayout like_ll;
     LinearLayout comment_ll;
     LinearLayout favorite_ll;
+    NinePhotoView ninePhotoView;
 
     LinearLayout commentAc_ll;
     EditText commentAc_et;
@@ -140,6 +144,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         like_ll = findViewById(R.id.like_ll_detail);
         comment_ll = findViewById(R.id.comment_ll_detail);
         favorite_ll = findViewById(R.id.favorite_ll_detail);
+        ninePhotoView = findViewById(R.id.nine_photo);
 
         commentAc_ll = findViewById(R.id.edittext_commentAc_ll);
         face_commentAc_iv = findViewById(R.id.face_commentAc_iv);
@@ -301,6 +306,13 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                             .load("http://"+getString(R.string.url)+":8080/userpic/" + activityVO.getUserpic())
                             .transform(new GlideRoundTransform(ActivityDetailActivity.this, 25))
                             .into(userPic_iv);
+
+                    if(activityVO.getPic() != null && !"".equals(activityVO.getPic())) {
+                        String picStr = activityVO.getPic();
+                        List<String> picList = Arrays.asList(picStr.split("/"));
+                        MyNineAdapter adapter = new MyNineAdapter(ActivityDetailActivity.this, picList);
+                        ninePhotoView.setAdapter(adapter);
+                    }
                     userName_tv.setText(activityVO.getUsername());
                     try {
                         shareTime_tv.setText(StringUtil.convertSharetime(activityVO.getCreateTime()));

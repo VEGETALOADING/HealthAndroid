@@ -52,7 +52,7 @@ import java.util.List;
 
 public class ActivityActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //点击查看大图待实现
+    //大图不支持缩放待实现
     ScrollView whole_sv;
     RecyclerView mRecyclerView;
     ImageView userPic;

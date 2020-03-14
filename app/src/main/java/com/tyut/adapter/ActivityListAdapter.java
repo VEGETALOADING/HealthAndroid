@@ -57,12 +57,7 @@ import java.util.Set;
 
 import static com.tyut.utils.EmojiUtil.decodeSampledBitmapFromResource;
 
-/**
- * Created by Idtk on 2017/3/9.
- * Blog : http://www.idtkm.com
- * GitHub : https://github.com/Idtk
- * 描述 :
- */
+
 
 public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapter.RVHolder> {
 

@@ -1,6 +1,10 @@
 package com.tyut.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +12,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.tyut.BigPicActivity;
 import com.tyut.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * Created by Idtk on 2017/3/9.
- * Blog : http://www.idtkm.com
- * GitHub : https://github.com/Idtk
- * 描述 :
- */
 
 public class MyNineAdapter extends NinePhotoViewAdapter<MyNineAdapter.MyHolder> {
 
@@ -51,7 +50,16 @@ public class MyNineAdapter extends NinePhotoViewAdapter<MyNineAdapter.MyHolder> 
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, position+"", Toast.LENGTH_SHORT).show();
+                ArrayList<String> arrayList = new ArrayList<>();
+                for (String s : mList) {
+                    arrayList.add(s);
+                }
+
+                Intent intent = new Intent(mContext, BigPicActivity.class);
+                intent.putStringArrayListExtra("picList", arrayList);
+                intent.putExtra("defaultposition", position);
+                mContext.startActivity(intent);
+                ((Activity) mContext).overridePendingTransition(R.anim.activityshow, R.anim.activityhidden);
             }
         });
     }
