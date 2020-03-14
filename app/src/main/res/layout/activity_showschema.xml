@@ -56,6 +56,7 @@
         android:orientation="vertical"
         android:background="@drawable/btn_white">
         <TextView
+             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="基本信息"
@@ -140,11 +141,13 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginTop="10dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@mipmap/test_icon"
                 android:layout_marginLeft="30dp"></ImageView>
             <TextView
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="评测结果"
@@ -179,12 +182,13 @@
         android:orientation="vertical"
         android:background="@drawable/btn_white">
         <TextView
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="均衡饮食"
             android:paddingLeft="30dp"
             android:gravity="left"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textColor="@color/black">
         </TextView>
         <TextView
@@ -211,13 +215,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left"
             android:paddingLeft="30dp"
             android:text="营养目标"
             android:textColor="@color/black"
-            android:textSize="25sp"></TextView>
+            android:textSize="20sp"></TextView>
 
         <LinearLayout
             android:layout_width="match_parent"

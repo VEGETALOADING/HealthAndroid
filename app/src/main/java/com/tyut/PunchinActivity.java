@@ -182,33 +182,6 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
         );
 
     }
-
-    /**
-     * 初始化对应功能的listener
-     *
-     * @return void
-     */
-    private void initToolbarClickListener() {
-        backToday.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickBackToDayBtn();
-            }
-        });
-        nextMonthBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                monthPager.setCurrentItem(monthPager.getCurrentPosition() + 1);
-            }
-        });
-        lastMonthBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                monthPager.setCurrentItem(monthPager.getCurrentPosition() - 1);
-            }
-        });
-    }
-
     private void initSettingData(){
         gson = new Gson();
         final SPSingleton settingDataSP = SPSingleton.get(PunchinActivity.this, "settingdata");
@@ -248,6 +221,31 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * 初始化对应功能的listener
+     *
+     * @return void
+     */
+    private void initToolbarClickListener() {
+        backToday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickBackToDayBtn();
+            }
+        });
+        nextMonthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                monthPager.setCurrentItem(monthPager.getCurrentPosition() + 1);
+            }
+        });
+        lastMonthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                monthPager.setCurrentItem(monthPager.getCurrentPosition() - 1);
+            }
+        });
+    }
 
     /**
      * 初始化currentDate

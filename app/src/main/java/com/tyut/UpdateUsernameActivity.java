@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
@@ -64,14 +65,14 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
                 UserVO userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
                 String username = username_et.getText().toString();
-                OkHttpUtils.get("http://ChooseMentionAdapter4:8080/portal/user/update.do?id="+userVO.getId()+"&username="+username,
+                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/update.do?id="+userVO.getId()+"&username="+username,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
                                 super.onFinish(status, msg);
                                 //解析数据
                                 Gson gson=new Gson();
-                                ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
                                 if(serverResponse.getStatus() == 0){
                                     SPSingleton util =  SPSingleton.get(UpdateUsernameActivity.this,SPSingleton.USERINFO);
                                     util.delete("user");

@@ -16,13 +16,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.tyut.utils.MD5Utils;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
+import com.tyut.utils.StringUtil;
 import com.tyut.utils.ValcodeUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class UpdatePhoneActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -97,7 +102,10 @@ public class UpdatePhoneActivity extends AppCompatActivity implements View.OnCli
                                         Looper.loop();
 
                                     }else{
-                                        OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do?phone="+phoneNum+"&valcode="+generateValcode,
+
+                                        String jsonParam = StringUtil.param2Json("&phone="+phoneNum
+                                                +"&valcode"+generateValcode);
+                                        OkHttpUtils.post("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do", jsonParam,
                                                 new OkHttpCallback(){
                                                     @Override
                                                     public void onFinish(String status, String msg) {

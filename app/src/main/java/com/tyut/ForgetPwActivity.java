@@ -36,6 +36,8 @@ import com.tyut.vo.ActivityVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.UnsupportedEncodingException;
@@ -64,7 +66,10 @@ public class ForgetPwActivity extends AppCompatActivity implements View.OnClickL
 
             switch (msg.what){
                 case 0:
-                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
+                    String jsonParam = StringUtil.param2Json("phone"
+                            +phone_et.getText().toString()
+                            +"&valcode"+generateValcode);
+                    OkHttpUtils.post("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do", jsonParam,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -160,10 +165,12 @@ public class ForgetPwActivity extends AppCompatActivity implements View.OnClickL
                 }else if(valcode_et.getText().toString().length() == 0){
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
                 }else{
-                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/resetpw.do?phone="
-                                    +phone_et.getText().toString()
-                                    +"&password="+ MD5Utils.getMD5Code(newPw_et.getText().toString())
-                                    +"&valcode="+valcode_et.getText().toString(),
+
+                    String jsonParam = StringUtil.param2Json(
+                            "passwprd="+MD5Utils.getMD5Code(newPw_et.getText().toString())
+                            +"&phone="+phone_et.getText().toString()
+                            +"&valcode"+generateValcode);
+                    OkHttpUtils.post("http://"+getString(R.string.url)+":8080/portal/user/resetpw.do",jsonParam,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {

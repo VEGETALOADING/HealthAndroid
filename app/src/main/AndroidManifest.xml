@@ -46,6 +46,10 @@
 
         </activity>
 
+        <activity android:name=".RegisterActivity">
+
+        </activity>
+
         <activity android:name=".PunchinActivity">
 
         </activity>
@@ -70,6 +74,7 @@
         <activity android:name=".UpdateUserInfoActivity" />
         <activity android:name=".UpdateUsernameActivity" />
         <activity android:name=".UpdatePhoneActivity" />
+        <activity android:name=".GuideActivity" />
         <activity android:name=".UpdateUserDataActivity" />
         <activity android:name=".TestActivity" >
 

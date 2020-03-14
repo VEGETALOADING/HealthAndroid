@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+
+  <TextView
+      android:id="@+id/tv1"
+      android:layout_centerHorizontal="true"
+      android:layout_marginTop="50dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="您的性别是？"
+      android:textColor="@color/black"
+      android:textSize="20sp"
+      android:gravity="center">
+  </TextView>
+  <TextView
+      android:id="@+id/tv2"
+      android:layout_centerHorizontal="true"
+      android:layout_below="@+id/tv1"
+      android:layout_marginTop="10dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="男女对食物热量需求不一样，请正确填写"></TextView>
+
+  <LinearLayout
+      android:id="@+id/ll3"
+      android:layout_below="@+id/tv2"
+      android:layout_centerHorizontal="true"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+    <RelativeLayout
+        android:layout_marginLeft="50dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+      <ImageView
+          android:id="@+id/boy_iv"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          android:layout_centerInParent="true"
+          android:src="@mipmap/pic_boy_selected">
+      </ImageView>
+      <TextView
+          android:layout_marginTop="30dp"
+          android:id="@+id/boy_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="男生"
+          android:textColor="@color/green_light"
+          android:textSize="18sp"
+          android:layout_centerHorizontal="true"
+          android:layout_below="@+id/boy_iv"></TextView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginRight="50dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+      <ImageView
+          android:id="@+id/girl_iv"
+          android:layout_width="80dp"
+          android:layout_height="80dp"
+          android:layout_centerInParent="true"
+          android:src="@mipmap/pic_girl_unselected">
+      </ImageView>
+      <TextView
+          android:layout_marginTop="30dp"
+          android:id="@+id/girl_tv"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="女生"
+          android:textColor="@color/line_grey"
+          android:textSize="18sp"
+          android:layout_centerHorizontal="true"
+          android:layout_below="@+id/girl_iv"></TextView>
+    </RelativeLayout>
+  </LinearLayout>
+  <TextView
+      android:layout_centerHorizontal="true"
+      android:id="@+id/tv4"
+      android:layout_below="@+id/ll3"
+      android:layout_marginVertical="40dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="您的身高是？"
+      android:textColor="@color/black"
+      android:textSize="20sp"
+      android:gravity="center">
+  </TextView>
+  <RelativeLayout
+      android:id="@+id/rl5"
+      android:layout_below="@+id/tv4"
+      android:layout_width="match_parent"
+      android:layout_height="150dp"
+      android:layout_gravity="center"
+      android:background="#fff"
+      android:gravity="center">
+
+    <TextView
+        android:id="@+id/height_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:gravity="bottom"
+        android:text="185.0"
+        android:textColor="@color/green_light"
+        android:textSize="25sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/height_tv"
+        android:gravity="bottom"
+        android:text="厘米"
+        android:textColor="@color/green_light"
+        android:textSize="15sp"></TextView>
+
+
+    <com.tyut.view.MyHorizontalScrollView
+        android:id="@+id/height_sv"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:layout_marginTop="56dp"
+        android:scrollbars="none">
+
+      <com.tyut.view.HeightRulerView
+          android:id="@+id/height_rv"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="top"
+          android:background="#ffffff" />
+
+
+    </com.tyut.view.MyHorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignBottom="@id/height_sv"
+        android:layout_centerHorizontal="true"
+        android:background="@color/black" />
+
+    <View
+        android:id="@+id/topline"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:background="@color/black" />
+
+    <View
+        android:id="@+id/triangle"
+        android:layout_width="30px"
+        android:layout_height="30px"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/topline"
+        android:background="@drawable/shape_triangle" />
+  </RelativeLayout>
+  <Button
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="50dp"
+      android:id="@+id/nextStep_btn"
+      android:layout_width="300dp"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:textColor="@color/white"
+      android:text="下一步"
+      android:background="@drawable/btn_green_light"></Button>
+
+</RelativeLayout>

@@ -38,6 +38,9 @@ import com.tyut.vo.ServerResponse;
 import com.tyut.vo.SettingData;
 import com.tyut.vo.UserVO;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -224,7 +227,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Toast.makeText(this, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }else{
                     generateValcode = ValcodeUtil.generateValcode();
-                    OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do?phone="+phone_et.getText().toString()+"&valcode="+generateValcode,
+
+                    String jsonParam = StringUtil.param2Json("phone"
+                            +phone_et.getText().toString()
+                            +"&valcode"+generateValcode);
+                    OkHttpUtils.post("http://"+getString(R.string.url)+":8080/portal/user/sendvalcode.do", jsonParam,
                             new OkHttpCallback(){
                                 @Override
                                 public void onFinish(String status, String msg) {
@@ -257,7 +264,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String password = MD5Utils.getMD5Code(pw_et.getText().toString());
 
                 //请求接口 -> okHttp在子线程中执行
-                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/login.do?username="+username+"&password="+password,
+                String jsonParam = StringUtil.param2Json(
+                        "username="+username
+                        +"&password="+password);
+                OkHttpUtils.post("http://"+getString(R.string.url)+":8080/portal/user/login.do",jsonParam,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -307,9 +317,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         });
                 break;
             case R.id.loginByValcode_btn:
-                OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/user/login.do?phone="
-                                +phone_et.getText().toString()
-                                +"&valcode="+valcode_et.getText().toString(),
+
+                jsonParam = StringUtil.param2Json(
+                        "phone="+phone_et.getText().toString()
+                        +"&valcode="+generateValcode);
+                OkHttpUtils.post("http://"+getString(R.string.url)+":8080/portal/user/login.do",
+                                jsonParam,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {
@@ -340,6 +353,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
+                                    //...按钮待实现
+
+                                }else if(serverResponse.getStatus() == 15){
+                                    //新用户注册成功
+                                    SPSingleton util = SPSingleton.get(LoginActivity.this, SPSingleton.USERINFO);
+                                    util.delete("user");
+                                    util.delete("isLogin");
+                                    util.delete("userid");
+                                    util.putBoolean("isLogin", true);
+                                    util.putString("user", gson.toJson(serverResponse.getData()));
+                                    util.putInt("userid", serverResponse.getData().getId());
+                                    LoginActivity.this.startActivity(new Intent(LoginActivity.this, GuideActivity.class));
 
 
                                 }else{

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="360dp"
+    android:background="#ffffff"
+    android:layout_gravity="center_horizontal"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/top_ll"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:textColor="@color/black"
+            android:text="用户档案引导"
+            android:textSize="20sp"
+            android:textStyle="bold"></TextView>
+    </LinearLayout>
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="欢迎加入薄荷！"></TextView>
+    <TextView
+        android:layout_marginVertical="10dp"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="为给您提供专业的健康服务，薄荷已为您建立专属的健康档案。只需1-2分钟完善信息，薄荷即可为您推荐合适的健康方案。">
+    </TextView>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@mipmap/pic_guide"
+        android:layout_gravity="center_horizontal"></ImageView>
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_green"
+        android:text="开始填写"
+        android:textColor="@color/white"></Button>
+</LinearLayout>

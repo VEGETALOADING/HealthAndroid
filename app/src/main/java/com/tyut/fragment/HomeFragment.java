@@ -211,7 +211,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             //获取用户信息
             UserVO userVO = (UserVO) SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
 
-            //体重身高空数据报错待实现（注册填入数据）
             username.setText(userVO.getUsername());
             Glide.with(this)
                     .load("http://"+getString(R.string.url)+":8080/userpic/" + userVO.getUserpic())

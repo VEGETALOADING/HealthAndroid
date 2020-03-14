@@ -14,11 +14,10 @@
 
         <TextView
             android:id="@+id/recordweight_date_tv"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_gravity="center"
+            android:layout_marginLeft="160dp"
             android:text="今天"
-            android:layout_marginLeft="105dp"
             android:textSize="20sp"
             android:gravity="center"
             android:textColor="@color/black"></TextView>
@@ -27,7 +26,7 @@
             android:id="@+id/weight_dl_close"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="75dp"
+            android:layout_marginLeft="125dp"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_close"></ImageView>
     </LinearLayout>
@@ -53,7 +52,7 @@
                 android:textColor="@color/green_light"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginLeft="155dp"></TextView>
+                android:layout_marginLeft="145dp"></TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
