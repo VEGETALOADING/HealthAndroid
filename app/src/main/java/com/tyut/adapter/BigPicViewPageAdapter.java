@@ -18,7 +18,11 @@ public class BigPicViewPageAdapter extends PagerAdapter {
      private List<View> viewList;
      private Context context;
      private CloseActivity closeActivity;
+     private SavePicInterface savePicInterface;
 
+    public void setSavePicInterface(SavePicInterface savePicInterface) {
+        this.savePicInterface = savePicInterface;
+    }
 
     public BigPicViewPageAdapter(final Context context, final List<View> viewList, final CloseActivity closeActivity) {
         this.viewList = viewList;
@@ -28,7 +32,9 @@ public class BigPicViewPageAdapter extends PagerAdapter {
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(context, "长按保存"+viewList.indexOf(view)+"图片待实现", Toast.LENGTH_SHORT).show();
+                    if(savePicInterface != null){
+                        savePicInterface.savePic();
+                    }
                     return true;
                 }
             });
@@ -71,5 +77,8 @@ public class BigPicViewPageAdapter extends PagerAdapter {
 
     public interface CloseActivity{
         void close();
+    }
+    public interface SavePicInterface{
+        void savePic();
     }
 }

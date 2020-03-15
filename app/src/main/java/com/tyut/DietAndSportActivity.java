@@ -159,8 +159,6 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
-
-                                        Toast.makeText(DietAndSportActivity.this, "onconfirm", Toast.LENGTH_SHORT).show();
                                         onResume();
 
                                     }
@@ -191,7 +189,6 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
-                                        Toast.makeText(DietAndSportActivity.this, "onconfirm", Toast.LENGTH_SHORT).show();
 
                                         onResume();
 
@@ -222,8 +219,6 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                                 }).setConfirm(new FoodPopUpWindow.IOnConfirmListener() {
                                     @Override
                                     public void onConfirm(FoodPopUpWindow dialog) {
-                                        Toast.makeText(DietAndSportActivity.this, "onconfirm", Toast.LENGTH_SHORT).show();
-
                                         onResume();
                                     }
                                 }).showFoodPopWindow();
@@ -361,11 +356,11 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
             case R.id.return_k:
 
                 Intent intent5 = null;
-                if(getIntent().getStringExtra("src").equals("HOMEACTIVITY")){
+                if(("HOMEACTIVITY").equals(getIntent().getStringExtra("src")) || getIntent().getStringExtra("src") == null){
                     intent5 = new Intent(DietAndSportActivity.this, HomeActivity.class);
                     intent5.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
 
-                }else if(getIntent().getStringExtra("src").equals("RECORDACTIVITY")){
+                }else if(("RECORDACTIVITY").equals(getIntent().getStringExtra("src"))){
                     intent5 = new Intent(DietAndSportActivity.this, RecordActivity.class);
                 }
 

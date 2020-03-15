@@ -327,7 +327,6 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
         }).setConfirm(new GirthPopUpWindow.IOnConfirmListener() {
             @Override
             public void onConfirm(GirthPopUpWindow dialog) {
-                //Toast.makeText(getActivity(), "onconfirm", Toast.LENGTH_SHORT).show();
                 onResume();
             }
         }).showFoodPopWindow();

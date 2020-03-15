@@ -393,7 +393,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/food_ranking"
+            android:id="@+id/sportAndTraining_rl"
             android:layout_width="180dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
@@ -401,12 +401,12 @@
             android:background="@drawable/btn_grey">
 
           <TextView
-              android:id="@+id/title_fr"
+              android:id="@+id/title_st"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:layout_marginLeft="15dp"
               android:layout_marginTop="15dp"
-              android:text="食物排行榜"
+              android:text="运动训练"
               android:textColor="@color/black"
               android:textSize="15sp"></TextView>
 
@@ -414,16 +414,16 @@
               android:id="@+id/tv_3"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_below="@+id/title_fr"
+              android:layout_below="@+id/title_st"
               android:layout_marginLeft="15dp"
               android:layout_marginTop="4dp"
-              android:text="低卡高纤帮你挑 "
+              android:text="精品训练推荐 "
               android:textSize="10sp"></TextView>
 
           <ImageView
               android:layout_width="60dp"
               android:layout_height="60dp"
-              android:layout_marginLeft="30dp"
+              android:layout_marginLeft="40dp"
               android:layout_marginTop="30dp"
               android:layout_toRightOf="@+id/tv_3"
               android:src="@mipmap/icon_rank"></ImageView>

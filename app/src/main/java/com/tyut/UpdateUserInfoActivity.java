@@ -235,11 +235,13 @@ public class UpdateUserInfoActivity extends AppCompatActivity implements View.On
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         //裁剪框的比例：1：1
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", 10);
+        intent.putExtra("aspectY", 10);
         //裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", 200);
-        intent.putExtra("outputY", 200);
+        intent.putExtra("outputX", 500);
+        intent.putExtra("outputY", 500);
+        intent.putExtra("scale", true);//去除黑边
+        intent.putExtra("scaleUpIfNeeded", true);//去除黑边
 
         intent.putExtra("outputFormat", "JPEG");//图片格式
         intent.putExtra("noFaceDetection", true);//取消人脸识别

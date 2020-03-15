@@ -90,6 +90,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
     private LinearLayout takePhoto_ll;
     private TextView commit_tv;
     private TextView cancelShare_tv;
+    private TextView photoCount_tv;
 
     private LinearLayout photoList_ll;
     private List<Integer> photoList;
@@ -147,7 +148,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
         seeable_checkBox = findViewById(R.id.mycheckbox);
         camera_iv = findViewById(R.id.camera_iv);
         badgeBound = findViewById(R.id.badgeBound);
-
+        photoCount_tv = findViewById(R.id.photoCount_tv);
         mention_rl = findViewById(R.id.mention_rl);
         topic_rl = findViewById(R.id.topic_rl);
         face_rl = findViewById(R.id.face_rl);
@@ -569,6 +570,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                 photos.add(file.getAbsolutePath());
 
                 badge.setBadgeNumber(badge.getBadgeNumber() + 1);
+                photoCount_tv.setText((Integer.parseInt(photoCount_tv.getText().toString()) + 1) + "");
 
                 final View view = mInflater.inflate(R.layout.item_sharephoto,
                         photoList_ll, false);
@@ -580,6 +582,7 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
                     public void onClick(View v) {
                         photoList_ll.removeView(view);
                         badge.setBadgeNumber(badge.getBadgeNumber() - 1);
+                        photoCount_tv.setText((Integer.parseInt(photoCount_tv.getText().toString()) - 1) + "");
                         photos.remove(file.getAbsolutePath());
                     }
                 });
@@ -640,17 +643,20 @@ public class ShareActivity extends AppCompatActivity implements View.OnClickList
 
     private void crop(Uri uri){
 
+        //删除动态要删除电脑上的图片文件
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         //裁剪框的比例：1：1
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
+        intent.putExtra("aspectX", 10);
+        intent.putExtra("aspectY", 10);
         //裁剪后输出图片的尺寸大小
-        intent.putExtra("outputX", 200);
-        intent.putExtra("outputY", 200);
+        intent.putExtra("outputX", 500);
+        intent.putExtra("outputY", 500);
+        intent.putExtra("scale", true);//去除黑边
+        intent.putExtra("scaleUpIfNeeded", true);//去除黑边
 
         intent.putExtra("outputFormat", "JPEG");//图片格式
         intent.putExtra("noFaceDetection", true);//取消人脸识别

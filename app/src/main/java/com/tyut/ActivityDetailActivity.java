@@ -241,6 +241,8 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                             public void onReply(final Reply reply) {
                                 ViewUtil.changeAlpha(mHandler, 0);
                                 final ReplyPUW replyPUW = new ReplyPUW(ActivityDetailActivity.this, reply);
+                                objectId = reply.getId();
+                                category = 2;
                                 replyPUW
                                         .setDelete(new ReplyPUW.IDeleteListener() {
                                             @Override
@@ -274,8 +276,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                         }).setReplyListener(new ReplyPUW.IReplyListener() {
                                     @Override
                                     public void onReply(ReplyPUW puw) {
-                                        objectId = reply.getId();
-                                        category = 2;
+
                                         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                         if(imm.isActive()){
                                             imm.isActive();
@@ -287,7 +288,37 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                         commentAc_et.setFocusableInTouchMode(true);
                                         commentAc_et.requestFocus();
                                     }
-                                }).showFoodPopWindow();
+                                })
+                                        .setReportListener(new ReplyPUW.IReportListener() {
+                                            @Override
+                                            public void onReport(ReplyPUW puw) {
+                                                OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/report/select.do?userid="
+                                                                +userVO.getId()
+                                                                +"&objectid="+reply.getId()
+                                                                +"&category=1",
+                                                        new OkHttpCallback(){
+                                                            @Override
+                                                            public void onFinish(String status, String msg) {
+                                                                super.onFinish(status, msg);
+                                                                //解析数据
+                                                                Gson gson=new Gson();
+                                                                ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                                                if(serverResponse.getStatus() == 0){
+                                                                    Intent intent = new Intent(ActivityDetailActivity.this, ReportActivity.class);
+                                                                    intent.putExtra("category", 1);
+                                                                    intent.putExtra("objectid", reply.getId());
+                                                                    ActivityDetailActivity.this.startActivity(intent);
+                                                                }else{
+                                                                    Looper.prepare();
+                                                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                                    Looper.loop();
+                                                                }
+                                                            }
+                                                        }
+                                                );
+
+                                            }
+                                        }).showFoodPopWindow();
                                 replyPUW.getPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
                                     @Override
                                     public void onDismiss() {
@@ -549,7 +580,36 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                                         }
                                 );
                             }
-                        })
+                        }).setReport(new DeleteActivityPUW.IReportListener() {
+                    @Override
+                    public void onReport(DeleteActivityPUW deleteActivityPUW) {
+                        OkHttpUtils.get("http://"+getString(R.string.url)+":8080//portal/report/select.do?userid="
+                                        +userVO.getId()
+                                        +"&objectid="+activityVO.getId()
+                                        +"&category=0",
+                                new OkHttpCallback(){
+                                    @Override
+                                    public void onFinish(String status, String msg) {
+                                        super.onFinish(status, msg);
+                                        //解析数据
+                                        Gson gson=new Gson();
+                                        ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                        if(serverResponse.getStatus() == 0){
+                                            Intent intent = new Intent(ActivityDetailActivity.this, ReportActivity.class);
+                                            intent.putExtra("category", 0);
+                                            intent.putExtra("objectid", activityVO.getId());
+                                            ActivityDetailActivity.this.startActivity(intent);
+                                        }else{
+                                            Looper.prepare();
+                                            Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                            Looper.loop();
+                                        }
+                                    }
+                                }
+                        );
+
+                    }
+                })
                         /*.setTOP(new DeleteActivityPUW.ITopListener() {
                             @Override
                             public void onTop(DeleteActivityPUW deleteActivityPUW) {
@@ -562,12 +622,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
 
                             }
                         })
-                        .setRepot(new DeleteActivityPUW.IReportListener() {
-                            @Override
-                            public void onReport(DeleteActivityPUW deleteActivityPUW) {
-
-                            }
-                        })*/
+                        */
                         .showFoodPopWindow();
                 deleteActivityPUW.getPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override

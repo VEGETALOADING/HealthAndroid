@@ -15,6 +15,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+import com.tyut.utils.ViewUtil;
 import com.tyut.vo.FoodVO;
 import com.tyut.vo.Myfood;
 import com.tyut.vo.ServerResponse;
@@ -62,6 +65,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
     private TextView not_found_tv;
     private View not_found_line;
     private LinearLayout not_found_ll;
+    private RelativeLayout whole_rl;
     private static final int FOODLISTACTIVITY = 0;
     private static final int FOODLIST = 1;
     private static final int SEARCHFOOD_NULL = 2;
@@ -84,6 +88,9 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
         public void handleMessage(@NonNull final Message msg) {
 
             switch (msg.what){
+                case 0:
+                    whole_rl.getForeground().setAlpha((int)msg.obj);
+                    break;
                 case 1:
 
                     final List<FoodVO> list = (List<FoodVO>) msg.obj;
@@ -93,7 +100,7 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onClick(final int position) {
                             FoodVO foodVO= list.get(position);
-
+                            ViewUtil.changeAlpha(mHandler, 0);
                             final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(foodVO, null, FoodListActivity.this);
                             foodPopUpWindow.setCreateTime(currentShowDate)
                                     .setTime(currentDietTime)
@@ -121,6 +128,12 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
                                     }
                                 }
                             }).showFoodPopWindow();
+                            foodPopUpWindow.getFoodPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                @Override
+                                public void onDismiss() {
+                                    ViewUtil.changeAlpha(mHandler, 1);
+                                }
+                            });
 
                         }
                     }));
@@ -205,7 +218,11 @@ public class FoodListActivity extends AppCompatActivity implements View.OnClickL
         not_found_ll = findViewById(R.id.not_found_ll);
         not_found_tv = findViewById(R.id.not_found_tv);
         addWhat_tv = findViewById(R.id.addwhat_tv);
+        whole_rl = findViewById(R.id.whole_rl);
 
+        if (whole_rl.getForeground()!=null){
+            whole_rl.getForeground().setAlpha(0);
+        }
         return_ll.setOnClickListener(this);
         common_food.setOnClickListener(this);
         favorite_food.setOnClickListener(this);

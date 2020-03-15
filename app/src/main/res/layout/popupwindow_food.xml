@@ -15,7 +15,7 @@
         <LinearLayout
             android:id="@+id/choosedate_ll"
             android:layout_marginLeft="100dp"
-            android:layout_width="250dp"
+            android:layout_width="220dp"
             android:layout_height="50dp"
             android:orientation="horizontal">
             <TextView
@@ -177,7 +177,7 @@
                 android:textColor="@color/green_light"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginLeft="165dp"></TextView>
+                android:layout_marginLeft="150dp"></TextView>
             <TextView
                 android:id="@+id/unit_infact_tv2"
                 android:layout_width="wrap_content"

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,6 +37,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.ActivityDetailActivity;
 import com.tyut.R;
+import com.tyut.ReportActivity;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -67,6 +69,12 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     private OnItemClickListener mListener;
     private OnUpdateListener updateListener;
     private OnReplyListener replyListener;
+    private OnReportListener reportListener;
+
+    public CommentListAdapter setReportListener(OnReportListener reportListener) {
+        this.reportListener = reportListener;
+        return this;
+    }
 
     public CommentListAdapter setReplyListener(OnReplyListener replyListener) {
         this.replyListener = replyListener;
@@ -112,8 +120,38 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
             if(userVO.getId() == mList.get(position).getUserid()){
                 holder.delete_iv.setVisibility(View.VISIBLE);
+                holder.report_iv.setVisibility(View.GONE);
             }else {
                 holder.delete_iv.setVisibility(View.GONE);
+                holder.report_iv.setVisibility(View.VISIBLE);
+                holder.report_iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        OkHttpUtils.get("http://"+mContext.getString(R.string.url)+":8080//portal/report/select.do?userid="
+                                        +userVO.getId()
+                                        +"&objectid="+mList.get(position).getId()
+                                        +"&category=1",                                                        new OkHttpCallback(){
+                                    @Override
+                                    public void onFinish(String status, String msg) {
+                                        super.onFinish(status, msg);
+                                        //解析数据
+                                        Gson gson=new Gson();
+                                        ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                        if(serverResponse.getStatus() == 0){
+                                            Intent intent = new Intent(mContext, ReportActivity.class);
+                                            intent.putExtra("category", 1);
+                                            intent.putExtra("objectid", mList.get(position).getId());
+                                            mContext.startActivity(intent);
+                                        }else{
+                                            Looper.prepare();
+                                            Toast.makeText(mContext, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                            Looper.loop();
+                                        }
+                                    }
+                                }
+                        );
+                    }
+                });
             }
             holder.delete_iv.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -300,6 +338,13 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             if(mList.get(position).getReplyList().size() > 3){
                 holder.replyCount_ll.setVisibility(View.VISIBLE);
                 holder.replyCount_tv.setText(mList.get(position).getReplyList().size()+"");
+                holder.replyCount_ll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //所有評論待实现
+                        Toast.makeText(mContext, "跳转所有评论", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }else{
                 holder.replyCount_ll.setVisibility(View.GONE);
             }
@@ -350,6 +395,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
         private TextView content_tv;
         private TextView likeCount_tv;
         private ImageView delete_iv;
+        private ImageView report_iv;
 
         private LinearLayout replyCount_ll;
         private TextView replyCount_tv;
@@ -367,6 +413,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
             replyCount_ll = itemView.findViewById(R.id.replycount_ll);
             replyCount_tv = itemView.findViewById(R.id.replycount_tv);
             replyRv = itemView.findViewById(R.id.reply_Rv);
+            report_iv = itemView.findViewById(R.id.report_comment_iv);
 
 
         }
@@ -381,6 +428,9 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
     }
     public interface OnReplyListener{
         void onReply(Reply reply);
+    }
+    public interface OnReportListener{
+        void onReport(Reply reply);
     }
 
 

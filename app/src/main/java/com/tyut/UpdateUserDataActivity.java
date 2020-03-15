@@ -295,6 +295,7 @@ public class UpdateUserDataActivity extends AppCompatActivity implements View.On
                                     util.putInt("userid", serverResponse.getData().getId());
 
                                     Intent intent = new Intent(UpdateUserDataActivity.this, ShowSchemaActivity.class);
+                                    intent.putExtra("homeFragment", 1);
                                     UpdateUserDataActivity.this.startActivity(intent);
 
 

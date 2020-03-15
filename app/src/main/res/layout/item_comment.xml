@@ -58,12 +58,13 @@
             <TextView
                 android:id="@+id/like_count_tv"
                 android:layout_centerVertical="true"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="X"></TextView>
             <ImageView
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:id="@+id/like_comment_iv"
                 android:layout_centerVertical="true"
                 android:layout_width="20dp"
@@ -76,6 +77,13 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@mipmap/icon_comment_unselected"></ImageView>
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/report_comment_iv"
+                android:layout_centerVertical="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/ic_report"></ImageView>
 
 
         </LinearLayout>

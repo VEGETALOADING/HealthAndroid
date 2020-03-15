@@ -29,14 +29,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.ActivityActivity;
 import com.tyut.ActivityDetailActivity;
-import com.tyut.FollowerListActivity;
 import com.tyut.R;
+import com.tyut.ReportActivity;
 import com.tyut.TopicActivity;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 
 import com.tyut.view.GlideRoundTransform;
@@ -47,7 +46,6 @@ import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.widget.DeleteActivityPUW;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -374,6 +372,35 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     }
                     final DeleteActivityPUW deleteActivityPUW = new DeleteActivityPUW(context, mList.get(position));
                     deleteActivityPUW
+                            .setReport(new DeleteActivityPUW.IReportListener() {
+                                @Override
+                                public void onReport(DeleteActivityPUW deleteActivityPUW) {
+
+                                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080//portal/report/select.do?userid="
+                                                    +userVO.getId()
+                                                    +"&objectid="+mList.get(position).getId()
+                                                    +"&category="+0,                                                        new OkHttpCallback(){
+                                                @Override
+                                                public void onFinish(String status, String msg) {
+                                                    super.onFinish(status, msg);
+                                                    //解析数据
+                                                    Gson gson=new Gson();
+                                                    ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                                    if(serverResponse.getStatus() == 0){
+                                                        Intent intent = new Intent(context, ReportActivity.class);
+                                                        intent.putExtra("category", 0);
+                                                        intent.putExtra("objectid", mList.get(position).getId());
+                                                        context.startActivity(intent);
+                                                    }else{
+                                                        Looper.prepare();
+                                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                        Looper.loop();
+                                                    }
+                                                }
+                                            }
+                                    );
+                                }
+                            })
                             .setDelete(new DeleteActivityPUW.IDeleteListener() {
                                 @Override
                                 public void onDelete(DeleteActivityPUW puw) {

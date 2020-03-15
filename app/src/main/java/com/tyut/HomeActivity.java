@@ -199,47 +199,15 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.home:
                 attachFragment(HOMEFRAGMENT_TAG);
-                img_home.setImageResource(R.mipmap.home_selected);
-                tv_home.setTextColor(Color.rgb(16,222,57));
-                img_friend.setImageResource(R.mipmap.friend_unselected);
-                tv_friend.setTextColor(Color.rgb(94,94,94));
-                img_activity.setImageResource(R.mipmap.activity_unselected);
-                tv_activity.setTextColor(Color.rgb(94,94,94));
-                img_my.setImageResource(R.mipmap.my_unselected);
-                tv_my.setTextColor(Color.rgb(94,94,94));
                 break;
             case R.id.friend:
                 attachFragment(FRIENDFRAGMENT_TAG);
-                img_home.setImageResource(R.mipmap.home_unselected);
-                tv_home.setTextColor(Color.rgb(94,94,94));
-                img_friend.setImageResource(R.mipmap.friend_selected);
-                tv_friend.setTextColor(Color.rgb(16,222,57));
-                img_activity.setImageResource(R.mipmap.activity_unselected);
-                tv_activity.setTextColor(Color.rgb(94,94,94));
-                img_my.setImageResource(R.mipmap.my_unselected);
-                tv_my.setTextColor(Color.rgb(94,94,94));
                 break;
             case R.id.activity:
                 attachFragment(ACTIVITYFRAGMENT_TAG);
-                img_home.setImageResource(R.mipmap.home_unselected);
-                tv_home.setTextColor(Color.rgb(94,94,94));
-                img_friend.setImageResource(R.mipmap.friend_unselected);
-                tv_friend.setTextColor(Color.rgb(94,94,94));
-                img_activity.setImageResource(R.mipmap.activity_selected);
-                tv_activity.setTextColor(Color.rgb(16,222,57));
-                img_my.setImageResource(R.mipmap.my_unselected);
-                tv_my.setTextColor(Color.rgb(94,94,94));
                 break;
             case R.id.my:
                 attachFragment(MYFRAGMENT_TAG);
-                img_home.setImageResource(R.mipmap.home_unselected);
-                tv_home.setTextColor(Color.rgb(94,94,94));
-                img_friend.setImageResource(R.mipmap.friend_unselected);
-                tv_friend.setTextColor(Color.rgb(94,94,94));
-                img_activity.setImageResource(R.mipmap.activity_unselected);
-                tv_activity.setTextColor(Color.rgb(94, 94, 94));
-                img_my.setImageResource(R.mipmap.my_selected);
-                tv_my.setTextColor(Color.rgb(16,222,57));
                 break;
             case R.id.add:
                 View view = getLayoutInflater().inflate(R.layout.popwindow_homeadd, null);
@@ -367,18 +335,50 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             if(fragmentTag.equals(HOMEFRAGMENT_TAG)){
                 fragment = new HomeFragment();
                 currentFragment = 0;
+                img_home.setImageResource(R.mipmap.home_selected);
+                tv_home.setTextColor(Color.rgb(16,222,57));
+                img_friend.setImageResource(R.mipmap.friend_unselected);
+                tv_friend.setTextColor(Color.rgb(94,94,94));
+                img_activity.setImageResource(R.mipmap.activity_unselected);
+                tv_activity.setTextColor(Color.rgb(94,94,94));
+                img_my.setImageResource(R.mipmap.my_unselected);
+                tv_my.setTextColor(Color.rgb(94,94,94));
 
             }else if(fragmentTag.equals(FRIENDFRAGMENT_TAG)){
                 fragment = new FriendFragment();
                 currentFragment = 2;
+                img_home.setImageResource(R.mipmap.home_unselected);
+                tv_home.setTextColor(Color.rgb(94,94,94));
+                img_friend.setImageResource(R.mipmap.friend_selected);
+                tv_friend.setTextColor(Color.rgb(16,222,57));
+                img_activity.setImageResource(R.mipmap.activity_unselected);
+                tv_activity.setTextColor(Color.rgb(94,94,94));
+                img_my.setImageResource(R.mipmap.my_unselected);
+                tv_my.setTextColor(Color.rgb(94,94,94));
             }
             else if(fragmentTag.equals(ACTIVITYFRAGMENT_TAG)){
                 fragment = new ActivityFragment();
                 currentFragment = 3;
+                img_home.setImageResource(R.mipmap.home_unselected);
+                tv_home.setTextColor(Color.rgb(94,94,94));
+                img_friend.setImageResource(R.mipmap.friend_unselected);
+                tv_friend.setTextColor(Color.rgb(94,94,94));
+                img_activity.setImageResource(R.mipmap.activity_selected);
+                tv_activity.setTextColor(Color.rgb(16,222,57));
+                img_my.setImageResource(R.mipmap.my_unselected);
+                tv_my.setTextColor(Color.rgb(94,94,94));
             }
             else if(fragmentTag.equals(MYFRAGMENT_TAG)){
                 fragment = new MyFragment();
                 currentFragment = 1;
+                img_home.setImageResource(R.mipmap.home_unselected);
+                tv_home.setTextColor(Color.rgb(94,94,94));
+                img_friend.setImageResource(R.mipmap.friend_unselected);
+                tv_friend.setTextColor(Color.rgb(94,94,94));
+                img_activity.setImageResource(R.mipmap.activity_unselected);
+                tv_activity.setTextColor(Color.rgb(94, 94, 94));
+                img_my.setImageResource(R.mipmap.my_selected);
+                tv_my.setTextColor(Color.rgb(16,222,57));
 
             }
             fragmentTransaction.add(fragment, fragmentTag);

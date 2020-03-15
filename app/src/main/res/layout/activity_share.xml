@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:text=" / 200"
+                    android:text=" / 2000"
                     android:gravity="right"></TextView>
 
 
@@ -244,6 +244,7 @@
                 </HorizontalScrollView>
 
                 <LinearLayout
+                    android:layout_marginTop="25dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -258,7 +259,7 @@
                         android:layout_width="wrap_content"
                         android:textSize="16sp"
                         android:layout_height="wrap_content"
-                        android:text="x"></TextView>
+                        android:text="0"></TextView>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

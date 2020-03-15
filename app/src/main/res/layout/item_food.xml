@@ -22,7 +22,7 @@
             android:textSize="20sp"></TextView>
         <TextView
             android:id="@+id/foodcalories_tv"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_below="@+id/foodname_tv"

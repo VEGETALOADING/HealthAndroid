@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="360dp"
+    android:layout_gravity="center"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/top_ll"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <LinearLayout
+            android:id="@+id/return_ll"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_return">
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="返回"
+                android:textColor="@color/black"></TextView>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="举报"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:paddingLeft="5dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="65dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"></TextView>
+
+        <TextView
+            android:id="@+id/confirm_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:text="确定"
+            android:textSize="20sp"
+            android:textColor="@color/green_light"
+            android:gravity="center"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+    <View
+        android:id="@+id/line"
+        android:layout_below="@id/top_ll"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_grey"></View>
+
+    <ScrollView
+        android:layout_below="@id/line"
+        android:id="@+id/reason_sv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请选择举报的理由"
+                android:layout_marginVertical="10dp"></TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/reasonRv_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"></androidx.recyclerview.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>

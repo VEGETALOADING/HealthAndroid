@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tyut.DietAndSportActivity;
 import com.tyut.FoodDetailActivity;
 import com.tyut.R;
 import com.tyut.RecordActivity;
@@ -86,6 +88,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     LinearLayout schema_ll;
     LinearLayout weight_ll;
     LinearLayout healthInfo_ll;
+    RelativeLayout diet_diary_rl;
+    RelativeLayout sportAndTraining_rl;
+    //运动训练视频待实现
+    //举报待实现
+    //分享待实现
 
 
     private static final int SEARCHFOOD_NULL = 0;
@@ -167,6 +174,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         defaultScrollView = view.findViewById(R.id.default_scrollview);
         schema_ll = view.findViewById(R.id.schema_ll);
         healthInfo_ll = view.findViewById(R.id.healthinfo);
+        diet_diary_rl = view.findViewById(R.id.diet_diary);
 
 
         blank_ll = view.findViewById(R.id.blank_ll);
@@ -179,6 +187,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         hot_food.setOnClickListener(this);
         schema_ll.setOnClickListener(this);
         weight_ll.setOnClickListener(this);
+        diet_diary_rl.setOnClickListener(this);
 
         search.setOnEditorActionListener(this);
         search.setOnTouchListener(new View.OnTouchListener() {
@@ -239,6 +248,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.diet_diary:
+                getActivity().startActivity(new Intent(getActivity(), DietAndSportActivity.class));
+                break;
             case R.id.cancelsearchfood_tv:
                 search.clearFocus();
                 InputMethodManager inputMethodManager =(InputMethodManager)getActivity()

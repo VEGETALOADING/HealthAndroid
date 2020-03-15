@@ -37,6 +37,7 @@ public class ReplyPUW implements View.OnClickListener {
 
     private ReplyPUW.IDeleteListener deleteListener;
     private ReplyPUW.IReplyListener replyListener;
+    private ReplyPUW.IReportListener reportListener;
 
 
     public PopupWindow getPopupWindow() {
@@ -47,6 +48,10 @@ public class ReplyPUW implements View.OnClickListener {
 
     public ReplyPUW setReplyListener(IReplyListener replyListener) {
         this.replyListener = replyListener;
+        return this;
+    }
+    public ReplyPUW setReportListener(IReportListener reportListener) {
+        this.reportListener = reportListener;
         return this;
     }
 
@@ -108,8 +113,11 @@ public class ReplyPUW implements View.OnClickListener {
                 popupWindow.dismiss();
                 break;
             case R.id.reportReply_tv:
+                if(reportListener != null){
+                    reportListener.onReport(this);
+                }
                 popupWindow.dismiss();
-                Toast.makeText(context, "举报", Toast.LENGTH_SHORT).show();
+
                 break;
 
         }
@@ -120,6 +128,9 @@ public class ReplyPUW implements View.OnClickListener {
     }
     public interface IReplyListener{
         void onReply(ReplyPUW puw);
+    }
+    public interface IReportListener{
+        void onReport(ReplyPUW puw);
     }
 
 

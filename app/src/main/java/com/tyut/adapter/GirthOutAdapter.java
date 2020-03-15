@@ -72,7 +72,6 @@ public class GirthOutAdapter extends RecyclerView.Adapter<GirthOutAdapter.Linear
                     }).setConfirm( new GirthPopUpWindow.IOnConfirmListener() {
                         @Override
                         public void onConfirm(GirthPopUpWindow dialog) {
-                            //Toast.makeText(getActivity(), "onconfirm", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(mContext, mContext.getClass());
                             intent.putExtra("src", 1);
                             mContext.startActivity(intent);
