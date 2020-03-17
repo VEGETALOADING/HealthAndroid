@@ -35,7 +35,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.tyut.ActivityActivity;
 import com.tyut.ActivityDetailActivity;
+import com.tyut.CommentDetailActivity;
 import com.tyut.R;
 import com.tyut.ReportActivity;
 import com.tyut.utils.EmojiUtil;
@@ -194,32 +196,40 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
                 }
             });
-            CommentVO vo = mList.get(position);
-            holder.username_tv.setText(vo.getUserName());
+            holder.username_tv.setText(mList.get(position).getUserName());
             Glide.with(mContext)
-                    .load("http://"+mContext.getString(R.string.url)+":8080/userpic/" + vo.getUserpic())
+                    .load("http://"+mContext.getString(R.string.url)+":8080/userpic/" + mList.get(position).getUserpic())
                     .transform(new GlideRoundTransform(mContext, 25))
                     .into(holder.userpic_iv);
-            if(vo.getIfLike()){
+
+            holder.userpic_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, ActivityActivity.class);
+                    intent.putExtra("username",mList.get(position).getUserName());
+                    mContext.startActivity(intent);
+                }
+            });
+            if(mList.get(position).getIfLike()){
                 holder.like_iv.setImageResource(R.mipmap.icon_like_selected);
                 holder.likeCount_tv.setTextColor(mContext.getResources().getColor(R.color.green_light));
             }else{
                 holder.like_iv.setImageResource(R.mipmap.icon_like_unselected);
                 holder.likeCount_tv.setTextColor(mContext.getResources().getColor(R.color.nav_text_default));
             }
-            if(vo.getLikeCount() == 0){
+            if(mList.get(position).getLikeCount() == 0){
                 holder.likeCount_tv.setVisibility(View.GONE);
 
             }else {
-                holder.likeCount_tv.setText(vo.getLikeCount()+"");
+                holder.likeCount_tv.setText(mList.get(position).getLikeCount()+"");
             }
             try {
-                holder.commentTime_tv.setText(StringUtil.convertSharetime(vo.getCreateTime()));
+                holder.commentTime_tv.setText(StringUtil.convertSharetime(mList.get(position).getCreateTime()));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             {
-                String str = vo.getContent();
+                String str = mList.get(position).getContent();
                 SpannableStringBuilder style = new SpannableStringBuilder(str);
                 Map<Integer, Integer> mentionMap = StringUtil.getMention(str);
                 Map<Integer, Integer> topicsMap = StringUtil.getTopics(str);
@@ -341,8 +351,9 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                 holder.replyCount_ll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //所有評論待实现
-                        Toast.makeText(mContext, "跳转所有评论", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(mContext, CommentDetailActivity.class);
+                        intent.putExtra("commentvo", mList.get(position));
+                        mContext.startActivity(intent);
                     }
                 });
             }else{
@@ -359,7 +370,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
                             replyListener.onReply(reply);
                         }
                     }
-                });
+                }, false);
 
                 holder.replyRv.setAdapter(replyListAdapter);
             }else{

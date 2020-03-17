@@ -27,11 +27,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tyut.ActivityActivity;
 import com.tyut.ActivityDetailActivity;
 import com.tyut.R;
 import com.tyut.ReportActivity;
 import com.tyut.TopicActivity;
+import com.tyut.UpdateUsernameActivity;
 import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -202,6 +204,15 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                     .load("http://"+context.getString(R.string.url)+":8080/userpic/" + mList.get(position).getUserpic())
                     .transform(new GlideRoundTransform(context, 25))
                     .into(holder.userPic_iv);
+
+            holder.userPic_iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ActivityActivity.class);
+                    intent.putExtra("username", mList.get(position).getUsername());
+                    context.startActivity(intent);
+                }
+            });
 
             try {
                 holder.shareTime_tv.setText(StringUtil.convertSharetime(mList.get(position).getCreateTime()));
@@ -435,16 +446,79 @@ public class ActivityListAdapter extends RecyclerView.Adapter<ActivityListAdapte
                                     );
                                 }
                             })
-                            /*.setTOP(new DeleteActivityPUW.ITopListener() {
+                            .setTOP(new DeleteActivityPUW.ITopListener() {
                                 @Override
                                 public void onTop(DeleteActivityPUW deleteActivityPUW) {
-
+                                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/user/update.do?id="+userVO.getId()+"&topacid="+mList.get(position).getId(),
+                                            new OkHttpCallback(){
+                                                @Override
+                                                public void onFinish(String status, final String msg) {
+                                                    super.onFinish(status, msg);
+                                                    //解析数据
+                                                    Gson gson=new Gson();
+                                                    ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
+                                                    if(serverResponse.getStatus() == 0){
+                                                        SPSingleton util =  SPSingleton.get(context,SPSingleton.USERINFO);
+                                                        util.delete("user");
+                                                        util.putString("user", gson.toJson(serverResponse.getData()));
+                                                        ((Activity)context).runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                Toast.makeText(context, "置顶成功", Toast.LENGTH_SHORT).show();
+                                                                if(updateListener != null){
+                                                                    updateListener.onUpdate(position);
+                                                                }
+                                                            }
+                                                        });
+                                                    }else{
+                                                        Looper.prepare();
+                                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                        Looper.loop();
+                                                    }
+                                                }
+                                            }
+                                    );
                                 }
                             })
+                            .setCancelTop(new DeleteActivityPUW.ICancelTopListener() {
+                                @Override
+                                public void onCancelTop(DeleteActivityPUW deleteActivityPUW) {
+                                    OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/user/update.do?id="+userVO.getId()+"&topacid=0",
+                                            new OkHttpCallback(){
+                                                @Override
+                                                public void onFinish(String status, final String msg) {
+                                                    super.onFinish(status, msg);
+                                                    //解析数据
+                                                    Gson gson=new Gson();
+                                                    ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
+                                                    if(serverResponse.getStatus() == 0){
+                                                        SPSingleton util =  SPSingleton.get(context,SPSingleton.USERINFO);
+                                                        util.delete("user");
+                                                        util.putString("user", gson.toJson(serverResponse.getData()));
+                                                        ((Activity)context).runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                Toast.makeText(context, "取消置顶成功", Toast.LENGTH_SHORT).show();
+                                                                if(updateListener != null){
+                                                                    updateListener.onUpdate(position);
+                                                                }
+                                                            }
+                                                        });
+                                                    }else{
+                                                        Looper.prepare();
+                                                        Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                        Looper.loop();
+                                                    }
+                                                }
+                                            }
+                                    );
+                                }
+                            })
+                            /*
                             .setShare(new DeleteActivityPUW.IShareListener() {
                                 @Override
                                 public void onShare(DeleteActivityPUW deleteActivityPUW) {
-
+分享待实现
                                 }
                             })*/
                             .showFoodPopWindow();

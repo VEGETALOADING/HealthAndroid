@@ -1,5 +1,6 @@
 package com.tyut;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,7 +55,6 @@ import com.tyut.utils.ViewUtil;
 
 import com.tyut.view.GlideRoundTransform;
 import com.tyut.view.NinePhotoView;
-import com.tyut.vo.Activity;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.CommentVO;
 import com.tyut.vo.Emoji;
@@ -174,6 +174,7 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
         commentAc_et.setOnClickListener(this);
         send_commentAc_tv.setOnClickListener(this);
         more_iv.setOnClickListener(this);
+        userPic_iv.setOnClickListener(this);
 
 
 
@@ -610,16 +611,75 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
 
                     }
                 })
-                        /*.setTOP(new DeleteActivityPUW.ITopListener() {
+                        .setTOP(new DeleteActivityPUW.ITopListener() {
                             @Override
                             public void onTop(DeleteActivityPUW deleteActivityPUW) {
-
+                                OkHttpUtils.get("http://"+ActivityDetailActivity.this.getString(R.string.url)+":8080/portal/user/update.do?id="+userVO.getId()+"&topacid="+activityId,
+                                        new OkHttpCallback(){
+                                            @Override
+                                            public void onFinish(String status, final String msg) {
+                                                super.onFinish(status, msg);
+                                                //解析数据
+                                                Gson gson=new Gson();
+                                                ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
+                                                if(serverResponse.getStatus() == 0){
+                                                    SPSingleton util =  SPSingleton.get(ActivityDetailActivity.this,SPSingleton.USERINFO);
+                                                    util.delete("user");
+                                                    util.putString("user", gson.toJson(serverResponse.getData()));
+                                                    (ActivityDetailActivity.this).runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(ActivityDetailActivity.this, "置顶成功", Toast.LENGTH_SHORT).show();
+                                                            onResume();
+                                                        }
+                                                    });
+                                                }else{
+                                                    Looper.prepare();
+                                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                    Looper.loop();
+                                                }
+                                            }
+                                        }
+                                );
                             }
                         })
+                        .setCancelTop(new DeleteActivityPUW.ICancelTopListener() {
+                            @Override
+                            public void onCancelTop(DeleteActivityPUW deleteActivityPUW) {
+                                OkHttpUtils.get("http://"+ActivityDetailActivity.this.getString(R.string.url)+":8080/portal/user/update.do?id="+userVO.getId()+"&topacid=0",
+                                        new OkHttpCallback(){
+                                            @Override
+                                            public void onFinish(String status, final String msg) {
+                                                super.onFinish(status, msg);
+                                                //解析数据
+                                                Gson gson=new Gson();
+                                                ServerResponse<UserVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<UserVO>>(){}.getType());
+                                                if(serverResponse.getStatus() == 0){
+                                                    SPSingleton util =  SPSingleton.get(ActivityDetailActivity.this,SPSingleton.USERINFO);
+                                                    util.delete("user");
+                                                    util.putString("user", gson.toJson(serverResponse.getData()));
+                                                    (ActivityDetailActivity.this).runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(ActivityDetailActivity.this, "取消置顶成功", Toast.LENGTH_SHORT).show();
+                                                            onResume();
+                                                        }
+                                                    });
+                                                }else{
+                                                    Looper.prepare();
+                                                    Toast.makeText(ActivityDetailActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                                    Looper.loop();
+                                                }
+                                            }
+                                        }
+                                );
+                            }
+                        })
+                        /*
                         .setShare(new DeleteActivityPUW.IShareListener() {
                             @Override
                             public void onShare(DeleteActivityPUW deleteActivityPUW) {
-
+分享待实现
                             }
                         })
                         */
@@ -820,6 +880,12 @@ public class ActivityDetailActivity extends AppCompatActivity implements View.On
                             }
                         }
                 );
+                break;
+            case R.id.userpic_activity:
+                Intent intent = new Intent(ActivityDetailActivity.this, ActivityActivity.class);
+                intent.putExtra("userid", activityVO.getUserid());
+                ActivityDetailActivity.this.startActivity(intent);
+                break;
 
         }
 

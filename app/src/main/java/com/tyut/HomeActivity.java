@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         userVO = (UserVO)  SPSingleton.get(this, SPSingleton.USERINFO).readObject("user", UserVO.class);
-        SPSingleton spSingleton = SPSingleton.get(HomeActivity.this, "settingdata");
+        SPSingleton spSingleton = SPSingleton.get(HomeActivity.this, SPSingleton.SETTINGDATA);
         SettingData settingData = (SettingData)spSingleton.readObject(userVO.getId()+"", SettingData.class);
 
         if(settingData != null){

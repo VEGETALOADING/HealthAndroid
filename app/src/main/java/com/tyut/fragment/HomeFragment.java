@@ -91,7 +91,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     RelativeLayout diet_diary_rl;
     RelativeLayout sportAndTraining_rl;
     //运动训练视频待实现
-    //举报待实现
     //分享待实现
 
 

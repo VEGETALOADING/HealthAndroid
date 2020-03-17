@@ -24,6 +24,9 @@
 
         </activity>
         <activity android:name=".FoodListActivity"></activity>
+        <activity android:name=".CommentDetailActivity"></activity>
+        <activity android:name=".UpdatePwActivity"></activity>
+        <activity android:name=".SettingActivity"></activity>
         <activity android:name=".ActivityActivity"></activity>
         <activity android:name=".ReportActivity">
 

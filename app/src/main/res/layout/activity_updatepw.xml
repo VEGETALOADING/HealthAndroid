@@ -6,12 +6,13 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:background="@color/white"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <LinearLayout
-            android:id="@+id/return_a"
+            android:id="@+id/return_ll"
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -34,48 +35,55 @@
             android:layout_width="0dp"
             android:layout_weight="6"
             android:layout_height="wrap_content"
-            android:text="昵称"
+            android:text="修改密码"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:layout_gravity="center_vertical"
             android:gravity="center"></TextView>
         <TextView
-            android:id="@+id/finish_tv"
+            android:id="@+id/confirm_tv"
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="center_vertical"
             android:textSize="20sp"
-            android:text="完成"
-            android:textColor="@color/nav_text_selected"></TextView>
+            android:text="确定"
+            android:textColor="@color/green_light"></TextView>
 
 
     </LinearLayout>
-
-
-
     <EditText
-        android:id="@+id/username_et"
+        android:id="@+id/oldPw_et"
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:layout_marginTop="50dp"
-        android:background="#DDDDDD"
-        android:hint="test"
+        android:background="@color/white"
+        android:hint="请输入旧密码"
         android:textColor="@color/black"></EditText>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_grey"></View>
+    <EditText
+        android:id="@+id/newPw_et"
+        android:password="true"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:background="@color/white"
+        android:hint="请输入新密码"
+        android:textColor="@color/black"></EditText>
     <TextView
-        android:layout_width="210dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:text="只允许中文、英文字母、数字、下划线 长度最少2 最大25"
+        android:text="密码至少包含 数字和英文，长度6-20"
         android:textSize="15sp"
         android:textColor="#999999"></TextView>
-
-
 
 </LinearLayout>

@@ -26,6 +26,7 @@ import com.tyut.FollowerListActivity;
 import com.tyut.FollowingListActivity;
 import com.tyut.LoginActivity;
 import com.tyut.R;
+import com.tyut.SettingActivity;
 import com.tyut.UpdateUserDataActivity;
 import com.tyut.UpdateUserInfoActivity;
 import com.tyut.utils.OkHttpCallback;
@@ -49,7 +50,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     RelativeLayout userinfo_rl;
     RelativeLayout menu1_1;
     RelativeLayout menu1_2;
-
+    ImageView setting_iv;
     private UserVO userVO;
     private static final int FOLLOWERCOUNT = 0;
     private static final int FOLLOWINGCOUNT = 1;
@@ -91,6 +92,9 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         userinfo_rl = view.findViewById(R.id.userinfo_rl);
         menu1_1 = view.findViewById(R.id.menu1_1);
         menu1_2 = view.findViewById(R.id.menu1_2);
+        setting_iv = view.findViewById(R.id.setting_iv);
+
+        setting_iv.setOnClickListener(this);
         logout_btn.setOnClickListener(this);
         follower_ll.setOnClickListener(this);
         following_ll.setOnClickListener(this);
@@ -225,15 +229,16 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 getActivity().startActivity(intent);
                 break;
             case R.id.userinfo_rl:
-                Intent intent1 = new Intent(getActivity(), UpdateUserInfoActivity.class);
-                getActivity().startActivity(intent1);
+                getActivity().startActivity(new Intent(getActivity(), UpdateUserInfoActivity.class));
                 break;
             case R.id.menu1_1:
-                Intent intent2 = new Intent(getActivity(), UpdateUserDataActivity.class);
-                getActivity().startActivity(intent2);
+                getActivity().startActivity(new Intent(getActivity(), UpdateUserDataActivity.class));
                 break;
             case R.id.menu1_2:
-
+                //更多饮食方案待实现
+                break;
+            case R.id.setting_iv:
+                getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
 
 

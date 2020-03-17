@@ -27,7 +27,7 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="20sp"
                 android:text="返回"
-                android:textColor="@color/nav_text_selected"></TextView>
+                android:textColor="@color/black"></TextView>
         </LinearLayout>
         <TextView
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/isBound_tv"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="25dp"
         android:layout_gravity="center"
         android:gravity="left"
@@ -64,7 +64,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/phone_tv"
-            android:layout_width="380dp"
+            android:layout_width="320dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:gravity="left"
@@ -75,7 +75,7 @@
         <Button
             android:layout_marginTop="50dp"
             android:id="@+id/change_btn"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:text="更换手机号"
@@ -86,6 +86,7 @@
 
 
     <LinearLayout
+        android:visibility="visible"
         android:id="@+id/notBound_ll"
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -96,13 +97,13 @@
         <EditText
             android:id="@+id/phoneNum_et"
             android:layout_gravity="center"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="40dp"
             android:background="#ffffff"
             android:hint="请输入手机号"
             android:textColor="@color/black"></EditText>
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="40dp"
             android:layout_gravity="center">
             <EditText
@@ -126,7 +127,7 @@
 
         <Button
             android:id="@+id/bount_btn"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="25dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"

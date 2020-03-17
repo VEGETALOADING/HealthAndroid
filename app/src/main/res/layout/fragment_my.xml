@@ -46,7 +46,14 @@
               android:src="@mipmap/update"></ImageView>
       </RelativeLayout>
 
-
+      <ImageView
+          android:id="@+id/setting_iv"
+          android:layout_width="20dp"
+          android:layout_height="20dp"
+          android:layout_alignParentRight="true"
+          android:layout_marginTop="10dp"
+          android:layout_marginRight="43dp"
+          android:src="@mipmap/ic_setting"></ImageView>
       <ImageView
           android:id="@+id/user_message"
           android:layout_width="20dp"

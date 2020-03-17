@@ -86,7 +86,7 @@ public class UpdateUsernameActivity extends AppCompatActivity implements View.On
 
                                 }else{
                                     Looper.prepare();
-                                    Toast.makeText(UpdateUsernameActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UpdateUsernameActivity.this, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
 

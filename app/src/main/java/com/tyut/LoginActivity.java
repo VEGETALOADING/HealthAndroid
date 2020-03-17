@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Gson gson=new Gson();
                                     ServerResponse<PunchinVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<PunchinVO>>(){}.getType());
                                     if(serverResponse.getStatus() == 0) {
-                                        SPSingleton spSingleton = SPSingleton.get(LoginActivity.this, "settingdata");
+                                        SPSingleton spSingleton = SPSingleton.get(LoginActivity.this, SPSingleton.SETTINGDATA);
                                         SettingData settingData = (SettingData)spSingleton.readObject(userVO.getId()+"", SettingData.class);
 
                                         if(serverResponse.getData().getPunchinList().size() == 0){

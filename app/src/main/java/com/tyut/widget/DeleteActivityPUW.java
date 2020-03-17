@@ -11,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.tyut.ActivityDetailActivity;
 import com.tyut.R;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.view.ScrollPickView;
 import com.tyut.vo.ActivityVO;
+import com.tyut.vo.UserVO;
 
 import java.util.List;
 
@@ -29,6 +31,7 @@ public class DeleteActivityPUW implements View.OnClickListener {
     private TextView share_tv;
     private TextView delete_tv;
     private TextView cancel_tv;
+    private TextView cancelTop_tv;
     private TextView report_tv;
     private ActivityVO activityVO;
 
@@ -45,6 +48,7 @@ public class DeleteActivityPUW implements View.OnClickListener {
     private DeleteActivityPUW.IDeleteListener deleteListener;
     private DeleteActivityPUW.IShareListener shareListener;
     private DeleteActivityPUW.IReportListener reportListener;
+    private DeleteActivityPUW.ICancelTopListener cancelTopListener;
 
 
     public PopupWindow getPopupWindow() {
@@ -60,6 +64,11 @@ public class DeleteActivityPUW implements View.OnClickListener {
 
     public DeleteActivityPUW setShare(DeleteActivityPUW.IShareListener shareListener) {
         this.shareListener = shareListener;
+        return this;
+    }
+
+    public DeleteActivityPUW setCancelTop(ICancelTopListener cancelTopListener) {
+        this.cancelTopListener = cancelTopListener;
         return this;
     }
 
@@ -136,6 +145,13 @@ public class DeleteActivityPUW implements View.OnClickListener {
                 }
                 popupWindow.dismiss();
                 break;
+            case R.id.cancelTop_tv:
+
+                if(cancelTopListener != null){
+                    cancelTopListener.onCancelTop(this);
+                }
+                popupWindow.dismiss();
+                break;
             case R.id.reportactivity_tv:
                 if(reportListener != null){
                     reportListener.onReport(this);
@@ -154,6 +170,9 @@ public class DeleteActivityPUW implements View.OnClickListener {
     public interface ITopListener{
         void onTop(DeleteActivityPUW deleteActivityPUW);
     }
+    public interface ICancelTopListener{
+        void onCancelTop(DeleteActivityPUW deleteActivityPUW);
+    }
     public interface IReportListener{
         void onReport(DeleteActivityPUW deleteActivityPUW);
     }
@@ -162,6 +181,7 @@ public class DeleteActivityPUW implements View.OnClickListener {
     private void initView(){
 
         cancel_tv = contentView.findViewById(R.id.cancel_tv);
+        cancelTop_tv = contentView.findViewById(R.id.cancelTop_tv);
         top_tv = contentView.findViewById(R.id.top_tv);
         share_tv = contentView.findViewById(R.id.sharetoweibo_tv);
         delete_tv = contentView.findViewById(R.id.deleteactivity_tv);
@@ -169,9 +189,17 @@ public class DeleteActivityPUW implements View.OnClickListener {
         shareOrDelete_ll = contentView.findViewById(R.id.shareordelete_ll);
         report_ll = contentView.findViewById(R.id.report_ll);
         report_tv = contentView.findViewById(R.id.reportactivity_tv);
+        UserVO userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
-        if(activityVO.getUserid() == SPSingleton.get(context ,SPSingleton.USERINFO).readInt("userid")){
+        if(activityVO.getUserid() == userVO.getId()){
             shareOrDelete_ll.setVisibility(View.VISIBLE);
+            if(userVO.getTopacid() == activityVO.getId()){
+                cancelTop_tv.setVisibility(View.VISIBLE);
+                top_tv.setVisibility(View.GONE);
+            }else {
+                cancelTop_tv.setVisibility(View.GONE);
+                top_tv.setVisibility(View.VISIBLE);
+            }
             report_ll.setVisibility(View.GONE);
         }else{
             shareOrDelete_ll.setVisibility(View.GONE);
@@ -180,6 +208,7 @@ public class DeleteActivityPUW implements View.OnClickListener {
 
         cancel_tv.setOnClickListener(this);
         top_tv.setOnClickListener(this);
+        cancelTop_tv.setOnClickListener(this);
         share_tv.setOnClickListener(this);
         delete_tv.setOnClickListener(this);
         report_tv.setOnClickListener(this);

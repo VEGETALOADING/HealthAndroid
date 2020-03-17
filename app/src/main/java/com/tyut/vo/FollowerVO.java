@@ -1,6 +1,8 @@
 package com.tyut.vo;
 
-public class FollowerVO {
+import java.io.Serializable;
+
+public class FollowerVO implements Serializable {
 
     private int id;
     private String username;

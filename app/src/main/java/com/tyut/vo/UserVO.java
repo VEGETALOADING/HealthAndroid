@@ -103,6 +103,16 @@ public class UserVO {
 
     private Boolean ifFollow;
 
+    private Integer topacid;
+
+    public Integer getTopacid() {
+        return topacid;
+    }
+
+    public void setTopacid(Integer topacid) {
+        this.topacid = topacid;
+    }
+
     public Boolean getIfFollow() {
         return ifFollow;
     }

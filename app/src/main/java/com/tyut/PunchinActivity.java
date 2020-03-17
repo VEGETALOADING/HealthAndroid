@@ -184,7 +184,7 @@ public class PunchinActivity extends AppCompatActivity implements View.OnClickLi
     }
     private void initSettingData(){
         gson = new Gson();
-        final SPSingleton settingDataSP = SPSingleton.get(PunchinActivity.this, "settingdata");
+        final SPSingleton settingDataSP = SPSingleton.get(PunchinActivity.this, SPSingleton.SETTINGDATA);
         reminedPunchin.setOnCheckChangeListener(new MyCheckBox.OnCheckChangeListener() {
             @Override
             public void onCheckChange(boolean isCheck) {

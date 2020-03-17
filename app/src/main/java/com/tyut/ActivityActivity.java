@@ -53,7 +53,7 @@ import java.util.List;
 public class ActivityActivity extends AppCompatActivity implements View.OnClickListener {
 
     //大图不支持缩放待实现
-    ScrollView whole_sv;
+    LinearLayout whole_ll;
     RecyclerView mRecyclerView;
     ImageView userPic;
     TextView userName;
@@ -89,7 +89,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
 
             switch (msg.what){
                 case 0:
-                    whole_sv.getForeground().setAlpha((int)msg.obj);
+                    whole_ll.getForeground().setAlpha((int)msg.obj);
                     break;
                 case 1:
                     follower_count.setText(String.valueOf(Math.round((Double) msg.obj)));
@@ -172,9 +172,9 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
         mRecyclerView = findViewById(R.id.activity_Rv);
         userNotExist_tv = findViewById(R.id.userNotExist_tv);
 
-        whole_sv = findViewById(R.id.whole_sv);
-        if (whole_sv.getForeground()!=null){
-            whole_sv.getForeground().setAlpha(0);
+        whole_ll = findViewById(R.id.whole_ll);
+        if (whole_ll.getForeground()!=null){
+            whole_ll.getForeground().setAlpha(0);
         }
 
 
@@ -192,6 +192,7 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
         userId = getIntent().getIntExtra("userid", 0);
         if(currentUserVO.getUsername().equals(getIntent().getStringExtra("username")) || userId == currentUserVO.getId()){
             userVO = currentUserVO;
+            userId = currentUserVO.getId();
             follow_tv.setVisibility(View.GONE);
             search_tv.setText("搜索我的动态");
             activityTime_tv.setText("我的全部动态");
@@ -332,23 +333,17 @@ public class ActivityActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.return_n:
-                if("HOMEACTIVITY".equals(getIntent().getStringExtra("src"))){
-                    intent = new Intent(ActivityActivity.this, HomeActivity.class);
-                    intent.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
-                    ActivityActivity.this.startActivity(intent);
-                }else{
-                    this.finish();
-                }
+               this.finish();
                 break;
             case R.id.follower_ll:
-                intent = new Intent(ActivityActivity.this, FollowerListActivity.class);
+                intent = new Intent(this, FollowerListActivity.class);
                 intent.putExtra("src", "ActivityActivity");
-                ActivityActivity.this.startActivity(intent);
+                this.startActivity(intent);
                 break;
             case R.id.following_ll:
-                intent = new Intent(ActivityActivity.this, FollowingListActivity.class);
+                intent = new Intent(this, FollowingListActivity.class);
                 intent.putExtra("src", "ActivityActivity");
-                ActivityActivity.this.startActivity(intent);
+                this.startActivity(intent);
                 break;
             case R.id.searactivity_tv:
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

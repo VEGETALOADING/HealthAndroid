@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.tyut.ActivityActivity;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
@@ -45,12 +47,14 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
 
     private Context mContext;
     private OnItemClickListener mListener;
+    private Boolean showAll;
 
     private List<Reply> mList;
-    public ReplyListAdapter(Context context, List<Reply> list, OnItemClickListener listener){
+    public ReplyListAdapter(Context context, List<Reply> list, OnItemClickListener listener, Boolean showAll){
         this.mContext = context;
         this.mListener = listener;
         this.mList = list;
+        this.showAll = showAll;
     }
 
 
@@ -80,8 +84,11 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
 
     @Override
     public void onBindViewHolder(@NonNull final ReplyListAdapter.LinearViewHolder holder, final int position) {
-        int i = mList.size();
-        if(mList.size() > position){
+        int showCount = 3;
+        if(showAll){
+            showCount = mList.size();
+        }
+        if(showCount > position && mList.size() > position){
 
             if(mList.get(position).getCategory() == 1){
                 holder.twoList_ll.setVisibility(View.GONE);
@@ -95,22 +102,23 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
                 holder.parentName_tl.setText("@"+mList.get(position).getParentName()+":");
                 holder.content_tl.setText(mList.get(position).getContent());
             }
-            holder.userName_ol.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener clickListener = new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "跳转<"+mList.get(position).getUserName()+">用户界面", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, ActivityActivity.class);
+                    intent.putExtra("username", mList.get(position).getUserName());
+                    mContext.startActivity(intent);
                 }
-            });
-            holder.userName_tl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "跳转<"+mList.get(position).getUserName()+">用户界面", Toast.LENGTH_SHORT).show();
-                }
-            });
+            };
+            holder.userName_ol.setOnClickListener(clickListener);
+            holder.userName_tl.setOnClickListener(clickListener);
             holder.parentName_tl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "跳转<"+mList.get(position).getUserName()+">用户界面", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, ActivityActivity.class);
+                    intent.putExtra("username", mList.get(position).getParentName());
+                    mContext.startActivity(intent);
                 }
             });
 
@@ -130,7 +138,14 @@ public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.Line
 
     @Override
     public int getItemCount() {
-       return mList.size();
+        if(showAll){
+            return mList.size();
+        }else {
+            if (mList.size() <= 3){
+                return mList.size();
+            }
+        }
+            return 3;
     }
 
     class LinearViewHolder extends RecyclerView.ViewHolder{

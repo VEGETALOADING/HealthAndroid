@@ -1,222 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<LinearLayout
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:foreground="@drawable/dim"
     tools:foreground=""
-    android:id="@+id/whole_sv">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal">
-        <LinearLayout
-            android:background="@color/green_light"
-            android:id="@+id/top_ll"
-            android:layout_gravity="center"
+    android:id="@+id/whole_ll">
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
-
-            <ImageView
-                android:id="@+id/return_n"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/ic_return">
-            </ImageView>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_centerHorizontal="true"
-            android:id="@+id/one_ll"
-            android:layout_marginTop="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_gravity="center"
-            android:background="@drawable/btn_white"
-            android:orientation="vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
             <LinearLayout
-                android:layout_width="330dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp">
+                android:background="@color/green_light"
+                android:id="@+id/top_ll"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
                 <ImageView
+                    android:id="@+id/return_n"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/ic_return">
+                </ImageView>
 
-                    android:id="@+id/userpic_activity"
-                    android:layout_width="40dp"
+            </LinearLayout>
+            <LinearLayout
+                android:layout_centerHorizontal="true"
+                android:id="@+id/one_ll"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_white"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <LinearLayout
+                    android:layout_width="330dp"
                     android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_launcher_background"></ImageView>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+
+                        android:id="@+id/userpic_activity"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/ic_launcher_background"></ImageView>
+
+                    <TextView
+                        android:id="@+id/username_activity"
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="left"
+                        android:text="default"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/follow_tv"
+                        android:layout_width="60dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="35dp"
+                        android:layout_height="30dp"
+                        android:textSize="18sp"
+                        android:background="@drawable/btn_green"
+                        android:textColor="#ffffff"
+                        android:text="关注"></TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/four_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="30dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/activity_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/activity_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0"
+                            android:textColor="@color/black"></TextView>
+
+                        <TextView
+                            android:id="@+id/activity_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="动态"
+                            android:textColor="@color/black"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/following_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/following_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0"
+                            android:textColor="@color/black"></TextView>
+
+                        <TextView
+                            android:id="@+id/following_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="关注"
+                            android:textColor="@color/black"></TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/follower_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/follower_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="0"
+                            android:textColor="@color/black"></TextView>
+                        <TextView
+                            android:id="@+id/follower_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="粉丝"
+                            android:textColor="@color/black"></TextView>
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/username_activity"
-                    android:layout_width="150dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="left"
-                    android:text="default"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"></TextView>
-
-                <TextView
-                    android:id="@+id/follow_tv"
-                    android:layout_width="60dp"
+                    android:id="@+id/searactivity_tv"
+                    android:layout_width="340dp"
+                    android:layout_marginTop="15dp"
+                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:layout_marginLeft="35dp"
-                    android:layout_height="30dp"
-                    android:textSize="18sp"
-                    android:background="@drawable/btn_green"
-                    android:textColor="#ffffff"
-                    android:text="关注"></TextView>
+                    android:layout_height="40dp"
+                    android:hint="搜索我的动态"
+                    android:background="@drawable/btn_grey_light"></TextView>
+
+
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/four_ll"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="30dp"
+                android:id="@+id/two_ll"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/one_ll"
+                android:layout_width="350dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/activity_ll"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/activity_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0"
-                        android:textColor="@color/black"></TextView>
-
-                    <TextView
-                        android:id="@+id/activity_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="动态"
-                        android:textColor="@color/black"></TextView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/following_ll"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/following_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0"
-                        android:textColor="@color/black"></TextView>
-
-                    <TextView
-                        android:id="@+id/following_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="关注"
-                        android:textColor="@color/black"></TextView>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/follower_ll"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/follower_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="0"
-                        android:textColor="@color/black"></TextView>
-                    <TextView
-                        android:id="@+id/follower_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="粉丝"
-                        android:textColor="@color/black"></TextView>
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/activityTime_tv"
+                    android:layout_width="128dp"
+                    android:layout_height="wrap_content"
+                    android:text="我的全部动态"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></TextView>
+                <ImageView
+                    android:id="@+id/calendar_iv"
+                    android:layout_width="15dp"
+                    android:layout_marginLeft="205dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/icon_calendar_unselected"></ImageView>
             </LinearLayout>
 
             <TextView
-                android:id="@+id/searactivity_tv"
-                android:layout_width="340dp"
-                android:layout_marginTop="15dp"
-                android:singleLine="true"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:layout_height="40dp"
-                android:hint="搜索我的动态"
-                android:background="@drawable/btn_grey_light"></TextView>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/two_ll"
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/one_ll"
-            android:layout_width="350dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/activityTime_tv"
-                android:layout_width="128dp"
-                android:layout_height="wrap_content"
-                android:text="我的全部动态"
+                android:visibility="gone"
+                android:id="@+id/userNotExist_tv"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"></TextView>
-            <ImageView
-                android:id="@+id/calendar_iv"
-                android:layout_width="15dp"
-                android:layout_marginLeft="205dp"
-                android:layout_gravity="center_vertical"
-                android:layout_height="15dp"
-                android:src="@mipmap/icon_calendar_unselected"></ImageView>
-        </LinearLayout>
+                android:layout_below="@id/two_ll"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:text="用户不存在"></TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/two_ll"
+                android:id="@+id/activity_Rv"
+                android:layout_centerHorizontal="true"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/userNotExist_tv"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:layout_below="@id/two_ll"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:text="用户不存在"></TextView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="15dp"
-            android:layout_below="@id/two_ll"
-            android:id="@+id/activity_Rv"
-            android:layout_centerHorizontal="true"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content">
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">health</string>
-    <string name="url">192.168.1.11</string>
-    <string name="localhost">"+this.getString(R.string.localhost)+"</string>
+    <string name="url">192.168.0.106</string>
 </resources>
