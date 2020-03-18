@@ -127,6 +127,7 @@ public class FollowerListActivity extends AppCompatActivity implements View.OnCl
                 }else {
                     this.finish();
                 }
+                break;
         }
     }
 }

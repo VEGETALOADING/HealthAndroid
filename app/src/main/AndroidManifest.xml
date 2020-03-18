@@ -18,6 +18,8 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".FollowingListActivity"></activity>
         <activity android:name=".FollowerListActivity"></activity>
+        <activity android:name=".SchemaListActivity"></activity>
+        <activity android:name=".SchemaDetailActivity"></activity>
         <activity android:name=".SportListActivity"></activity>
         <activity android:name=".ActivityDetailActivity"
             android:windowSoftInputMode="adjustPan|stateHidden"><!-- 键盘不将导航栏顶起-->

@@ -84,7 +84,6 @@ import static com.tyut.utils.EmojiUtil.decodeSampledBitmapFromResource;
 
 public class FriendFragment extends Fragment implements View.OnClickListener {
 
-
     LinearLayout whole_ll;
     TextView search_tv;
     ImageView message_iv;
@@ -100,6 +99,12 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
 
     private static final int TOPICS = 1;
     private static final int ACTIVITYVO = 2;
+    private FriendFragmentListener listener;
+
+
+    public interface FriendFragmentListener{
+        void senMessage(int i);
+    }
 
     private Handler mHandler = new Handler(){
         @Override
@@ -107,7 +112,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
 
             switch (msg.what){
                 case 0:
-                    whole_ll.getForeground().setAlpha((int)msg.obj);
+                    //whole_ll.getForeground().setAlpha((int)msg.obj);
                     break;
                 case 1:
                     final List<Topic> topics = (List<Topic>) msg.obj;
@@ -174,6 +179,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                         @Override
                         public void onFlush(int i) {
                             ViewUtil.changeAlpha(mHandler, i);
+                            listener.senMessage(i);
                         }
                     }));
                     break;
@@ -290,5 +296,23 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                 });
                 break;
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if(context instanceof FriendFragmentListener) {
+            listener = (FriendFragmentListener)context;
+        } else{
+            throw new IllegalArgumentException("activity must implements FragmentListener");
+        }
+    }
+
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 }

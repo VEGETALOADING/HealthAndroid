@@ -26,7 +26,9 @@ import com.tyut.FollowerListActivity;
 import com.tyut.FollowingListActivity;
 import com.tyut.LoginActivity;
 import com.tyut.R;
+import com.tyut.SchemaListActivity;
 import com.tyut.SettingActivity;
+import com.tyut.ShowSchemaActivity;
 import com.tyut.UpdateUserDataActivity;
 import com.tyut.UpdateUserInfoActivity;
 import com.tyut.utils.OkHttpCallback;
@@ -50,6 +52,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
     RelativeLayout userinfo_rl;
     RelativeLayout menu1_1;
     RelativeLayout menu1_2;
+    RelativeLayout menu1_3;
     ImageView setting_iv;
     private UserVO userVO;
     private static final int FOLLOWERCOUNT = 0;
@@ -92,6 +95,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         userinfo_rl = view.findViewById(R.id.userinfo_rl);
         menu1_1 = view.findViewById(R.id.menu1_1);
         menu1_2 = view.findViewById(R.id.menu1_2);
+        menu1_3 = view.findViewById(R.id.menu1_3);
         setting_iv = view.findViewById(R.id.setting_iv);
 
         setting_iv.setOnClickListener(this);
@@ -102,6 +106,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         userinfo_rl.setOnClickListener(this);
         menu1_1.setOnClickListener(this);
         menu1_2.setOnClickListener(this);
+        menu1_3.setOnClickListener(this);
         return view;
     }
 
@@ -235,10 +240,14 @@ public class MyFragment extends Fragment implements View.OnClickListener {
                 getActivity().startActivity(new Intent(getActivity(), UpdateUserDataActivity.class));
                 break;
             case R.id.menu1_2:
-                //更多饮食方案待实现
+                getActivity().startActivity(new Intent(getActivity(), SchemaListActivity.class));
+                //bmi规则待实现
                 break;
             case R.id.setting_iv:
                 getActivity().startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+            case R.id.menu1_3:
+                getActivity().startActivity(new Intent(getActivity(), ShowSchemaActivity.class));
                 break;
 
 

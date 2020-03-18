@@ -353,8 +353,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                                     Looper.loop();
 
-                                    //...按钮待实现
-
                                 }else if(serverResponse.getStatus() == 15){
                                     //新用户注册成功
                                     SPSingleton util = SPSingleton.get(LoginActivity.this, SPSingleton.USERINFO);

@@ -35,6 +35,7 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+import com.tyut.utils.ViewUtil;
 import com.tyut.view.MyProgressView;
 import com.tyut.vo.NutritionVO;
 import com.tyut.vo.ServerResponse;
@@ -161,7 +162,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
         standardWeight_tv.setText(StringUtil.keepDecimal((float) (standardWeight * 0.9), 1) +"kg----"+ StringUtil.keepDecimal((float) (standardWeight * 1.1), 1)+"kg");
 
 
-        initPieChart(myPieChart, carb, fat, protein);
+        ViewUtil.initCFPPieChart(myPieChart, carb, fat, protein);
         OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/healthtest/select.do?bmi="+bmi,
                 new OkHttpCallback(){
                     @Override
@@ -186,63 +187,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void initPieChart(PieChart pieChart, float carb, float fat, float protein){
-        pieChart.setNoDataText("老哥，我还没吃饭呢，快给我数据");
 
-        float carb_percent = carb / (carb + fat + protein) * 100;
-        float pro_percent = protein / (carb + fat + protein) * 100;
-        float fat_percent = fat / (carb + fat + protein) * 100;
-        PieEntry pieEntry1 = new PieEntry(carb_percent,"碳水化合物");
-        PieEntry pieEntry2 = new PieEntry(fat_percent,"脂肪");
-        PieEntry pieEntry3 = new PieEntry(pro_percent,"蛋白质");
-
-
-
-        List<PieEntry> list = new ArrayList<>();
-        list.add(pieEntry1);
-        list.add(pieEntry2);
-        list.add(pieEntry3);
-        PieDataSet pieDataSet = new PieDataSet(list, "");
-
-        //一般有多少项数据，就配置多少个颜色的，少的话会复用最后一个颜色，多的话无大碍
-        pieDataSet.addColor(Color.parseColor("#feb64d"));
-        pieDataSet.addColor(Color.parseColor("#ff7c7c"));
-        pieDataSet.addColor(Color.parseColor("#9287e7"));
-
-
-        PieData pieData = new PieData(pieDataSet);
-
-        pieChart.setData(pieData);
-        //显示值格式化，这里使用Api,添加百分号
-        pieData.setValueFormatter(new PercentFormatter());
-
-        pieChart.setDrawEntryLabels(false);
-        //设置值得颜色
-
-        pieData.setValueTextColor(Color.parseColor("#FFFFFF"));
-        //设置值得大小
-        pieData.setValueTextSize(10f);
-
-        Description description = new Description();
-
-        description.setText("");
-        //把右下边的Description label 去掉，同学也可以设置成饼图说明
-        pieChart.setDescription(description);
-
-        //去掉中心圆，此时中心圆半透明
-        pieChart.setHoleRadius(0f);
-        //去掉半透明
-        pieChart.setTransparentCircleAlpha(0);
-
-        //设置动画
-        pieChart.animateX(2000, Easing.EasingOption.EaseInOutQuad);
-        //图例设置
-        Legend legend = pieChart.getLegend();
-
-        legend.setEnabled(false);//是否显示图例
-
-        pieChart.invalidate();
-    }
 
     @Override
     public void onClick(View v) {
@@ -251,11 +196,13 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(ShowSchemaActivity.this, HomeActivity.class);
                 if(getIntent().getIntExtra("homeFragment", 0) == 1) {
                     intent.putExtra("homeFragment", 1);
+                    ShowSchemaActivity.this.startActivity(intent);
                 }else if(getIntent().getIntExtra("homeFragment", 0) == 0){
                     intent.putExtra("homeFragment", 0);
-
+                    ShowSchemaActivity.this.startActivity(intent);
+                }else{
+                    this.finish();
                 }
-                ShowSchemaActivity.this.startActivity(intent);
                 break;
             case R.id.update_btn:
                 finish();

@@ -54,7 +54,7 @@ import com.tyut.widget.WeightPopUpWindow;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener, FriendFragment.FriendFragmentListener {
 
     RelativeLayout whole_rl;
     LinearLayout home_LinearLayout;
@@ -393,4 +393,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public void senMessage(int i) {
+        ViewUtil.changeAlpha(mHandler, i);
+    }
 }

@@ -354,8 +354,7 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
 
         switch (v.getId()){
             case R.id.return_k:
-
-                Intent intent5 = null;
+                /*Intent intent5 = null;
                 if(("HOMEACTIVITY").equals(getIntent().getStringExtra("src")) || getIntent().getStringExtra("src") == null){
                     intent5 = new Intent(DietAndSportActivity.this, HomeActivity.class);
                     intent5.putExtra("homeFragment", getIntent().getIntExtra("homeFragment", 0));
@@ -364,7 +363,8 @@ public class DietAndSportActivity extends AppCompatActivity implements View.OnCl
                     intent5 = new Intent(DietAndSportActivity.this, RecordActivity.class);
                 }
 
-                DietAndSportActivity.this.startActivity(intent5);
+                DietAndSportActivity.this.startActivity(intent5);*/
+                this.finish();
                 break;
             case R.id.lastday_iv:
                 currentShowDate = StringUtil.getLastDay(currentShowDate);

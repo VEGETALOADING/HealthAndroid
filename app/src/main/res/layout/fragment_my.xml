@@ -145,53 +145,61 @@
   </RelativeLayout>
   <RelativeLayout
       android:id="@+id/menu1"
-      android:layout_width="match_parent"
+      android:layout_width="350dp"
       android:layout_height="wrap_content"
       android:layout_marginTop="25dp"
       android:gravity="center"
+      android:layout_centerHorizontal="true"
       android:layout_below="@+id/userinfo"
-      android:background="#ffffff">
-    <RelativeLayout
-        android:id="@+id/menu1_1"
-        android:layout_width="400dp"
-        android:layout_height="40dp">
+      android:background="@drawable/btn_white">
 
-        <ImageView
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/textbook"
-            android:layout_marginLeft="0dp"
-            android:id="@+id/infomation">
-        </ImageView>
+      <RelativeLayout
+          android:id="@+id/menu1_1"
+          android:layout_width="match_parent"
+          android:layout_height="40dp">
 
-      <TextView
-          android:id="@+id/tv_information"
-          android:layout_width="145dp"
-          android:layout_height="match_parent"
-          android:layout_marginLeft="29dp"
-          android:layout_marginTop="10dp"
-          android:layout_marginBottom="10dp"
-          android:layout_toRightOf="@+id/infomation"
-          android:gravity="left"
-          android:text="健康资料"
-          android:textColor="@color/black"></TextView>
+          <ImageView
+              android:id="@+id/infomation"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:layout_marginStart="20dp"
+              android:layout_marginLeft="0dp"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:src="@mipmap/textbook"></ImageView>
 
-      <ImageView
-          android:layout_width="20dp"
-          android:layout_height="match_parent"
-          android:layout_marginTop="10dp"
-          android:layout_marginBottom="10dp"
-          android:layout_marginLeft="370dp"
-          android:src="@mipmap/right"></ImageView>
+          <TextView
+              android:id="@+id/tv_information"
+              android:layout_width="145dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="29dp"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:layout_toRightOf="@+id/infomation"
+              android:gravity="left"
+              android:text="健康资料"
+              android:textColor="@color/black"></TextView>
 
-    </RelativeLayout>
-    <RelativeLayout
+          <ImageView
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginRight="10dp"
+              android:layout_alignParentRight="true"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:src="@mipmap/right"></ImageView>
+
+      </RelativeLayout>
+      <View
+          android:id="@+id/line1"
+          android:layout_below="@id/menu1_1"
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/line_grey"></View>
+      <RelativeLayout
         android:id="@+id/menu1_2"
-        android:layout_below="@+id/menu1_1"
-        android:layout_width="400dp"
+        android:layout_below="@+id/line1"
+        android:layout_width="match_parent"
         android:layout_height="40dp">
 
       <ImageView
@@ -221,24 +229,69 @@
           android:layout_width="20dp"
           android:layout_height="match_parent"
           android:layout_marginTop="10dp"
+          android:layout_marginRight="10dp"
           android:layout_marginBottom="10dp"
-          android:layout_marginLeft="370dp"
+          android:layout_alignParentRight="true"
           android:src="@mipmap/right"></ImageView>
 
     </RelativeLayout>
+      <View
+          android:id="@+id/line2"
+          android:layout_below="@id/menu1_2"
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:background="@color/line_grey"></View>
+      <RelativeLayout
+          android:id="@+id/menu1_3"
+          android:layout_below="@+id/line2"
+          android:layout_width="match_parent"
+          android:layout_height="40dp">
 
+          <ImageView
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:layout_marginStart="20dp"
+              android:layout_width="20dp"
+              android:layout_height="20dp"
+              android:src="@mipmap/ic_heartrate"
+              android:layout_marginLeft="0dp"
+              android:id="@+id/schema_iv">
+          </ImageView>
 
+          <TextView
+              android:id="@+id/tv_schema"
+              android:layout_width="145dp"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="29dp"
+              android:layout_marginTop="10dp"
+              android:layout_marginBottom="10dp"
+              android:layout_toRightOf="@+id/schema_iv"
+              android:gravity="left"
+              android:text="健康方案"
+              android:textColor="@color/black"></TextView>
+
+          <ImageView
+              android:layout_width="20dp"
+              android:layout_height="match_parent"
+              android:layout_marginTop="10dp"
+              android:layout_marginRight="10dp"
+              android:layout_marginBottom="10dp"
+              android:layout_alignParentRight="true"
+              android:src="@mipmap/right"></ImageView>
+
+      </RelativeLayout>
 
   </RelativeLayout>
 
 
   <Button
       android:id="@+id/logout_btn"
-      android:layout_width="match_parent"
+      android:layout_width="350dp"
+      android:layout_centerHorizontal="true"
       android:layout_height="wrap_content"
       android:layout_below="@+id/menu1"
       android:layout_marginTop="29dp"
-      android:background="#ffffff"
+      android:background="@drawable/btn_white"
       android:text="退出账号"></Button>
 
 </RelativeLayout>
