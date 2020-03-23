@@ -177,7 +177,5 @@ public class ViewUtil {
         legend.setEnabled(false);//是否显示图例
 
         pieChart.invalidate();
-
-        //粉丝关注加滚动列表待实现
     }
 }

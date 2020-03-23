@@ -1,5 +1,6 @@
 package com.tyut.fragment;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -34,9 +35,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.DietAndSportActivity;
 import com.tyut.FoodDetailActivity;
+import com.tyut.MyfavActivity;
 import com.tyut.R;
 import com.tyut.RecordActivity;
+import com.tyut.SchemaDetailActivity;
+import com.tyut.SchemaListActivity;
 import com.tyut.ShowSchemaActivity;
+import com.tyut.SportListActivity;
 import com.tyut.WeightActivity;
 import com.tyut.adapter.FoodListAdapter;
 import com.tyut.utils.OkHttpCallback;
@@ -48,11 +53,16 @@ import com.tyut.utils.StringUtil;
 
 import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.FoodVO;
+import com.tyut.vo.MSchema;
 import com.tyut.vo.ServerResponse;
+import com.tyut.vo.SportVO;
 import com.tyut.vo.UserVO;
 
 
 import java.util.List;
+import java.util.Random;
+
+import javax.xml.validation.Schema;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -64,6 +74,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     TextView weight;
     TextView bmi;
     TextView cancel;
+
+    TextView schemaName_tv;
+    TextView schemaIntro_tv;
+    ImageView schemaPic_iv;
 
     TextView hot_tv;
     TextView carb_tv ;
@@ -89,16 +103,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     LinearLayout weight_ll;
     LinearLayout healthInfo_ll;
     RelativeLayout diet_diary_rl;
-    RelativeLayout sportAndTraining_rl;
+    RelativeLayout myfav_rl;
     //运动训练视频待实现
     //分享待实现
 
 
     private static final int SEARCHFOOD_NULL = 0;
     private static final int SEARCHFOOD_NOT_NULL = 1;
+    private static final int INITSCHEMA = 2;
 
     private String condition1 = null;
     private String condition2 = null;
+    private MSchema currentSchema;
 
     private PopupWindow mPop;
 
@@ -140,7 +156,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
 
                     break;
 
-                case 3:
+                case 2:
+                    final List<MSchema> schemaList = (List<MSchema>) msg.obj;
+                    currentSchema = schemaList.get(new Random().nextInt(schemaList.size()));
+                    schemaName_tv.setText("#"+currentSchema.getName()+"#");
+                    schemaIntro_tv.setText(currentSchema.getIntro());
+                    Glide.with(getActivity())
+                            .load("http://"+getActivity().getString(R.string.url)+":8080/schemapic/" + currentSchema.getMainpic())
+                            .placeholder(R.mipmap.ic_launcher)
+                            .into(schemaPic_iv);
+
                     break;
 
             }
@@ -178,6 +203,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
 
         blank_ll = view.findViewById(R.id.blank_ll);
         weight_ll = view.findViewById(R.id.weight_ll);
+        myfav_rl = view.findViewById(R.id.myfav_rl);
+
+        schemaName_tv = view.findViewById(R.id.schemaName_tv);
+        schemaIntro_tv = view.findViewById(R.id.schemaIntro_tv);
+        schemaPic_iv = view.findViewById(R.id.schemaMainPic_iv);
 
         healthInfo_ll.setOnClickListener(this);
         message.setOnClickListener(this);
@@ -187,8 +217,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         schema_ll.setOnClickListener(this);
         weight_ll.setOnClickListener(this);
         diet_diary_rl.setOnClickListener(this);
+        myfav_rl.setOnClickListener(this);
 
         search.setOnEditorActionListener(this);
+        schemaPic_iv.setOnClickListener(this);
         search.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
@@ -240,6 +272,31 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                     status.setText("增肌");
                     break;
             }
+            if(currentSchema == null) {
+                OkHttpUtils.get("http://" + getString(R.string.url) + ":8080/portal/schema/select.do?userid=0",
+                        new OkHttpCallback() {
+                            @Override
+                            public void onFinish(String status, String msg) {
+                                super.onFinish(status, msg);
+                                //解析数据
+                                Gson gson = new Gson();
+                                ServerResponse<List<MSchema>> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<List<MSchema>>>() {
+                                }.getType());
+                                if (serverResponse.getStatus() == 0) {
+                                    Message message = new Message();
+                                    message.what = INITSCHEMA;
+                                    message.obj = serverResponse.getData();
+                                    mHandler.sendMessage(message);
+                                } else {
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }
+                        }
+                );
+            }
+
 
         }
     }
@@ -406,6 +463,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
             case R.id.healthinfo:
                 Intent intent2 = new Intent(getActivity(), RecordActivity.class);
                 getActivity().startActivity(intent2);
+                break;
+            case R.id.myfav_rl:
+                getActivity().startActivity(new Intent(getActivity(), MyfavActivity.class));
+                break;
+            case R.id.schemaMainPic_iv:
+                if(currentSchema!=null) {
+                    Intent intent3 = new Intent(getActivity(), SchemaDetailActivity.class);
+                    intent3.putExtra("schema", currentSchema);
+                    getActivity().startActivity(intent3);
+                }
                 break;
 
 

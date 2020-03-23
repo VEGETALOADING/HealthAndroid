@@ -193,7 +193,7 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.return_c:
-                Intent intent = new Intent(ShowSchemaActivity.this, HomeActivity.class);
+                /*Intent intent = new Intent(ShowSchemaActivity.this, HomeActivity.class);
                 if(getIntent().getIntExtra("homeFragment", 0) == 1) {
                     intent.putExtra("homeFragment", 1);
                     ShowSchemaActivity.this.startActivity(intent);
@@ -202,7 +202,8 @@ public class ShowSchemaActivity extends AppCompatActivity implements View.OnClic
                     ShowSchemaActivity.this.startActivity(intent);
                 }else{
                     this.finish();
-                }
+                }*/
+                this.finish();
                 break;
             case R.id.update_btn:
                 finish();

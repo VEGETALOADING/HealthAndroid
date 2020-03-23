@@ -19,6 +19,7 @@
         <activity android:name=".FollowingListActivity"></activity>
         <activity android:name=".FollowerListActivity"></activity>
         <activity android:name=".SchemaListActivity"></activity>
+        <activity android:name=".MyfavActivity"></activity>
         <activity android:name=".SchemaDetailActivity"></activity>
         <activity android:name=".SportListActivity"></activity>
         <activity android:name=".ActivityDetailActivity"

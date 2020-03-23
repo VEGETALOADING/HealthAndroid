@@ -10,6 +10,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
 import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
+import com.tyut.utils.ViewUtil;
 import com.tyut.vo.FoodVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.widget.FoodPopUpWindow;
@@ -71,10 +74,11 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
     String protein;
     String fat;
     FoodVO foodVO;
+    RelativeLayout whole_rl;
 
     Integer userid;
-    private static final int ADDFAVORITE = 0;
-    private static final int CANCELFAVORITE = 1;
+    private static final int ADDFAVORITE = 1;
+    private static final int CANCELFAVORITE = 2;
 
     List<String> dateWithYearList = StringUtil.getRecengtDateListWithYear();
 
@@ -83,13 +87,15 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         public void handleMessage(@NonNull final Message msg) {
 
             switch (msg.what){
-
                 case 0:
+                    whole_rl.getForeground().setAlpha((int)msg.obj);
+                    break;
+                case 1:
                     favorite_iv.setImageResource(R.mipmap.icon_fav_selected);
                     favorite_tv.setText("已收藏");
                     favorite_tv.setTextColor(getResources().getColor(R.color.green));
                     break;
-                case 1:
+                case 2:
                     favorite_iv.setImageResource(R.mipmap.icon_fav_unselected);
                     favorite_tv.setText("收藏");
                     favorite_tv.setTextColor(getResources().getColor(R.color.nav_text_default));
@@ -127,6 +133,10 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
         favorite_tv = findViewById(R.id.favoritefood_detail_tv);
         favorite_ll = findViewById(R.id.favoritefood_detail_ll);
         record_ll = findViewById(R.id.record_fooddetail_ll);
+        whole_rl = findViewById(R.id.whole_rl);
+        if (whole_rl.getForeground()!=null){
+            whole_rl.getForeground().setAlpha(0);
+        }
 
         qianka_btn.setOnClickListener(this);
         qianjiao_btn.setOnClickListener(this);
@@ -261,6 +271,7 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
             case R.id.record_fooddetail_ll:
 
                 final FoodPopUpWindow foodPopUpWindow = new FoodPopUpWindow(foodVO, null, FoodDetailActivity.this);
+                ViewUtil.changeAlpha(mHandler, 0);
                 foodPopUpWindow.initialData().setCancel(new FoodPopUpWindow.IOnCancelListener() {
                     @Override
                     public void onCancel(FoodPopUpWindow dialog) {
@@ -272,6 +283,12 @@ public class FoodDetailActivity extends AppCompatActivity implements View.OnClic
                         onResume();
                     }
                 }).showFoodPopWindow();
+                foodPopUpWindow.getFoodPopupWindow().setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        ViewUtil.changeAlpha(mHandler, 1);
+                    }
+                });
 
                 break;
 

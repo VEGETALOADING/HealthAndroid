@@ -89,7 +89,6 @@ public class SchemaDetailActivity extends AppCompatActivity implements View.OnCl
 
         Glide.with(this)
                 .load("http://"+this.getString(R.string.url)+":8080/schemapic/" + schema.getMainpic())
-                .transform(new GlideRoundTransform(this, 25))
                 .placeholder(R.mipmap.ic_launcher)
                 .into(schemaPic_iv);
         content_tv.setText(schema.getContent());

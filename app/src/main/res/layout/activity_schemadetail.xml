@@ -43,6 +43,7 @@
             <ImageView
                 android:paddingTop="15dp"
                 android:id="@+id/schemaMainPic_iv"
+                android:scaleType="centerCrop"
                 android:background="@color/green_lighter"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"></ImageView>
