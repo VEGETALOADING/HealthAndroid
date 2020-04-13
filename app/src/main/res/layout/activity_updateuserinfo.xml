@@ -3,8 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="360dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:foreground="@drawable/dim"
+    tools:foreground=""
+    android:id="@+id/whole_ll">
 
     <LinearLayout
         android:layout_marginTop="15dp"
@@ -38,6 +41,7 @@
             android:text="个人资料"
             android:textSize="20sp"
             android:paddingLeft="-50dp"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_gravity="center_vertical"
             android:gravity="center"></TextView>
@@ -47,7 +51,7 @@
         android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:background="#FFFFF8">
 
@@ -63,6 +67,7 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="头像"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"></TextView>
 
@@ -106,6 +111,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="用户名"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:textSize="18sp"
@@ -151,6 +157,7 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:text="手机号码"
+                android:textColor="@color/black"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:textSize="18sp"

@@ -64,7 +64,7 @@
         android:layout_below="@id/top_ll"
         android:layout_above="@id/nav_das"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:foreground="@drawable/dim"
         tools:foreground="">
         <LinearLayout
@@ -119,7 +119,7 @@
                             android:layout_height="200dp"
                             android:layout_centerVertical="true"
                             android:layout_centerHorizontal="true"
-                            android:id="@+id/hotCircleBar"
+                               android:id="@+id/hotCircleBar"
                             ></com.tyut.view.CircleProgressBar>
                         <TextView
                             android:id="@+id/remanentHot_das"

@@ -49,7 +49,7 @@
             android:id="@+id/commitAddFood_btn"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="58dp"
+            android:layout_marginLeft="38dp"
             android:text="完成"
             android:textSize="18sp"
             android:gravity="center"

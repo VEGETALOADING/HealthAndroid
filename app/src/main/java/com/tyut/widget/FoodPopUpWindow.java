@@ -1,5 +1,6 @@
 package com.tyut.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Looper;
@@ -275,20 +276,29 @@ public class FoodPopUpWindow implements View.OnClickListener {
                                     //解析数据
                                     Gson gson=new Gson();
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                    if(serverResponse.getStatus() == 0){
+                                        ((Activity)context).runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if(confirmListener != null){
+                                                    confirmListener.onConfirm(FoodPopUpWindow.this);
+                                                }
+                                            }
+                                        });
+                                    }
                                     Looper.prepare();
                                     Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
                                 }
                             }
                     );
+                }else{
+                    if(confirmListener != null){
+                        confirmListener.onConfirm(FoodPopUpWindow.this);
+                    }
                 }
 
                 foodPopupWindow.dismiss();
-                if(confirmListener != null){
-                    confirmListener.onConfirm(this);
-                }
-
-
                 break;
             case R.id.choosedate_ll:
                 if(!showChooseDate){
@@ -315,6 +325,14 @@ public class FoodPopUpWindow implements View.OnClickListener {
                                 ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
                                 if(serverResponse.getStatus() == 0){
                                     tag = true;
+                                    ((Activity)context).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(confirmListener != null){
+                                                confirmListener.onConfirm(FoodPopUpWindow.this);
+                                            }
+                                        }
+                                    });
                                 }
                                     Looper.prepare();
                                     Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
@@ -323,10 +341,6 @@ public class FoodPopUpWindow implements View.OnClickListener {
                         }
                 );
                 foodPopupWindow.dismiss();
-                if(confirmListener != null){
-                    confirmListener.onConfirm(this);
-                }
-
                 break;
 
         }

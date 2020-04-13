@@ -1,5 +1,6 @@
 package com.tyut.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Looper;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tyut.R;
+import com.tyut.activity.ActivityDetailActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
@@ -211,6 +213,17 @@ public class SportPopUpWindow implements View.OnClickListener {
                                     //解析数据
                                     Gson gson=new Gson();
                                     ServerResponse serverResponse = gson.fromJson(msg, ServerResponse.class);
+                                    if(serverResponse.getStatus() == 0){
+                                        ((Activity)context).runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                if(confirmListener != null){
+                                                    confirmListener.onConfirm(SportPopUpWindow.this);
+                                                }
+                                            }
+                                        });
+
+                                    }
                                     Looper.prepare();
                                     Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                     Looper.loop();
@@ -238,6 +251,16 @@ public class SportPopUpWindow implements View.OnClickListener {
                                 //解析数据
                                 Gson gson=new Gson();
                                 ServerResponse serverResponse=gson.fromJson(msg, ServerResponse.class);
+                                if(serverResponse.getStatus() == 0){
+                                    ((Activity)context).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if(confirmListener != null){
+                                                confirmListener.onConfirm(SportPopUpWindow.this);
+                                            }
+                                        }
+                                    });
+                                }
                                 Looper.prepare();
                                 Toast.makeText(context, serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                 Looper.loop();
@@ -245,9 +268,6 @@ public class SportPopUpWindow implements View.OnClickListener {
                         }
                 );
                 sportPopupWindow.dismiss();
-                if(confirmListener != null){
-                    confirmListener.onConfirm(this);
-                }
                 break;
 
         }

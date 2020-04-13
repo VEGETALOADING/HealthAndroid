@@ -8,14 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tyut.R;
-import com.tyut.SchemaDetailActivity;
+import com.tyut.activity.SchemaDetailActivity;
 import com.tyut.utils.SPSingleton;
 import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.MSchema;

@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/blue_light"
             android:text="浪子回头："
-            android:textSize="20sp"></TextView>
+            android:textSize="16sp"></TextView>
         <TextView
             android:id="@+id/content_ol"
             android:layout_marginLeft="5dp"
@@ -24,7 +24,7 @@
             android:textColor="@color/black"
             android:singleLine="false"
             android:text="金不换"
-            android:textSize="20sp"></TextView>
+            android:textSize="16sp"></TextView>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/twoList_ll"
@@ -38,20 +38,20 @@
             android:layout_height="wrap_content"
             android:textColor="@color/blue_light"
             android:text="断浪"
-            android:textSize="20sp"></TextView>
+            android:textSize="16sp"></TextView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:text="回复"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:layout_marginLeft="5dp"></TextView>
         <TextView
             android:id="@+id/parentname_tl"
             android:layout_marginLeft="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textColor="@color/blue_light"
             android:text="/@浪子回头:"></TextView>
         <TextView
@@ -61,7 +61,7 @@
             android:textColor="@color/black"
             android:text="回复xxxxxxxxxxxxxxxxxxxx"
             android:singleLine="false"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:layout_marginLeft="5dp"></TextView>
     </LinearLayout>
 

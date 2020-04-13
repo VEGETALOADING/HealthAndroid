@@ -1,7 +1,6 @@
 package com.tyut.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +21,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.PunchinActivity;
 import com.tyut.R;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.view.calendar.CustomDayView;
 import com.tyut.view.calendar.Utils;
@@ -38,14 +34,11 @@ import com.tyut.view.calendar.interf.OnSelectDateListener;
 import com.tyut.view.calendar.model.CalendarDate;
 import com.tyut.view.calendar.view.Calendar;
 import com.tyut.view.calendar.view.MonthPager;
-import com.tyut.vo.Punchin;
-import com.tyut.vo.PunchinVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 import com.tyut.vo.Weight;
 import com.tyut.widget.RecordWeightDialog;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -116,6 +109,9 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
     public void onResume() {
         super.onResume();
         userVO = (UserVO)  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
+        initWeightList();
+    }
+    private void initWeightList(){
         OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/weight/list.do?&userid="+userVO.getId(),
                 new OkHttpCallback(){
                     @Override
@@ -305,12 +301,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
         dialog.setConfirm(new RecordWeightDialog.IOnConfirmListener() {
             @Override
             public void onConfirm(RecordWeightDialog dialog) {
-                //String createTime = null;
-                /*if ("今天".equals(date)) {
-                    createTime = StringUtil.getCurrentDate("yyyy-MM-dd");
-                }else{
-                    createTime = date;
-                }*/
+
                 String weight = dialog.getWeight();
                 OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/weight/add.do?userid=" + userVO.getId() + "&weight=" + weight + "&createTime=" + date,
                         new OkHttpCallback() {
@@ -326,7 +317,7 @@ public class WeightCalendarFragment extends Fragment implements OnClickListener 
                                 util.putBoolean("isLogin", true);
                                 util.putString("user", gson.toJson(serverResponse.getData()));
                                 util.putInt("userid", serverResponse.getData().getId());
-                                onResume();
+                                initWeightList();
                                 Looper.prepare();
                                 Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                 Looper.loop();

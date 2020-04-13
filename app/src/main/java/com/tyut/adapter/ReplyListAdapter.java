@@ -1,47 +1,24 @@
 package com.tyut.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.tyut.ActivityActivity;
+import com.tyut.activity.ActivityActivity;
 import com.tyut.R;
-import com.tyut.utils.OkHttpCallback;
-import com.tyut.utils.OkHttpUtils;
-import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.utils.StringUtil;
-import com.tyut.vo.CommentVO;
 import com.tyut.vo.Reply;
-import com.tyut.vo.ServerResponse;
-import com.tyut.vo.UserVO;
 
-import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ReplyListAdapter extends RecyclerView.Adapter<ReplyListAdapter.LinearViewHolder> {
 

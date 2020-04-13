@@ -1,9 +1,7 @@
 package com.tyut.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,36 +31,31 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.DietAndSportActivity;
-import com.tyut.FoodDetailActivity;
-import com.tyut.MyfavActivity;
+import com.tyut.activity.DietAndSportActivity;
+import com.tyut.activity.FoodDetailActivity;
+import com.tyut.activity.MyfavActivity;
 import com.tyut.R;
-import com.tyut.RecordActivity;
-import com.tyut.SchemaDetailActivity;
-import com.tyut.SchemaListActivity;
-import com.tyut.ShowSchemaActivity;
-import com.tyut.SportListActivity;
-import com.tyut.WeightActivity;
+import com.tyut.activity.RecordActivity;
+import com.tyut.activity.SchemaDetailActivity;
+import com.tyut.activity.ShowSchemaActivity;
+import com.tyut.activity.WeightActivity;
 import com.tyut.adapter.FoodListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 
 import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.FoodVO;
+import com.tyut.vo.HotVO;
 import com.tyut.vo.MSchema;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.SportVO;
 import com.tyut.vo.UserVO;
 
 
 import java.util.List;
 import java.util.Random;
-
-import javax.xml.validation.Schema;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, TextView.OnEditorActionListener {
 
@@ -82,6 +75,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     TextView hot_tv;
     TextView carb_tv ;
     TextView protein_tv;
+    TextView restCal_tv;
     TextView fat_tv;
     TextView desc_tv;
     TextView asc_tv;
@@ -111,7 +105,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     private static final int SEARCHFOOD_NULL = 0;
     private static final int SEARCHFOOD_NOT_NULL = 1;
     private static final int INITSCHEMA = 2;
+    private static final int HOTVO_NULL = 3;
+    private static final int HOTVO_NOTNULL = 4;
 
+    private UserVO userVO;
     private String condition1 = null;
     private String condition2 = null;
     private MSchema currentSchema;
@@ -167,6 +164,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                             .into(schemaPic_iv);
 
                     break;
+                case 3:
+                    restCal_tv.setText(StringUtil.getNutritionData(userVO).getHot()+"");
+                    break;
+                case 4:
+                    final HotVO hotVO = (HotVO) msg.obj;
+                    Integer hotIntake = hotVO.getBreakfastHot()+hotVO.getLunchHot()+hotVO.getDinnerHot();
+                    Integer hotConsume = hotVO.getSportHot();
+                    restCal_tv.setText((StringUtil.getNutritionData(userVO).getHot() - hotIntake + hotConsume)+"");
+                    break;
 
             }
         }
@@ -204,6 +210,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         blank_ll = view.findViewById(R.id.blank_ll);
         weight_ll = view.findViewById(R.id.weight_ll);
         myfav_rl = view.findViewById(R.id.myfav_rl);
+
+        restCal_tv = view.findViewById(R.id.rest_calories);
 
         schemaName_tv = view.findViewById(R.id.schemaName_tv);
         schemaIntro_tv = view.findViewById(R.id.schemaIntro_tv);
@@ -249,7 +257,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
         if(isLogin == true){
 
             //获取用户信息
-            UserVO userVO = (UserVO) SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
+            userVO = (UserVO) SPSingleton.get(getActivity(), SPSingleton.USERINFO).readObject("user", UserVO.class);
 
             username.setText(userVO.getUsername());
             Glide.with(this)
@@ -296,7 +304,38 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
                         }
                 );
             }
+            OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/hot/select.do?userId="+userVO.getId()+"&date="+ StringUtil.getCurrentDate("yyyy-MM-dd"),
+                    new OkHttpCallback(){
+                        @Override
+                        public void onFinish(String status, String msg) {
+                            super.onFinish(status, msg);
+                            //解析数据
+                            Gson gson=new Gson();
+                            ServerResponse<HotVO> serverResponse = gson.fromJson(msg, new TypeToken<ServerResponse<HotVO>>(){}.getType());
+                            if(serverResponse.getStatus() == 0){
+                                if(serverResponse.getData().getSportHot() == 0
+                                        && serverResponse.getData().getBreakfastHot() == 0
+                                        && serverResponse.getData().getLunchHot() == 0
+                                        && serverResponse.getData().getDinnerHot() == 0){
+                                    Message message = new Message();
+                                    message.what= HOTVO_NULL;
+                                    mHandler.sendMessage(message);
 
+                                }else{
+                                    Message message = new Message();
+                                    message.what= HOTVO_NOTNULL;
+                                    message.obj = serverResponse.getData();
+                                    mHandler.sendMessage(message);
+                                }
+
+                            }else{
+                                Looper.prepare();
+                                Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
+                        }
+                    }
+            );
 
         }
     }
@@ -305,7 +344,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Text
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.diet_diary:
-                getActivity().startActivity(new Intent(getActivity(), DietAndSportActivity.class));
+                Intent intent4 = new Intent(getActivity(), DietAndSportActivity.class);
+                intent4.putExtra("src", 0);
+                getActivity().startActivity(intent4);
+                getActivity().finish();
                 break;
             case R.id.cancelsearchfood_tv:
                 search.clearFocus();

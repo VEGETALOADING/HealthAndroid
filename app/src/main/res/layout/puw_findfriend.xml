@@ -6,12 +6,11 @@
     android:gravity="center_horizontal"
     android:layout_height="match_parent">
     <LinearLayout
+        android:layout_margin="10dp"
         android:id="@+id/top_ll"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp">
-
+        android:layout_gravity="center">
         <TextView
             android:id="@+id/cancel_tv"
             android:layout_marginLeft="10dp"
@@ -27,14 +26,14 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginLeft="78dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:paddingLeft="5dp"
             android:text="发现好友"
-            android:textSize="20sp"
-            android:textStyle="bold"></TextView>
+            android:textColor="@color/black"
+            android:textSize="20sp"></TextView>
 
 
     </LinearLayout>

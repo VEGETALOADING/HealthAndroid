@@ -16,39 +16,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.ActivityActivity;
-import com.tyut.ActivityDetailActivity;
-import com.tyut.FollowerListActivity;
-import com.tyut.FoodListActivity;
+import com.tyut.activity.ActivityActivity;
 import com.tyut.R;
-import com.tyut.TopicActivity;
-import com.tyut.TopicListActivity;
-import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.adapter.FollowerListAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.utils.ViewUtil;
-import com.tyut.vo.ActivityVO;
 import com.tyut.vo.Follow;
 import com.tyut.vo.FollowerVO;
 import com.tyut.vo.ServerResponse;
-import com.tyut.vo.Topic;
 import com.tyut.vo.UserVO;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class FindFriendPUW implements View.OnClickListener {

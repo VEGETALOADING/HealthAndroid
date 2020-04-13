@@ -1,26 +1,15 @@
 package com.tyut.fragment;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.IconMarginSpan;
-import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -40,47 +28,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.ActivityActivity;
-import com.tyut.ActivityDetailActivity;
+import com.tyut.activity.ActivityDetailActivity;
 import com.tyut.R;
-import com.tyut.RecordActivity;
-import com.tyut.ShareActivity;
-import com.tyut.TopicActivity;
-import com.tyut.TopicListActivity;
-import com.tyut.UpdateUserDataActivity;
+import com.tyut.activity.TopicActivity;
+import com.tyut.activity.TopicListActivity;
 import com.tyut.adapter.ActivityListAdapter;
-import com.tyut.adapter.CommentListAdapter;
-import com.tyut.utils.EmojiUtil;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.utils.StringUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.view.GlideRoundTransform;
 import com.tyut.vo.ActivityVO;
-import com.tyut.vo.CommentVO;
-import com.tyut.vo.Emoji;
-import com.tyut.vo.Reply;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.Topic;
 import com.tyut.vo.UserVO;
-import com.tyut.widget.BirthdayPopUpWindow;
 import com.tyut.widget.FindFriendPUW;
-import com.tyut.widget.ReplyPUW;
-import com.tyut.widget.SearchActivityPUW;
 import com.tyut.widget.SearchThreePUW;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static com.tyut.utils.EmojiUtil.decodeSampledBitmapFromResource;
 
 public class FriendFragment extends Fragment implements View.OnClickListener {
 
@@ -173,7 +138,7 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                     }, new ActivityListAdapter.OnUpdateListener() {
                         @Override
                         public void onUpdate(int position) {
-                            onResume();
+                            initActivityList();
                         }
                     }).setFlushListener(new ActivityListAdapter.OnFlushListener() {
                         @Override
@@ -245,6 +210,13 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                     }
                 }
         );
+        initActivityList();
+
+
+
+    }
+
+    private void initActivityList(){
         OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/activity/friend.do?currentUserId="+userVO.getId(),
                 new OkHttpCallback(){
                     @Override
@@ -267,8 +239,6 @@ public class FriendFragment extends Fragment implements View.OnClickListener {
                     }
                 }
         );
-
-
     }
 
     @Override

@@ -9,31 +9,34 @@
       android:layout_gravity="center"
       android:layout_width="match_parent"
       android:layout_height="40dp">
+
     <LinearLayout
-        android:id="@+id/return_d"
-        android:layout_gravity="center"
+        android:id="@+id/return_ll"
         android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
       <ImageView
           android:layout_width="30dp"
           android:layout_height="match_parent"
-          android:src="@mipmap/ic_return">
-      </ImageView>
+          android:src="@mipmap/ic_return"></ImageView>
+
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:gravity="center_vertical"
           android:layout_gravity="center_vertical"
-          android:textSize="20sp"
+          android:gravity="center_vertical"
           android:text="返回"
-          android:textColor="@color/black"></TextView>
+          android:textColor="@color/black"
+          android:textSize="20sp"></TextView>
     </LinearLayout>
     <TextView
         android:layout_width="0dp"
         android:layout_weight="4"
         android:layout_height="wrap_content"
         android:text="关注"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:paddingLeft="-50dp"
         android:textStyle="bold"
@@ -42,11 +45,12 @@
 
   </LinearLayout>
   <ScrollView
+      android:layout_below="@id/top_ll"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_main"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff">

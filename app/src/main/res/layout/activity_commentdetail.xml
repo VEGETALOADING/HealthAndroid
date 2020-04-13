@@ -94,7 +94,7 @@
             android:layout_marginLeft="50dp"
             android:layout_height="wrap_content"
             android:text="来点描述"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/black" />
         <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="10dp"
@@ -148,7 +148,7 @@
 
 
     <LinearLayout
-        android:layout_marginTop="240dp"
+        android:layout_marginTop="200dp"
         android:visibility="invisible"
         android:id="@+id/addFace_hide_ll"
         android:background="#ffffff"

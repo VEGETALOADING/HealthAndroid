@@ -23,14 +23,9 @@ import java.util.List;
 public class TopicPopUpWindow implements View.OnClickListener {
 
     private TextView clos_tv;
-    private RecyclerView recent_Rv;
     private RecyclerView hot_Rv;
     private TopicAdapter mAdapter;
-
-    private LinearLayout recent_ll;
     private LinearLayout hot_ll;
-
-    private List<String> recentTopics;
     private List<String> hotTopics;
 
     private String selectedTopic;
@@ -47,10 +42,9 @@ public class TopicPopUpWindow implements View.OnClickListener {
         return this.topicPopUpWindow;
     }
 
-    public TopicPopUpWindow(Context context, List<String> recentTopics, List<String> hotTopics) {
+    public TopicPopUpWindow(Context context, List<String> hotTopics) {
 
         this.context = context;
-        this.recentTopics = recentTopics;
         this.hotTopics = hotTopics;
 
         contentView = LayoutInflater.from(context).inflate(
@@ -98,25 +92,9 @@ public class TopicPopUpWindow implements View.OnClickListener {
     private void initView(){
 
 
-        recent_ll = contentView.findViewById(R.id.recenttopic_ll);
         hot_ll = contentView.findViewById(R.id.hottopic_ll);
         clos_tv = contentView.findViewById(R.id.close_topic);
         hot_Rv = contentView.findViewById(R.id.hotTopic_Rv);
-        recent_Rv = contentView.findViewById(R.id.recentTopic_Rv);
-        if(recentTopics!=null) {
-            recent_Rv.setLayoutManager(new LinearLayoutManager(context));
-            recent_Rv.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.VERTICAL));
-            recent_Rv.setAdapter(new TopicAdapter(context, recentTopics, new TopicAdapter.OnItemClickListener() {
-                @Override
-                public void onClick(int position) {
-
-                    selectedTopic = recentTopics.get(position);
-                    topicPopUpWindow.dismiss();
-                }
-            }));
-        }else{
-            recent_ll.setVisibility(View.GONE);
-        }
         if(hotTopics!=null) {
             hot_Rv.setLayoutManager(new LinearLayoutManager(context));
             hot_Rv.addItemDecoration(new RecycleViewDivider(context, LinearLayoutManager.VERTICAL));

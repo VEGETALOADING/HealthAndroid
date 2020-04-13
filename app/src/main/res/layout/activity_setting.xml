@@ -8,7 +8,7 @@
         android:id="@+id/top_ll"
         android:background="@color/white"
         android:layout_gravity="center"
-        android:layout_width="380dp"
+        android:layout_width="360dp"
         android:layout_height="55dp">
         <LinearLayout
             android:id="@+id/return_ll"

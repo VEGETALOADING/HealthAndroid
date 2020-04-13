@@ -2,21 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
   <LinearLayout
       android:id="@+id/top_ll"
-      android:layout_width="350dp"
+      android:layout_width="340dp"
       android:layout_height="60dp"
       android:layout_gravity="center">
 
     <EditText
         android:id="@+id/searchfood_et"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="30dp"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/btn_grey"
+        android:background="@drawable/btn_white"
         android:gravity="center"
         android:hint="搜索食物营养和热量"
         android:imeOptions="actionSearch"
@@ -55,10 +54,10 @@
 
       <LinearLayout
           android:id="@+id/one_ll"
-          android:layout_width="350dp"
+          android:layout_width="340dp"
           android:layout_height="200dp"
           android:layout_gravity="center"
-          android:background="@drawable/btn_grey"
+          android:background="@drawable/btn_white"
           android:orientation="vertical">
 
         <LinearLayout
@@ -70,7 +69,6 @@
           <ImageView
               android:id="@+id/userpic_home"
               android:layout_width="40dp"
-
               android:layout_height="40dp"
               android:layout_gravity="center_vertical"
               android:layout_marginLeft="10dp"
@@ -92,7 +90,7 @@
               android:layout_width="wrap_content"
               android:layout_height="30dp"
               android:layout_gravity="center"
-              android:layout_marginLeft="60dp">
+              android:layout_marginLeft="40dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -205,11 +203,11 @@
 
       <LinearLayout
           android:id="@+id/two_ll"
-          android:layout_width="350dp"
+          android:layout_width="340dp"
           android:layout_height="250dp"
           android:layout_gravity="center"
           android:layout_marginTop="20dp"
-          android:background="@drawable/btn_grey"
+          android:background="@drawable/btn_white"
           android:orientation="vertical">
 
         <LinearLayout
@@ -232,7 +230,7 @@
               android:layout_width="10dp"
               android:layout_height="10dp"
               android:layout_gravity="center"
-              android:layout_marginLeft="240dp"
+              android:layout_marginLeft="210dp"
               android:src="@mipmap/right"></ImageView>
         </LinearLayout>
 
@@ -270,16 +268,17 @@
       <LinearLayout
           android:layout_marginTop="20dp"
           android:id="@+id/three_ll"
-          android:layout_width="350dp"
+          android:layout_width="340dp"
           android:layout_height="wrap_content"
           android:layout_gravity="center">
 
         <RelativeLayout
             android:id="@+id/diet_diary"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="80dp"
             android:layout_gravity="center"
-            android:background="@drawable/btn_grey">
+            android:background="@drawable/btn_white">
 
           <TextView
               android:id="@+id/title_dd"
@@ -329,11 +328,12 @@
 
         <RelativeLayout
             android:id="@+id/myfav_rl"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/btn_grey">
+            android:background="@drawable/btn_white">
 
           <TextView
               android:id="@+id/title_myfav"

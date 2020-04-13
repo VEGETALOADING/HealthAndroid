@@ -1,9 +1,7 @@
 package com.tyut.utils;
 
-import com.tyut.MainActivity;
 import com.tyut.vo.NutritionVO;
 import com.tyut.vo.UserVO;
-import com.tyut.vo.Weight;
 
 
 import org.joda.time.DateTime;
@@ -258,7 +256,6 @@ public class StringUtil {
         return calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
     }
 
-
     public static String convertSharetime(String datetime) throws ParseException {
 
         DateFormat source = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -330,7 +327,6 @@ public class StringUtil {
         }
         return map;
     }
-
 
     public static Map<Integer, Integer> getMention(String str){
         String reg = "@([^\\s|\\/|:|@]+)";//定义正则表达式

@@ -21,11 +21,10 @@ import androidx.fragment.app.Fragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tyut.R;
-import com.tyut.UpdateUserDataActivity;
+import com.tyut.activity.UpdateUserDataActivity;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.StringUtil;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
@@ -145,6 +144,11 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
         //查数据
         userId =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
 
+       initWeight();
+
+    }
+
+    private void initWeight(){
         OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/weight/list.do?userid="+userId,
                 new OkHttpCallback(){
                     @Override
@@ -166,7 +170,6 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
                     }
                 }
         );
-
     }
 
     @Override
@@ -219,7 +222,7 @@ public class WeightProgressFragment extends Fragment implements View.OnClickList
                                                 util.putBoolean("isLogin", true);
                                                 util.putString("user", gson.toJson(serverResponse.getData()));
                                                 util.putInt("userid", serverResponse.getData().getId());
-                                                onResume();
+                                                initWeight();
                                                 Looper.prepare();
                                                 Toast.makeText(getActivity(), serverResponse.getMsg(), Toast.LENGTH_SHORT).show();
                                                 Looper.loop();

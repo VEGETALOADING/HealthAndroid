@@ -36,6 +36,7 @@
             android:layout_marginLeft="50dp"
             android:gravity="center"
             android:paddingLeft="5dp"
+            android:textColor="@color/black"
             android:text="动态详情"
             android:textSize="20sp"
             android:textStyle="bold"></TextView>
@@ -270,7 +271,7 @@
         android:background="#ffffff"
         android:id="@+id/edittext_commentAc_ll"
         android:layout_width="match_parent"
-        android:layout_marginTop="410dp"
+        android:layout_marginTop="370dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical">

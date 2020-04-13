@@ -16,86 +16,86 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FollowingListActivity"></activity>
-        <activity android:name=".FollowerListActivity"></activity>
-        <activity android:name=".SchemaListActivity"></activity>
-        <activity android:name=".MyfavActivity"></activity>
-        <activity android:name=".SchemaDetailActivity"></activity>
-        <activity android:name=".SportListActivity"></activity>
-        <activity android:name=".ActivityDetailActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"><!-- 键盘不将导航栏顶起-->
-
-        </activity>
-        <activity android:name=".FoodListActivity"></activity>
-        <activity android:name=".CommentDetailActivity"></activity>
-        <activity android:name=".UpdatePwActivity"></activity>
-        <activity android:name=".SettingActivity"></activity>
-        <activity android:name=".ActivityActivity"></activity>
-        <activity android:name=".ReportActivity">
-
-        </activity>
-        <activity android:name=".TopicListActivity"></activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".HomeActivity"
-            android:windowSoftInputMode="adjustPan"><!-- 键盘不将导航栏顶起-->
-                                                     <!-- +puw消失自动隐藏软键盘-->
-
-        </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BigPicActivity">
+        <activity android:name=".activity.FollowingListActivity"></activity>
+        <activity android:name=".activity.FollowerListActivity"></activity>
+        <activity android:name=".activity.SchemaListActivity"></activity>
+        <activity android:name=".activity.MyfavActivity"></activity>
+        <activity android:name=".activity.SchemaDetailActivity"></activity>
+        <activity android:name=".activity.SportListActivity"></activity>
+        <activity android:name=".activity.ActivityDetailActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"><!-- 键盘不将导航栏顶起-->
+
+        </activity>
+        <activity android:name=".activity.FoodListActivity"></activity>
+        <activity android:name=".activity.CommentDetailActivity"></activity>
+        <activity android:name=".activity.UpdatePwActivity"></activity>
+        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".activity.ActivityActivity"></activity>
+        <activity android:name=".activity.ReportActivity">
+
+        </activity>
+        <activity android:name=".activity.TopicListActivity"></activity>
+        <activity android:name=".activity.MainActivity">
+
+        </activity>
+        <activity android:name=".activity.HomeActivity"
+            android:windowSoftInputMode="adjustPan"><!-- 键盘不将导航栏顶起-->
+                                                     <!-- +puw消失自动隐藏软键盘-->
+
+        </activity>
+        <activity android:name=".activity.LoginActivity">
+
+        </activity>
+        <activity android:name=".activity.BigPicActivity">
 
         </activity>
 
-        <activity android:name=".ForgetPwActivity">
+        <activity android:name=".activity.ForgetPwActivity">
 
         </activity>
 
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".activity.RegisterActivity">
 
         </activity>
 
-        <activity android:name=".PunchinActivity">
+        <activity android:name=".activity.PunchinActivity">
 
         </activity>
-        <activity android:name=".ShareActivity"
+        <activity android:name=".activity.ShareActivity"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden"
             android:windowSoftInputMode="adjustPan|stateHidden">
-
-
-
         </activity>
 
-        <activity android:name=".AddStatusActivity">
+        <activity android:name=".activity.AddStatusActivity">
 
         </activity>
-        <activity android:name=".WeightActivity">
+        <activity android:name=".activity.WeightActivity">
 
         </activity>
-        <activity android:name=".GirthActivity">
+        <activity android:name=".activity.GirthActivity">
 
         </activity>
-        <activity android:name=".UpdateUserInfoActivity" />
-        <activity android:name=".UpdateUsernameActivity" />
-        <activity android:name=".UpdatePhoneActivity" />
-        <activity android:name=".GuideActivity" />
-        <activity android:name=".UpdateUserDataActivity" />
-        <activity android:name=".TestActivity" >
+        <activity android:name=".activity.UpdateUserInfoActivity" />
+        <activity android:name=".activity.UpdateUsernameActivity" />
+        <activity android:name=".activity.UpdatePhoneActivity" />
+        <activity android:name=".activity.GuideActivity" />
+        <activity android:name=".activity.UpdateUserDataActivity" />
+        <activity android:name=".activity.TestActivity" >
 
         </activity>
-        <activity android:name=".ShowSchemaActivity" />
-        <activity android:name=".RecordActivity" />
-        <activity android:name=".DietAndSportActivity" />
-        <activity android:name=".TopicActivity" />
-        <activity android:name=".FoodDetailActivity">
+        <activity android:name=".activity.ShowSchemaActivity" />
+        <activity android:name=".activity.RecordActivity" />
+        <activity android:name=".activity.DietAndSportActivity" />
+        <activity android:name=".activity.TopicActivity" />
+        <activity android:name=".activity.FoodDetailActivity">
 
         </activity>
         

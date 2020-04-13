@@ -59,6 +59,7 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
 
     GirthListVO girthListVO = new GirthListVO();
     private static final int GIRTHLISTVO = 0;
+    private Integer userid;
 
 
     private Handler mHandler = new Handler(){
@@ -230,8 +231,11 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
     public void onResume() {
         super.onResume();
 
-        Integer userid =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
+        userid =  SPSingleton.get(getActivity(), SPSingleton.USERINFO).readInt("userid");
+        initGirth();
+    }
 
+    private void initGirth(){
         OkHttpUtils.get("http://"+getString(R.string.url)+":8080/portal/girth/list.do?userid="+userid,
                 new OkHttpCallback(){
                     @Override
@@ -256,7 +260,6 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
                     }
                 }
         );
-
     }
 
 
@@ -327,7 +330,7 @@ public class GirthCurveFragment extends Fragment implements View.OnClickListener
         }).setConfirm(new GirthPopUpWindow.IOnConfirmListener() {
             @Override
             public void onConfirm(GirthPopUpWindow dialog) {
-                onResume();
+                initGirth();
             }
         }).showFoodPopWindow();
     }

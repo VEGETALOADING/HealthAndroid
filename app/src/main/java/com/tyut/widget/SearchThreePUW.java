@@ -1,6 +1,5 @@
 package com.tyut.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +25,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.ActivityActivity;
-import com.tyut.ActivityDetailActivity;
-import com.tyut.FollowerListActivity;
+import com.tyut.activity.ActivityActivity;
+import com.tyut.activity.ActivityDetailActivity;
 import com.tyut.R;
-import com.tyut.ShareActivity;
-import com.tyut.TopicActivity;
+import com.tyut.activity.TopicActivity;
 import com.tyut.adapter.ActivityListAdapter;
 import com.tyut.adapter.FollowerListAdapter;
 import com.tyut.adapter.TopicAdapter;
@@ -40,11 +36,9 @@ import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
 import com.tyut.utils.ViewUtil;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.FollowerVO;
-import com.tyut.vo.FoodVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.Topic;
 import com.tyut.vo.UserVO;
@@ -305,7 +299,8 @@ public class SearchThreePUW implements View.OnClickListener, TextView.OnEditorAc
         }
         switch (type){
             case 1:
-                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?content="+name+"&currentUserId="+userVO.getId(),
+                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?content="+name
+                                +"&currentUserId="+userVO.getId()+"&status=0",
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

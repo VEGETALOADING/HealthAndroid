@@ -6,20 +6,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.tyut.ActivityDetailActivity;
 import com.tyut.R;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.view.ScrollPickView;
 import com.tyut.vo.ActivityVO;
 import com.tyut.vo.UserVO;
-
-import java.util.List;
 
 
 public class DeleteActivityPUW implements View.OnClickListener {

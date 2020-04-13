@@ -12,7 +12,7 @@
     <TextView
         android:id="@+id/jumpValcode_tv"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="280dp"
+        android:layout_marginLeft="275dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="免密登录"
@@ -70,7 +70,7 @@
           android:textSize="18sp"
           android:textColor="@color/green_light"
           android:layout_marginTop="10dp"
-          android:layout_marginLeft="250dp"></TextView>
+          android:layout_marginLeft="240dp"></TextView>
 
       <Button
           android:layout_marginTop="87dp"

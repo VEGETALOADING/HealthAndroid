@@ -1,11 +1,9 @@
 package com.tyut.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -15,10 +13,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -27,19 +23,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.tyut.ActivityActivity;
-import com.tyut.ActivityDetailActivity;
+import com.tyut.activity.ActivityDetailActivity;
 import com.tyut.R;
 import com.tyut.adapter.ActivityListAdapter;
-import com.tyut.adapter.TopicAdapter;
 import com.tyut.utils.OkHttpCallback;
 import com.tyut.utils.OkHttpUtils;
-import com.tyut.utils.RecycleViewDivider;
 import com.tyut.utils.SPSingleton;
-import com.tyut.utils.SharedPreferencesUtil;
-import com.tyut.utils.ViewUtil;
 import com.tyut.vo.ActivityVO;
-import com.tyut.vo.FoodVO;
 import com.tyut.vo.ServerResponse;
 import com.tyut.vo.UserVO;
 
@@ -57,6 +47,7 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
     PopupWindow popupWindow;
     View contentView;
     Context context;
+    private Boolean flag;
 
     public PopupWindow getPopupWindow() {
         return popupWindow;
@@ -85,9 +76,10 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
     };
 
 
-    public SearchActivityPUW(Context context) {
+    public SearchActivityPUW(Context context, Boolean flag) {
 
         this.context = context;
+        this.flag = flag;
         contentView = LayoutInflater.from(context).inflate(
                 R.layout.popupwindow_searchactivity, null);
         initView();
@@ -135,10 +127,20 @@ public class SearchActivityPUW implements View.OnClickListener, TextView.OnEdito
                 UserVO userVO = (UserVO) SPSingleton.get(context, SPSingleton.USERINFO).readObject("user", UserVO.class);
 
                 String content = String.valueOf(search_et.getText());
-                OkHttpUtils.get("http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="
-                                +userVO.getId()
-                                +"&userid="+userVO.getId()
-                                +"&content=" + content,
+                String link = new String();
+                if(flag){
+                    link = "http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="
+                            +userVO.getId()
+                            +"&userid="+userVO.getId()
+                            +"&content=" + content;
+                }else{
+                    link = "http://"+context.getString(R.string.url)+":8080/portal/activity/find.do?currentUserId="
+                            +userVO.getId()
+                            +"&userid="+userVO.getId()
+                            +"&content=" + content
+                            +"&status=0";
+                }
+                OkHttpUtils.get(link,
                         new OkHttpCallback(){
                             @Override
                             public void onFinish(String status, String msg) {

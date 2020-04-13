@@ -1,6 +1,5 @@
 package com.tyut.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tyut.HomeActivity;
 import com.tyut.R;
 import com.tyut.utils.RecycleViewDivider;
 import com.tyut.vo.GirthVO;

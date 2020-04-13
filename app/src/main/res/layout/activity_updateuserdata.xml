@@ -31,7 +31,7 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="20sp"
                 android:text="返回"
-                android:textColor="@color/nav_text_selected"></TextView>
+                android:textColor="@color/black"></TextView>
         </LinearLayout>
         <TextView
             android:layout_width="0dp"

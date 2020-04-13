@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/btn_white">
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:id="@+id/takePhoto_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="#3333FF"
+            android:textSize="30sp"
+            android:text="拍照"
+            android:gravity="center"
+            android:layout_weight="1"></TextView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_grey"></View>
+        <TextView
+            android:layout_marginVertical="10dp"
+            android:id="@+id/fromAlbum_tv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:textColor="#3333FF"
+            android:textSize="30sp"
+            android:text="相册"
+            android:gravity="center"
+            android:layout_weight="1"></TextView>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp">
+    </View>
+    <TextView
+        android:id="@+id/cancel_tv"
+        android:layout_marginVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textColor="#3333FF"
+        android:textSize="30sp"
+        android:text="取消"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:background="@drawable/btn_white"
+        android:layout_weight="1"></TextView>
+
+</LinearLayout>

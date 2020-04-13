@@ -33,30 +33,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/recenttopic_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_height="wrap_content"
-            android:text="最近使用"></TextView>
-        <ScrollView
-            android:id="@+id/recentTopic_sv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentTopic_Rv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#ffffff"></androidx.recyclerview.widget.RecyclerView>
-
-        </ScrollView>
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/hottopic_ll"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -64,7 +40,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             android:text="热门话题"></TextView>
 
